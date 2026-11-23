@@ -102,6 +102,8 @@
     4: { label: '安全通知', icon: '<path d="M12 3l7 3v6c0 4-3 7-7 9-7-2-7-5-7-9V6l7-3Z"/><path d="m9 12 2 2 4-4"/>' },
     5: { label: '测试通知', icon: '<path d="M9 3h6M10 3v6L5 19h14L14 9V3"/><path d="M7.5 14h9"/>' },
   };
+  const SVC_NAME = { 'GitHub Pages 源站': '站点源站', 'GitHub Pages': '站点源站' };
+  const svcName = n => SVC_NAME[n] || String(n || '').replace(/GitHub Pages?/gi, '源站').trim();
   const esc = s => String(s || '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 
   function noticeLock() {
@@ -195,7 +197,7 @@
     pill.textContent = bad ? `${bad} 项中断` : warn ? `${warn} 项降级` : '全部正常';
     $('#smList').innerHTML = svcs.map(s => {
       const cls = s.status === 'outage' ? 'bad' : s.status === 'degraded' ? 'warn' : '';
-      return `<div class="sm-row"><i class="led ${cls}"></i><span class="nm">${esc(s.name)}</span><span class="ms">${fmtPing(s.latency_ms)}</span></div>`;
+      return `<div class="sm-row"><i class="led ${cls}"></i><span class="nm">${esc(svcName(s.name))}</span><span class="ms">${fmtPing(s.latency_ms)}</span></div>`;
     }).join('');
     $('#smUpdated').textContent = '更新 ' + new Date(d.generated_at).toLocaleTimeString('zh-CN', { hour12: false });
   }
@@ -207,7 +209,7 @@
       const up = s.uptime_90d == null ? null : Math.round(s.uptime_90d * 1000) / 10;
       return `<div class="sp-item">
         <div class="row1"><i class="led ${bad ? 'bad' : s.status === 'degraded' ? 'warn' : ''}" style="width:8px;height:8px;border-radius:50%;background:${bad ? 'var(--bad)' : s.status === 'degraded' ? 'var(--warn)' : 'var(--ok)'}"></i>
-          <span class="name">${esc(s.name)}</span></div>
+          <span class="name">${esc(svcName(s.name))}</span></div>
         <div class="url">${esc(String(s.url).replace(/^https?:\/\//, ''))}</div>
         <div class="metrics"><div>Ping<b>${fmtPing(s.latency_ms)}</b></div><div>可用率<b>${up == null ? '—' : up + '%'}</b></div></div>
         <div class="uptime"><i class="${bad ? 'bad' : ''}" style="width:${up == null ? 0 : up}%"></i></div>
@@ -233,7 +235,7 @@
 
   /* ---------- 子站 ---------- */
   const SITES = [
-    { n: '开发人员', d: '项目、仓库与更新日志，粉色主题的子站。', u: 'dev.rxh.asia', h: 'https://dev.rxh.asia/', i: 'code' },
+    { n: '开发人员', d: '项目与更新日志，粉色主题的子站。', u: 'dev.rxh.asia', h: 'https://dev.rxh.asia/', i: 'code' },
     { n: '开放平台', d: '面向开发者的接口门户，账号与主站统一。', u: 'open.rxh.asia', h: 'https://open.rxh.asia/', i: 'api' },
     { n: '站点状态', d: '边缘定时探测，Ping 与 90 天可用率。', u: 'status.rxh.asia', h: 'https://status.rxh.asia/', i: 'wave' },
     { n: '账号中心', d: '统一账号：昵称、头像、密码与 ID。', u: 'auth.rxh.asia', h: 'https://auth.rxh.asia/', i: 'user' },
