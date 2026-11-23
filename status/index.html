@@ -159,7 +159,6 @@ const TARGETS = [
   {id:'home', grp:'site', name:'总站首页', url:'www.rxh.asia/', kind:'fetch', p:'../'},
   {id:'gov',  grp:'site', name:'政务服务系统', url:'/gov/', kind:'fetch', p:'../gov/'},
   {id:'st',   grp:'site', name:'状态页', url:'/status/', kind:'fetch', p:'./'},
-  {id:'pages',grp:'ext',  name:'GitHub Pages 源站', url:'rxhrxh520.github.io', kind:'nocors', p:'https://rxhrxh520.github.io/'},
   {id:'ava',  grp:'ext',  name:'GitHub 头像', url:'github.com/RXHrxh520.png', kind:'image', p:'https://github.com/RXHrxh520.png?size=40'},
   {id:'cdn',  grp:'ext',  name:'jsDelivr 图标源', url:'fastly.jsdelivr.net', kind:'nocors', p:'https://fastly.jsdelivr.net/npm/simple-icons@latest/icons/github.svg'}
 ];
@@ -230,10 +229,16 @@ function render(){
   const bad = lasts.filter(h=>!h.ok);
   const slow = lasts.filter(h=>h.ok && h.ms > 800);
   const bicon = $('#bicon'), bTitle = $('#bTitle'), bSub = $('#bSub');
-  bicon.className = 'bicon'; bTitle.textContent = '正在检测各项服务…';
+  bicon.className = 'bicon';
+  bicon.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M4 12.5l5 5 11-11"/></svg>';
+  bTitle.textContent = '正在检测各项服务…';
   if(lasts.length){
-    if(bad.length){ bicon.classList.add('bad'); bTitle.textContent = bad.length + ' 项服务异常'; bSub.textContent = '建议稍后重试，或检查本地网络'; }
-    else if(slow.length){ bicon.classList.add('warn'); bTitle.textContent = '所有服务可用 · ' + slow.length + ' 项响应偏慢'; bSub.textContent = '偏慢多为首次握手或跨域探测造成，可忽略'; }
+    if(bad.length){ bicon.classList.add('bad');
+      bicon.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M6 6l12 12M18 6l-12 12"/></svg>';
+      bTitle.textContent = bad.length + ' 项服务异常'; bSub.textContent = '建议稍后重试，或检查本地网络'; }
+    else if(slow.length){ bicon.classList.add('warn');
+      bicon.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M12 7v8M12 19h.01"/></svg>';
+      bTitle.textContent = '所有服务可用 · ' + slow.length + ' 项响应偏慢'; bSub.textContent = '偏慢多为首次握手或跨域探测造成，可忽略'; }
     else { bTitle.textContent = '所有系统运行正常'; bSub.textContent = '全部服务响应正常'; }
   }
   $('#lastTime').textContent = new Date().toLocaleTimeString('zh-CN',{hour12:false});
