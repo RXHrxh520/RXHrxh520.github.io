@@ -450,6 +450,107 @@
     .tool-grid{grid-template-columns:repeat(3,1fr)}
   }
 
+
+  /* ============ 工作台 ============ */
+  .bench{margin-top:22px;background:rgba(255,255,255,.72);border:1px solid rgba(255,255,255,.9);
+    border-radius:22px;padding:22px 26px;box-shadow:0 14px 36px rgba(80,40,60,.05)}
+  .bench-head{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap}
+  .bench-head h3{margin:0;font-size:17px}
+  .bench-head span{font-size:12px;color:var(--ink-3);font-family:ui-monospace,Menlo,monospace}
+  .bench-grid{display:grid;grid-template-columns:1fr 1fr;gap:0 30px;margin-top:8px}
+  .brow{display:flex;gap:14px;padding:10px 0;border-bottom:1px dashed var(--pink-line);font-size:12.5px;align-items:baseline}
+  .brow span{width:58px;flex:0 0 auto;color:var(--ink-3)}
+  .brow b{font-weight:600;color:var(--ink);font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12.5px}
+
+  /* ============ 更新日志 ============ */
+  .log-list{list-style:none;padding:0;margin:14px 0 0;display:grid;gap:14px}
+  .log-list li{display:flex;gap:12px;align-items:flex-start}
+  .ldate{flex:0 0 auto;font-family:ui-monospace,Menlo,monospace;font-size:11px;color:var(--pink-deep);
+    background:#fff0f5;border:1px solid var(--pink-line);border-radius:6px;padding:2px 7px;margin-top:1px}
+  .log-list b{display:block;font-size:13px;color:var(--ink)}
+  .log-list i{display:block;font-style:normal;font-size:11.5px;color:var(--ink-3);line-height:1.55;margin-top:2px}
+
+  /* ============ 404 · 微信 ============ */
+  .wx2{width:min(420px,100%);height:min(880px,100%);background:#ededed;display:flex;flex-direction:column;
+    overflow:hidden;border-radius:18px;box-shadow:0 30px 90px rgba(0,0,0,.5);position:relative}
+  .wx2-nav{height:46px;flex:0 0 auto;display:flex;align-items:center;background:#ededed;
+    border-bottom:1px solid #d9d9d9;position:relative;padding:0 4px;z-index:5}
+  .wnav-btn{width:44px;height:40px;border:0;background:none;display:grid;place-items:center;cursor:pointer;color:#111}
+  .wnav-btn svg{width:21px;height:21px;opacity:.9}
+  .wx2-title{flex:1;text-align:center;font-size:17px;font-weight:500;color:#111;letter-spacing:.2px}
+  .wx2-body{flex:1;overflow-y:auto;background:#ededed;-webkit-overflow-scrolling:touch}
+  .wx2-tabbar{flex:0 0 auto;display:flex;background:#f7f7f7;border-top:1px solid #dcdcdc;
+    padding-bottom:env(safe-area-inset-bottom)}
+  .wx2-tabbar.hide{display:none}
+  .wtab{flex:1;border:0;background:none;padding:7px 0 5px;display:flex;flex-direction:column;align-items:center;
+    gap:3px;cursor:pointer;color:#7d7f83;font-size:10.5px;position:relative}
+  .wtab svg{width:23px;height:23px}
+  .wtab.on{color:#07c160}
+  .wdot{position:absolute;top:5px;left:calc(50% + 6px);width:8px;height:8px;border-radius:50%;background:#fa5151}
+
+  .wlist{background:#fff}
+  .wrow{display:flex;align-items:center;gap:12px;padding:11px 14px;background:#fff;
+    border-bottom:1px solid #ededed;cursor:pointer}
+  .wrow:active{background:#e9e9e9}
+  .wrow:last-child{border-bottom:0}
+  .wav{width:44px;height:44px;border-radius:5px;flex:0 0 auto;display:grid;place-items:center;
+    font-size:14px;font-weight:700;color:#fff;overflow:hidden;background:#dcdcdc}
+  .wav.default{background:#e7e7e7}
+  .wav svg{width:26px;height:26px}
+  .wav.service{background:#4a90e2;font-size:12px}
+  .wav.news{background:#2f7d32;font-size:15px}
+  .wmid{flex:1;min-width:0}
+  .wmid b{display:block;font-size:16px;font-weight:400;color:#111;line-height:1.35}
+  .wmid i{display:block;font-style:normal;font-size:12.5px;color:#9a9a9a;margin-top:2px;
+    white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .wright{flex:0 0 auto;display:flex;flex-direction:column;align-items:flex-end;gap:5px;text-align:right}
+  .wright span{font-size:11.5px;color:#a6a6a6}
+  .wright em{font-style:normal;background:#fa5151;color:#fff;font-size:11px;min-width:18px;height:18px;
+    border-radius:9px;display:grid;place-items:center;padding:0 5px}
+
+  .wchat{padding:10px 12px 24px;min-height:100%;display:flex;flex-direction:column;gap:10px}
+  .wtime{text-align:center;font-size:11.5px;color:#9a9a9a;margin:10px 0 6px}
+  .wb{max-width:78%;background:#fff;border-radius:5px;padding:9px 12px;font-size:15px;line-height:1.55;
+    color:#111;align-self:flex-start;position:relative;word-break:break-word}
+  .wb::before{content:"";position:absolute;left:-5px;top:11px;border-right:6px solid #fff;
+    border-top:4px solid transparent;border-bottom:4px solid transparent}
+  .wb.me{align-self:flex-end;background:#95ec69}
+  .wb.me::before{left:auto;right:-5px;border-right:0;border-left:6px solid #95ec69}
+
+  .wcard{background:#fff;border-radius:6px;padding:12px;cursor:pointer}
+  .wcard:active{background:#f6f6f6}
+  .wcard b{display:block;font-size:15px;line-height:1.45;color:#111}
+  .wthumb{height:72px;border-radius:4px;margin-top:10px;background:linear-gradient(120deg,#eef2f6,#dde6ef);
+    display:grid;place-items:center;color:#8fa0b3;font-size:11px;letter-spacing:3px}
+  .wsrc{margin-top:9px;font-size:11.5px;color:#9a9a9a;display:flex;gap:8px}
+
+  .wgroup{background:#fff;margin-top:9px}
+  .wgtitle{padding:8px 14px;font-size:12px;color:#8a8a8a;background:#ededed}
+  .wcell{display:flex;align-items:center;gap:12px;padding:13px 14px;background:#fff;
+    border-bottom:1px solid #ededed;cursor:pointer;font-size:15px;color:#111}
+  .wcell:last-child{border-bottom:0}
+  .wcell:active{background:#e9e9e9}
+  .wcell .ci{width:24px;height:24px;border-radius:5px;background:#f1f1f1;display:grid;place-items:center;color:#5d6570}
+  .wcell .ci svg{width:15px;height:15px}
+  .wcell .cv{margin-left:auto;color:#a6a6a6;font-size:12.5px}
+  .me{display:flex;gap:14px;align-items:center;padding:26px 16px 22px;background:#fff}
+  .mav{width:62px;height:62px;border-radius:6px;background:#e7e7e7;display:grid;place-items:center;overflow:hidden}
+  .mav svg{width:36px;height:36px}
+  .me h3{margin:0;font-size:19px;font-weight:500}
+  .me p{margin:5px 0 0;font-size:12.5px;color:#8a8a8a;line-height:1.5}
+
+  .art{padding:18px 16px 40px;background:#fff}
+  .art h1{font-size:22px;line-height:1.42;margin:0 0 12px;letter-spacing:-.2px}
+  .art .am{display:flex;gap:10px;flex-wrap:wrap;font-size:12.5px;color:#9a9a9a;margin-bottom:18px}
+  .art p{font-size:16px;line-height:1.85;color:#333;margin:0 0 16px}
+  .art .src{margin-top:22px;padding-top:14px;border-top:1px solid #eee;font-size:12px;color:#9a9a9a}
+
+  @media (max-width:520px){
+    .argview{padding:0}
+    .wx2{width:100%;height:100%;border-radius:0;box-shadow:none}
+    .bench-grid{grid-template-columns:1fr;gap:0}
+  }
+
   /* ============ 页脚（黑） ============ */
   .footer{
     margin-top:100px;background:#0d0c10;color:#fff;
@@ -571,8 +672,8 @@
     <span id="themeLabel">暗夜</span>
   </button>
   <button id="modeBtn" aria-label="切换模式">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>
-    <span id="modeLabel">GitHub</span>
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M9.4 7.6 11 6a3.6 3.6 0 0 1 5.1 5.1l-1.5 1.5"/><path d="M14.6 16.4 13 18a3.6 3.6 0 0 1-5.1-5.1l1.5-1.5"/><path d="M4 4l7 7M20 20l-7-7" opacity=".5"/></svg>
+    <span id="modeLabel">404</span>
   </button>
 </div>
 
@@ -654,20 +755,19 @@
           </div>
         </div>
 
-        <div class="panel next-panel">
-          <div class="kicker">NEXT</div>
-          <h3>接下来要做的</h3>
-          <div class="next-cards" id="nextCards"></div>
+        <div class="panel log-panel">
+          <div class="kicker">LOG</div>
+          <h3>站点更新</h3>
+          <ul class="log-list" id="logList"></ul>
         </div>
       </div>
 
-      <div class="stack tool">
-        <div class="tool-head">
-          <h3>工具箱</h3>
-          <span id="toolMeta">—</span>
+      <div class="stack bench">
+        <div class="bench-head">
+          <h3>工作台</h3>
+          <span id="benchDays">—</span>
         </div>
-        <div class="tool-tabs" id="toolTabs"></div>
-        <div class="tool-grid" id="toolGrid"></div>
+        <div class="bench-grid" id="benchGrid"></div>
       </div>
     </div>
   </section>
@@ -746,6 +846,7 @@
           <div class="ai-badges">
             <span class="ai-badge">思考强度 <b>MAX</b></span>
             <span class="ai-badge">上下文 <b>999M</b></span>
+            <span class="ai-badge">会话 <b id="msgCount">0</b></span>
           </div>
         </div>
 
@@ -828,32 +929,12 @@
     </div>
   </section>
 
-  <!-- ================= ARG 模式（微信界面） ================= -->
+  <!-- ================= 404 · 微信界面 ================= -->
   <section class="argview" id="view-arg">
-    <div class="wx">
-      <div class="wx-nav">
-        <button class="wx-back" id="wxBack" aria-label="返回">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M15 4l-8 8 8 8"/></svg>
-        </button>
-        <div class="wx-title">文件传输助手</div>
-        <button class="wx-more" aria-label="更多">
-          <svg viewBox="0 0 24 24" fill="currentColor"><circle cx="5" cy="12" r="1.9"/><circle cx="12" cy="12" r="1.9"/><circle cx="19" cy="12" r="1.9"/></svg>
-        </button>
-      </div>
-      <div class="wx-body" id="wxBody"></div>
-      <div class="wx-toolbar">
-        <button class="wx-ico" aria-label="语音">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M12 4v10"/><path d="M8 9v3a4 4 0 0 0 8 0v-3"/><path d="M12 16c-4 0-6-1-7-2M12 16c4 0 6-1 7-2"/></svg>
-        </button>
-        <div class="wx-inputwrap"><input class="wx-input" id="wxInput" placeholder="发消息"></div>
-        <button class="wx-ico" aria-label="表情">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><circle cx="12" cy="12" r="8.5"/><circle cx="9" cy="10" r="1"/><circle cx="15" cy="10" r="1"/><path d="M8.5 14.5c1.5 1.6 5.5 1.6 7 0"/></svg>
-        </button>
-        <button class="wx-send" id="wxSend">发送</button>
-        <button class="wx-plus" id="wxPlus" aria-label="更多功能">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><circle cx="12" cy="12" r="8.6"/><path d="M12 8v8M8 12h8"/></svg>
-        </button>
-      </div>
+    <div class="wx2">
+      <div class="wx2-nav" id="wx2Nav"></div>
+      <div class="wx2-body" id="wx2Body"></div>
+      <div class="wx2-tabbar" id="wx2Tab"></div>
     </div>
   </section>
 </main>
@@ -924,7 +1005,7 @@
           </a>
 
           <button class="fitem" data-copy="软小寒" style="width:100%;background:none;border:0;font:inherit;text-align:left;cursor:pointer;color:#fff">
-            <span class="ficon stroke"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="7"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3"/><circle cx="12" cy="12" r="1.6"/></svg></span>
+            <span class="ficon"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEgAAABICAYAAABV7bNHAAACBUlEQVR4nO2aS6LCIBAEjfe/My4UTZA/Mz0doPY+hqI7Kr7Hwwj3wWr9Wp4Wi95BjAcuKJTDLsskQSHMkqCCmEWkgAkqyWGVR1ExZiCCatPBmCJ1Qa2bZpO0K1ZAVVBvGphSpCZodJMsknbFCqgIkjp9hhSJC2LYlCT0FbMWLipIazOWkugTZI2YIO1TtkqRiCDU8BaSdsUKDAtCnyp6vSFBVs8F5Lq7YgW6BVl/gEOt3yVIYrjjOI7Rv4GQZFIxL0dCkjbNgqyrFaI9DzxBYWrYq9YkSGsQ5qpVC2J5MKfQOjxYxUpyWFNUJYjtwZxCY86iIGS1GB/Y6hVr3TRb1bKC7lKtEMm5k6dlIeecHpZ3Tdpv8yxViwqyTo8UEvv4E8Qkh+Fdzbxi7B8gL4LQ6UFtfmRfX0HMcixTZHphpv2aM70BeI68uAfLNPTss2pYKYEM70qtM9Bcd6BoFQwRJCkHnUL16w6N5CDTqJogllrFqD14NUHaclBVU7kPQiUHsY54gphrFaMUguxmWhNUK4fxpjI1ezJBK8nJIVKxGeSkZhu+UZxBTo6hBM0mJzZnt6DZ5HjCebvupGeVE6M5QSvIOc/eJGgFOR6/h+pL+5XknKlK0KpynHOuKGhVOZ7sPwvc7YunBskEbTlvoj/7bDk//hK05Vy5CNpyIrgP1nPQsuXkeQFFGX/+ldFQrQAAAABJRU5ErkJggg==" alt="Delta Force" style="width:18px;height:18px;object-fit:contain"></span>
             <span class="fmeta"><b>Delta Force</b><i>软小寒</i></span>
             <span class="farrow">⧉</span>
           </button>
@@ -1123,73 +1204,273 @@ document.getElementById('themeBtn').addEventListener('click', ()=>{
 /* ================= 模式 ================= */
 function setMode(on){
   document.body.classList.toggle('arg', on);
-  document.getElementById('modeLabel').textContent = on ? 'ARG' : 'GitHub';
+  document.getElementById('modeLabel').textContent = on ? 'ARG' : '404';
   if(!on) window.scrollTo(0, 0);
 }
 document.getElementById('modeBtn').addEventListener('click', ()=>{
   setMode(!document.body.classList.contains('arg'));
 });
-document.getElementById('wxBack').addEventListener('click', ()=> setMode(false));
+const _wb = document.getElementById('wxBack');
+if(_wb) _wb.addEventListener('click', ()=> setMode(false));
 
-/* ================= 工具箱 ================= */
-const TOOLS = {
-  '开发': [['Kotlin','主力语言','Ko'],['Java','老本行','Ja'],['Android Studio','吃饭工具','AS'],['Gradle','构建配置','Gr']],
-  '日常': [['VS Code','写页面','VC'],['Git','版本管理','Gi'],['Figma','画稿对齐','Fi'],['Markdown','写文档','Md']],
-  'AI':   [['DeepSeek','推理与代码','DS'],['Kimi','长文本','Ki'],['Claude','写文档','Cl'],['火山方舟','国产模型','火']]
-};
-function renderTools(active){
-  const tabs = Object.keys(TOOLS).map(k=>`<button class="tool-tab ${k===active?'on':''}" data-k="${k}">${k} <span style="opacity:.6">${String(TOOLS[k].length).padStart(2,'0')}</span></button>`).join('');
-  document.getElementById('toolTabs').innerHTML = tabs;
-  document.getElementById('toolGrid').innerHTML = TOOLS[active].map(([n,d,s])=>`
-    <div class="titem"><span class="ti">${s}</span><span><b>${n}</b><i>${d}</i></span></div>`).join('');
-  document.getElementById('toolTabs').querySelectorAll('.tool-tab').forEach(b=>{
-    b.addEventListener('click', ()=> renderTools(b.dataset.k));
-  });
-  const total = Object.values(TOOLS).reduce((a,b)=>a+b.length,0);
-  document.getElementById('toolMeta').textContent = total + ' 件在用的东西 · 分 ' + Object.keys(TOOLS).length + ' 组';
-}
-renderTools('开发');
-
-/* ================= 接下来 ================= */
-const NEXT = [
-  {t:'接入 RXH-Uranium', d:'把总站里的对话接到真实模型，先跑通一条链路', p:62, s:'doing', l:'进行中'},
-  {t:'分站体系成型', d:'路径式子站再扩两三个，总站只做入口', p:78, s:'doing', l:'进行中'},
-  {t:'APIBalance 自动更新', d:'检查更新、静默升级，不打断正在用的界面', p:35, s:'queue', l:'排队中'},
-  {t:'开一个真正的博客', d:'把踩过的坑写成能检索的东西', p:12, s:'idea', l:'想法'}
+/* ================= 工作台 ================= */
+const BENCH = [
+  ['系统','Windows 11 · Android 14'],
+  ['主力语言','Kotlin · Java'],
+  ['顺手语言','JavaScript · HTML'],
+  ['编辑器','VS Code'],
+  ['终端','PowerShell · Bash'],
+  ['托管','GitHub Pages'],
+  ['域名','rxh.asia'],
+  ['静态资源','jsDelivr']
 ];
-const NEXT_HTML = NEXT.map(n=>`
-  <div class="ncard">
-    <div class="nrow"><b>${n.t}</b><em class="${n.s}">${n.l}</em></div>
-    <p>${n.d}</p>
-    <div class="nbar"><i data-p="${n.p}"></i></div>
-    <div class="npct"><span>${n.p}%</span><span>${n.p>=70?'接近收尾':n.p>=40?'推进中':'刚起步'}</span></div>
-  </div>`).join('');
-document.getElementById('nextCards').innerHTML = NEXT_HTML;
-requestAnimationFrame(()=> setTimeout(()=>{
-  document.querySelectorAll('.nbar i').forEach(el=> el.style.width = el.dataset.p + '%');
-}, 60));
+document.getElementById('benchGrid').innerHTML = BENCH.map(([k,v])=>
+  `<div class="brow"><span>${k}</span><b>${v}</b></div>`).join('');
 
-/* ================= 微信输入 ================= */
-const wxInput = document.getElementById('wxInput');
-const wxSend = document.getElementById('wxSend');
-const wxBody = document.getElementById('wxBody');
-const wxPlus = document.getElementById('wxPlus');
-wxInput.addEventListener('input', ()=> wxSend.classList.toggle('on', wxInput.value.trim().length > 0));
-function sendWx(){
-  const v = wxInput.value.trim();
-  if(!v) return;
-  const row = document.createElement('div');
-  row.className = 'wx-msg';
-  row.innerHTML = '<div class="b"></div>';
-  row.querySelector('.b').textContent = v;
-  wxBody.appendChild(row);
-  wxBody.scrollTop = wxBody.scrollHeight;
-  wxInput.value = '';
-  wxSend.classList.remove('on');
+(function(){
+  const start = new Date('2026-11-18T00:00:00+08:00');
+  const days = Math.floor((Date.now() - start) / 86400000) + 1;
+  document.getElementById('benchDays').textContent = '本站第 ' + days + ' 天 · 单文件手写';
+})();
+
+/* ================= 更新日志 ================= */
+const LOGS = [
+  {d:'11-23', t:'404 入口上线', n:'主站右上角改名为 404，进去是一套微信界面：会话、通讯录、发现、我。'},
+  {d:'11-23', t:'政务服务大厅重做', n:'按浙江政务服务网的版式重排，办件查询拆成普通办件与内部流转单两套。'},
+  {d:'11-22', t:'系统状态页', n:'按 GitHub Status 的结构做：分组、90 格色条、可用率与故障记录。'},
+  {d:'11-20', t:'路径式分站', n:'不再一个站一个域名，仓库里一个目录就是一个分站。'},
+  {d:'11-18', t:'总站上线', n:'玻璃拟态悬浮导航、四视图、绑定 www.rxh.asia 并开启强制 HTTPS。'}
+];
+document.getElementById('logList').innerHTML = LOGS.map(l=>
+  `<li><span class="ldate">${l.d}</span><div><b>${l.t}</b><i>${l.n}</i></div></li>`).join('');
+
+/* ================= 404 · 微信 ================= */
+const ME = { name:'软小寒', wxid:'rxh_2026', region:'玄河平凉' };
+
+const ARTICLES = [
+  {
+    t:'凌晨收工的剧组，被十几台相机堵在高速口',
+    d:'2026-11-21', src:'藤蔓新闻',
+    p:[
+      '一场夜戏拍到将近凌晨三点，剧组车辆刚驶出影视城，就被等在路边的十几台车跟上了。有人在超车道上变道别车，有人把相机伸出天窗，只为了拍一张演员摘下口罩的侧脸。',
+      '这样的画面这两年越来越常见。代拍已经形成一条完整的链条：有人蹲守行程，有人按张收费，有人把照片打包卖给粉丝站。被围堵的不只是演员，还有正常行驶的其他车辆。',
+      '更值得追问的是需求端。只要有人愿意为一张模糊的生图付钱，就会有人愿意在高速上别车。追星追到把公共安全当成成本，这笔账最后是由所有路过的人来承担的。',
+      '平台已经在清理代拍交易的关键词，但换个说法又能搜到。真正能刹住这股风的，大概不是封几个账号，而是没人再为这种照片买单。'
+    ]
+  },
+  {
+    t:'排队三小时的网红店，视频里那一桌是借来的',
+    d:'2026-11-19', src:'藤蔓新闻',
+    p:[
+      '一家新开的餐厅在小范围内刷屏：满桌菜品、暖光、镜头缓慢推近，配文是"终于排到了"。评论区里有人问地址，有人问要不要等位。',
+      '实际情况是，那一桌菜是店里提前摆好的样品，拍摄结束后被收回后厨。镜头外的食客在门口排了三个小时，进店后发现菜单上有一半的菜"今日售罄"。',
+      '探店内容早就成了生意。报价单上写着拍摄时长、出图数量、是否需要好评，甚至标注"不拍排队画面"。观众看到的是热闹，看不到的是合同。',
+      '虚假种草的成本最终落在消费者身上：时间、期待，还有对一整座城市餐饮口碑的信任。比起骂一家店，更该被看见的是这套默认的默契。'
+    ]
+  },
+  {
+    t:'粉丝集资打投流水上千万，钱去哪了没人说得清',
+    d:'2026-11-16', src:'藤蔓新闻',
+    p:[
+      '一个后援会在一周内收到超过一千万的集资，用于某档节目的投票和应援。账目以截图形式公布，几张表格，几行汇总，没有流水，也没有第三方见证。',
+      '有粉丝在群里提出疑问，很快被管理员移出。留下来的说法是"信任就好"。等到节目结束，集资余额的去向变成了一个新的问题，而这个问题通常不会得到回答。',
+      '集资打投的逻辑是把喜欢折算成数字，再把数字折算成资源。中间经手的人越多，账就越难对。参与者大多是学生，很多人第一次转出的是自己的生活费。',
+      '这不是某一个后援会的问题，而是一整套缺少约束的运作方式。没有票据、没有审计、没有退出机制，只有不断被放大的情绪和不断被消耗的钱。'
+    ]
+  }
+];
+
+const CHATS = [
+  {id:'file', name:'文件传输助手', av:'file', preview:'', time:'11:20', badge:0},
+  {id:'self', name:ME.name, av:'default', preview:'', time:'11:58', badge:0},
+  {id:'kefu', name:'藤蔓客服', av:'service', preview:'近期高发黑灰产通过参与扫码送礼、有偿辅助…', time:'11:42', badge:1},
+  {id:'news', name:'藤蔓新闻', av:'news', preview:'【藤蔓新闻】凌晨收工的剧组，被十几台相机堵在高速口', time:'10:06', badge:2}
+];
+
+const AVATARS = {
+  file: '<svg viewBox="0 0 24 24" fill="none" stroke="#2e7d32" stroke-width="2"><path d="M7 3.5h6l4.5 4.5v12.5H7z"/><path d="M13 3.5V8h4.5"/></svg>',
+  default: '<svg viewBox="0 0 24 24" fill="none" stroke="#b7b7b7" stroke-width="2"><circle cx="12" cy="9" r="3.5"/><path d="M4.8 19.8c1.3-3.5 4-5.3 7.2-5.3s5.9 1.8 7.2 5.3"/></svg>'
+};
+
+const S = { tab:'chats', chat:null, art:null };
+
+const navHTML = () => {
+  if(S.art !== null){
+    return `<button class="wnav-btn" data-back="art"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M15 4l-8 8 8 8"/></svg></button>
+      <div class="wx2-title">藤蔓新闻</div><button class="wnav-btn"></button>`;
+  }
+  if(S.chat){
+    return `<button class="wnav-btn" data-back="chat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M15 4l-8 8 8 8"/></svg></button>
+      <div class="wx2-title">${S.chat.name}</div>
+      <button class="wnav-btn" data-more="1"><svg viewBox="0 0 24 24" fill="currentColor"><circle cx="5" cy="12" r="1.8"/><circle cx="12" cy="12" r="1.8"/><circle cx="19" cy="12" r="1.8"/></svg></button>`;
+  }
+  const title = S.tab === 'chats' ? '微信(4)' : S.tab === 'contacts' ? '通讯录' : S.tab === 'discover' ? '发现' : '我';
+  const right = S.tab === 'chats'
+    ? `<button class="wnav-btn" data-more="1"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg></button>`
+    : `<button class="wnav-btn"></button>`;
+  return `<button class="wnav-btn"></button><div class="wx2-title">${title}</div>${right}`;
+};
+
+const rowHTML = c => `<div class="wrow" data-chat="${c.id}">
+  <span class="wav ${c.av}">${AVATARS[c.av] || (c.av === 'service' ? '客服' : '藤')}</span>
+  <div class="wmid"><b>${c.name}</b><i>${c.preview || ''}</i></div>
+  <div class="wright"><span>${c.time}</span>${c.badge ? `<em>${c.badge}</em>` : ''}</div>
+</div>`;
+
+const listHTML = () => `<div class="wlist">${CHATS.map(rowHTML).join('')}</div>`;
+
+function chatHTML(){
+  const id = S.chat.id;
+  if(id === 'kefu'){
+    return `<div class="wchat">
+      <div class="wtime">今天 11:42</div>
+      <div class="wb">近期高发黑灰产通过参与扫码送礼、有偿辅助等方式，诱导用户进行辅助注册、辅助解封验证的情况较多。</div>
+      <div class="wb">前述行为容易给你造成一定的安全风险。</div>
+      <div class="wb">如有人以"帮忙点一下""帮朋友验证"为由索要你的账号操作权限，请直接拒绝并保留截图。</div>
+      <div class="wtime">今天 11:43</div>
+      <div class="wb">如你已误操作，请尽快修改密码、开启二次验证，并在本会话留言说明情况。</div>
+    </div>`;
+  }
+  if(id === 'news'){
+    return `<div class="wchat">
+      <div class="wtime">今天 10:06</div>
+      ${ARTICLES.map((a,i)=>`<div class="wcard" data-art="${i}">
+        <b>${a.t}</b>
+        <div class="wthumb">藤 蔓 新 闻</div>
+        <div class="wsrc"><span>${a.src}</span><span>${a.d}</span></div>
+      </div>`).join('')}
+    </div>`;
+  }
+  return `<div class="wchat"></div>`;
 }
-wxSend.addEventListener('click', sendWx);
-wxInput.addEventListener('keydown', e=>{ if(e.key === 'Enter'){ e.preventDefault(); sendWx(); } });
-wxPlus.addEventListener('click', ()=>{ if(typeof flash === 'function') flash('更多功能还没开'); });
+
+function articleHTML(){
+  const a = ARTICLES[S.art];
+  return `<div class="art">
+    <h1>${a.t}</h1>
+    <div class="am"><span>${a.src}</span><span>${a.d}</span></div>
+    ${a.p.map(x=>`<p>${x}</p>`).join('')}
+    <div class="src">本文为虚构内容，人物均为化名，不指向任何真实事件。</div>
+  </div>`;
+}
+
+function contactsHTML(){
+  return `<div class="wgroup">
+    <div class="wcell"><span class="ci"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="10" cy="12" r="3"/><path d="M3 20v-1.5a5 5 0 0 1 5-5"/><path d="M17 8v8M13 12h8"/></svg></span>新的朋友<span class="cv">3</span></div>
+    <div class="wcell"><span class="ci"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="9" r="2.6"/><circle cx="16" cy="10" r="2.2"/><path d="M4 19c.8-3 2.8-4.4 5-4.4s4.2 1.4 5 4.4"/></svg></span>群聊<span class="cv">2</span></div>
+    <div class="wcell"><span class="ci">标</span>标签</div>
+    <div class="wcell"><span class="ci">公</span>公众号<span class="cv">1</span></div>
+  </div>
+  <div class="wgroup">
+    ${['藤蔓客服','藤蔓新闻', ME.name].map(n=>`<div class="wcell"><span class="ci" style="background:#dcdcdc;color:#fff;font-size:11px">${n.slice(0,1)}</span>${n}</div>`).join('')}
+  </div>`;
+}
+
+function discoverHTML(){
+  return `<div class="wgroup">
+    <div class="wcell"><span class="ci">圈</span>朋友圈<span class="cv"><span class="wdot" style="position:static;display:inline-block"></span></span></div>
+    <div class="wcell"><span class="ci">视</span>视频号</div>
+    <div class="wcell"><span class="ci">播</span>直播</div>
+  </div>
+  <div class="wgroup">
+    <div class="wcell"><span class="ci">扫</span>扫一扫</div>
+    <div class="wcell"><span class="ci">看</span>看一看</div>
+    <div class="wcell"><span class="ci">搜</span>搜一搜</div>
+  </div>
+  <div class="wgroup">
+    <div class="wcell"><span class="ci">程</span>小程序</div>
+  </div>`;
+}
+
+function meHTML(){
+  return `<div class="me">
+    <div class="mav">${AVATARS.default}</div>
+    <div><h3>${ME.name}</h3>
+      <p>微信号：${ME.wxid}<br>地区：${ME.region}</p>
+    </div>
+  </div>
+  <div class="wgroup">
+    <div class="wcell"><span class="ci">服</span>服务</div>
+  </div>
+  <div class="wgroup">
+    <div class="wcell"><span class="ci">收</span>收藏</div>
+    <div class="wcell"><span class="ci">圈</span>朋友圈</div>
+    <div class="wcell"><span class="ci">卡</span>卡包</div>
+    <div class="wcell"><span class="ci">表</span>表情</div>
+  </div>
+  <div class="wgroup">
+    <div class="wcell"><span class="ci">设</span>设置</div>
+  </div>`;
+}
+
+function tabbarHTML(){
+  const tabs = [
+    {k:'chats', label:'微信', icon:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M20 11.5c0 3.6-3.6 6.5-8 6.5-1 0-2-.16-2.9-.45L5 19l1.2-2.7C4.9 15 4 13.3 4 11.5C4 7.9 7.6 5 12 5s8 2.9 8 6.5z"/><circle cx="9.5" cy="11" r=".9"/><circle cx="14.5" cy="11" r=".9"/></svg>', dot:true},
+    {k:'contacts', label:'通讯录', icon:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><circle cx="12" cy="8.5" r="3.4"/><path d="M5 20c1-4 3.8-6 7-6s6 2 7 6"/></svg>'},
+    {k:'discover', label:'发现', icon:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><circle cx="12" cy="12" r="8"/><path d="M15.5 8.5 13 13l-4.5 2.5L11 11l4.5-2.5z"/></svg>'},
+    {k:'me', label:'我', icon:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><circle cx="12" cy="8.6" r="3.5"/><path d="M5.2 19.6c1-3.8 3.8-5.8 6.8-5.8s5.8 2 6.8 5.8"/></svg>'}
+  ];
+  return tabs.map(t=>`<button class="wtab ${S.tab===t.k && !S.chat && S.art===null ? 'on':''}" data-tab="${t.k}">
+    ${t.icon}<span>${t.label}</span>${t.dot ? '<i class="wdot"></i>' : ''}</button>`).join('');
+}
+
+function renderWX(){
+  document.getElementById('wx2Nav').innerHTML = navHTML();
+  const body = document.getElementById('wx2Body');
+  if(S.art !== null) body.innerHTML = articleHTML();
+  else if(S.chat) body.innerHTML = chatHTML();
+  else if(S.tab === 'chats') body.innerHTML = listHTML();
+  else if(S.tab === 'contacts') body.innerHTML = contactsHTML();
+  else if(S.tab === 'discover') body.innerHTML = discoverHTML();
+  else body.innerHTML = meHTML();
+
+  const tb = document.getElementById('wx2Tab');
+  tb.classList.toggle('hide', !!S.chat || S.art !== null);
+  tb.innerHTML = tabbarHTML();
+
+  body.scrollTop = S.chat || S.art !== null ? 0 : body.scrollTop;
+}
+
+document.getElementById('view-arg').addEventListener('click', e=>{
+  const tab = e.target.closest('[data-tab]');
+  if(tab){ S.tab = tab.dataset.tab; S.chat = null; S.art = null; renderWX(); return; }
+  const row = e.target.closest('[data-chat]');
+  if(row){ S.chat = CHATS.find(c=>c.id === row.dataset.chat); S.art = null; renderWX(); return; }
+  const art = e.target.closest('[data-art]');
+  if(art){ S.art = Number(art.dataset.art); renderWX(); return; }
+  const back = e.target.closest('[data-back]');
+  if(back){ S.chat = null; S.art = null; renderWX(); return; }
+  if(e.target.closest('[data-more]') && typeof flash === 'function') flash('功能未开放');
+});
+renderWX();
+
+/* ================= AI 会话计数 ================= */
+let aiCount = 0;
+const aiBadge = document.getElementById('msgCount');
+function bumpAI(){
+  aiCount++;
+  if(aiBadge) aiBadge.textContent = aiCount;
+}
+
+let streak = 0, lastSug = '';
+document.querySelectorAll('#sug .sug').forEach(b=>{
+  b.addEventListener('click', ()=>{
+    const txt = b.textContent.trim();
+    if(lastSug === txt) streak++; else { lastSug = txt; streak = 1; }
+    if(streak >= 25){
+      addMsg('me', txt);
+      bumpAI();
+      setTimeout(()=>{ addMsg('ai', 'RXH-2026-11 这个可以到政务中心去查询'); bumpAI(); }, 520);
+      streak = 0; lastSug = '';
+      document.getElementById('chat').scrollTop = document.getElementById('chat').scrollHeight;
+      return;
+    }
+    input.value = txt;
+    input.focus();
+    form.requestSubmit();
+  });
+});
+document.getElementById('aiForm').addEventListener('submit', bumpAI);
 </script>
 
 </body>
