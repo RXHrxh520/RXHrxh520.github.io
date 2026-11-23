@@ -13,7 +13,10 @@
     $$('.view').forEach(el => el.classList.toggle('on', el.id === 'v-' + v));
     $$('nav.tabs .tab').forEach(b => b.classList.toggle('on', b.dataset.view === v));
     if (v === 'status') loadStatus(true);
-    if (v === 'me') renderMe();
+    if (v === 'me') {
+      if (me) { location.href = 'https://auth.rxh.asia/account/'; return; }
+      renderMe();
+    }
     history.replaceState(null, '', v === 'home' ? '/' : '/#' + v);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
@@ -256,8 +259,8 @@
     else { b.textContent = '登录 / 注册'; b.onclick = () => window.RXHAuth.open({ onSuccess: afterAuth }); }
   }
   async function afterAuth(user) {
-    me = user; setAuthBtn(); renderMe(); loadNotices();
-    go('me');
+    me = user; setAuthBtn(); loadNotices();
+    location.href = 'https://auth.rxh.asia/account/';
   }
   function renderMe() {
     const card = $('#meCard');
