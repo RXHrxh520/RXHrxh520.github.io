@@ -327,6 +327,122 @@
   .explain h3{margin:0;font-size:17px}
   .explain .bullets{margin-top:16px}
 
+
+  /* ============ 明暗主题 ============ */
+  body.dark{
+    --ink:#f3eef7; --ink-2:#cec8da; --ink-3:#948ea3;
+    --pink-line:#4a3440;
+    background:
+      radial-gradient(1000px 600px at 6% -10%, #2a1622 0%, rgba(42,22,34,0) 62%),
+      radial-gradient(900px 520px at 96% 2%, #241a2a 0%, rgba(36,26,42,0) 58%),
+      linear-gradient(180deg,#100e13 0%,#131017 45%,#0e0c11 100%);
+    color:var(--ink);
+  }
+  body.dark .panel,body.dark .stack,body.dark .explain,body.dark .soon,body.dark .repo,
+  body.dark .ai-shell,body.dark .tool,body.dark .ncard{
+    background:rgba(32,29,39,.82);border-color:rgba(255,255,255,.09);
+    box-shadow:0 18px 44px rgba(0,0,0,.38);
+  }
+  body.dark .chip,body.dark .fact,body.dark .stat,body.dark .tab,body.dark .sug{
+    background:rgba(255,255,255,.07);border-color:rgba(255,255,255,.13);color:var(--ink-2);
+  }
+  body.dark .navbar{background:rgba(26,23,32,.64);border-color:rgba(255,255,255,.14);
+    box-shadow:0 14px 40px rgba(0,0,0,.45), inset 0 1px 0 rgba(255,255,255,.08);}
+  body.dark .nav-item{color:#cfc8db}
+  body.dark .nav-item:hover{background:rgba(255,255,255,.09);color:#fff}
+  body.dark .nav-item.active{color:#fff}
+  body.dark .page-title,body.dark .hero h1,body.dark .kicker,body.dark .stack-head h3{color:#fff}
+  body.dark .desc,body.dark .page-desc,body.dark .repo .text{color:#c3bccd}
+  body.dark .repo .meta span{background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.1);color:#b9b2c6}
+  body.dark .repo:hover{border-color:rgba(255,255,255,.16)}
+  body.dark .ai-form{background:rgba(255,255,255,.05);border-color:rgba(255,255,255,.1)}
+  body.dark .ai-input{color:#fff}
+  body.dark .ai-input::placeholder{color:#8f8899}
+  body.dark .chat .msg .bubble{background:rgba(255,255,255,.08);color:#eee}
+  body.dark .soon code{background:rgba(255,255,255,.06)}
+  body.dark .ctrl button{background:rgba(30,27,37,.72);border-color:rgba(255,255,255,.16);color:#efe9f7}
+
+  /* ============ 右上角控制 ============ */
+  .ctrl{position:fixed;top:22px;right:26px;z-index:66;display:flex;gap:8px}
+  .ctrl button{display:flex;align-items:center;gap:7px;height:38px;padding:0 14px;border-radius:999px;
+    border:1px solid rgba(255,255,255,.75);background:rgba(255,255,255,.62);
+    backdrop-filter:blur(18px) saturate(160%);-webkit-backdrop-filter:blur(18px) saturate(160%);
+    font-size:12.5px;font-weight:600;color:var(--ink-2);cursor:pointer;
+    box-shadow:0 8px 24px rgba(40,20,40,.08);transition:.2s}
+  .ctrl button:hover{transform:translateY(-1px);color:var(--ink)}
+  .ctrl svg{width:15px;height:15px;opacity:.8}
+
+  /* ============ 工具箱（JS 版） ============ */
+  .tool{margin-top:22px;background:rgba(255,255,255,.72);border:1px solid rgba(255,255,255,.9);
+    border-radius:22px;padding:22px 26px;box-shadow:0 14px 36px rgba(80,40,60,.05)}
+  .tool-head{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap}
+  .tool-head h3{margin:0;font-size:17px}
+  .tool-head span{font-size:12.5px;color:var(--ink-3)}
+  .tool-tabs{display:flex;gap:8px;margin:16px 0 14px;flex-wrap:wrap}
+  .tool-tab{border:1px solid var(--pink-line);background:transparent;color:var(--ink-2);
+    border-radius:999px;padding:7px 15px;font-size:12.5px;font-weight:600;cursor:pointer;transition:.2s}
+  .tool-tab.on{background:var(--pink);border-color:var(--pink);color:#fff}
+  .tool-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+  .titem{display:flex;align-items:center;gap:11px;border:1px solid var(--pink-line);border-radius:14px;
+    background:rgba(255,255,255,.5);padding:11px 13px}
+  .titem .ti{width:30px;height:30px;border-radius:9px;background:#fff0f5;color:var(--pink-deep);
+    display:grid;place-items:center;font-size:11.5px;font-weight:800;flex:0 0 auto}
+  .titem b{display:block;font-size:13px;line-height:1.35}
+  .titem i{display:block;font-size:11px;color:var(--ink-3);font-style:normal;margin-top:1px}
+
+  /* ============ 接下来（进度卡） ============ */
+  .next-cards{display:grid;gap:10px;margin-top:16px}
+  .ncard{border:1px solid var(--pink-line);border-radius:14px;padding:12px 14px;background:rgba(255,255,255,.5);margin:0}
+  .nrow{display:flex;align-items:center;gap:8px}
+  .nrow b{font-size:13.5px}
+  .nrow em{font-style:normal;font-size:11px;padding:2px 8px;border-radius:999px;margin-left:auto}
+  .nrow em.doing{background:#eefbf3;color:#2f9e63}
+  .nrow em.queue{background:#fff7f0;color:#c9832f}
+  .nrow em.idea{background:#f3f1ff;color:#6b5bd2}
+  .ncard p{margin:6px 0 9px;font-size:11.8px;color:var(--ink-3);line-height:1.55}
+  .nbar{height:5px;border-radius:99px;background:#ffe3ec;overflow:hidden}
+  .nbar i{display:block;height:100%;width:0;border-radius:99px;
+    background:linear-gradient(90deg,#ff9dbb,#ff4f86);transition:width .8s cubic-bezier(.2,.8,.2,1)}
+  .npct{display:flex;justify-content:space-between;margin-top:5px;font-size:10.5px;color:var(--ink-3)}
+
+  /* ============ ARG / 微信界面 ============ */
+  .arg{display:none}
+  body.arg .arg{display:flex}
+  body.arg .view,body.arg .navbar,body.arg .footer{display:none !important}
+  body.arg .ctrl{top:14px;right:14px}
+  .arg{position:fixed;inset:0;z-index:55;background:#111;
+    align-items:center;justify-content:center;padding:0}
+  .wx{width:min(430px,100%);height:min(880px,100%);background:#ededed;display:flex;flex-direction:column;
+    overflow:hidden;box-shadow:0 30px 90px rgba(0,0,0,.55);border-radius:16px;position:relative}
+  .wx-nav{height:52px;flex:0 0 auto;display:flex;align-items:center;background:#ededed;
+    border-bottom:1px solid #d7d7d7;padding:0 6px;position:relative;z-index:2}
+  .wx-back,.wx-more{width:46px;height:44px;border:0;background:none;cursor:pointer;display:grid;place-items:center;color:#1a1a1a}
+  .wx-back svg,.wx-more svg{width:22px;height:22px;opacity:.85}
+  .wx-title{flex:1;text-align:center;font-size:17px;font-weight:500;color:#111;letter-spacing:.2px}
+  .wx-body{flex:1;background:#ededed;overflow-y:auto;padding:14px 12px;display:flex;flex-direction:column;gap:10px}
+  .wx-msg{display:flex;justify-content:flex-end}
+  .wx-msg .b{max-width:76%;background:#95ec69;color:#111;font-size:15px;line-height:1.45;
+    padding:9px 12px;border-radius:5px;word-break:break-word;position:relative}
+  .wx-msg .b::after{content:"";position:absolute;right:-5px;top:12px;width:0;height:0;
+    border-left:6px solid #95ec69;border-top:4px solid transparent;border-bottom:4px solid transparent}
+  .wx-toolbar{flex:0 0 auto;display:flex;align-items:center;gap:8px;background:#f7f7f7;
+    border-top:1px solid #d7d7d7;padding:8px 10px calc(8px + env(safe-area-inset-bottom))}
+  .wx-ico{width:34px;height:34px;border:0;background:none;display:grid;place-items:center;cursor:pointer;color:#2b2b2b}
+  .wx-ico svg{width:23px;height:23px;opacity:.72}
+  .wx-inputwrap{flex:1;display:flex}
+  .wx-input{width:100%;height:36px;border:0;border-radius:6px;background:#fff;padding:0 10px;
+    font-size:15px;color:#111;outline:0;font-family:inherit}
+  .wx-send{display:none;height:34px;padding:0 15px;border:0;border-radius:4px;background:#07c160;
+    color:#fff;font-size:14px;cursor:pointer;flex:0 0 auto}
+  .wx-send.on{display:block}
+  .wx-plus{width:30px;height:30px;border:0;background:none;display:grid;place-items:center;cursor:pointer;color:#2b2b2b}
+  .wx-plus svg{width:25px;height:25px;opacity:.8}
+  body.arg .wx-plus{display:grid}
+
+  @media (max-width:1100px){
+    .tool-grid{grid-template-columns:repeat(3,1fr)}
+  }
+
   /* ============ 页脚（黑） ============ */
   .footer{
     margin-top:100px;background:#0d0c10;color:#fff;
@@ -441,6 +557,18 @@
 </head>
 <body>
 
+<!-- ============ 右上控制：明暗 / 模式 ============ -->
+<div class="ctrl">
+  <button id="themeBtn" aria-label="切换明暗">
+    <svg id="themeIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><circle cx="12" cy="12" r="4.2"/><path d="M12 2v2.4M12 19.6v2.4M2 12h2.4M19.6 12h2.4M4.8 4.8l1.7 1.7M17.5 17.5l1.7 1.7M19.2 4.8l-1.7 1.7M6.5 17.5l-1.7 1.7"/></svg>
+    <span id="themeLabel">暗夜</span>
+  </button>
+  <button id="modeBtn" aria-label="切换模式">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>
+    <span id="modeLabel">GitHub</span>
+  </button>
+</div>
+
 <!-- ================= 悬浮玻璃导航 ================= -->
 <nav class="navbar">
   <a class="nav-item active" href="#home" data-view="home">
@@ -519,51 +647,20 @@
           </div>
         </div>
 
-        <div class="panel">
+        <div class="panel next-panel">
           <div class="kicker">NEXT</div>
           <h3>接下来要做的</h3>
-          <ul class="next-list">
-            <li><div><b>接入 RXH-Uranium</b><small>把总站里的对话真正接通</small></div><span class="st doing">进行中</span></li>
-            <li><div><b>APIBalance 自动更新</b><small>检查更新、安静升级，不打断使用</small></div><span class="st queue">排队中</span></li>
-            <li><div><b>开一个真正的博客</b><small>把踩过的坑写成能检索的东西</small></div><span class="st idea">想法</span></li>
-          </ul>
+          <div class="next-cards" id="nextCards"></div>
         </div>
       </div>
 
-      <div class="stack">
-        <div class="stack-head">
+      <div class="stack tool">
+        <div class="tool-head">
           <h3>工具箱</h3>
-          <span>每天真的在用的东西</span>
+          <span id="toolMeta">—</span>
         </div>
-        <div class="stack-cols">
-          <div class="stack-col">
-            <h4>开发</h4>
-            <div class="chips">
-              <span class="chip">Kotlin</span>
-              <span class="chip">Java</span>
-              <span class="chip">Android Studio</span>
-              <span class="chip">Gradle</span>
-            </div>
-          </div>
-          <div class="stack-col">
-            <h4>日常</h4>
-            <div class="chips">
-              <span class="chip">Git</span>
-              <span class="chip">VS Code</span>
-              <span class="chip">Figma</span>
-              <span class="chip">Markdown</span>
-            </div>
-          </div>
-          <div class="stack-col">
-            <h4>AI</h4>
-            <div class="chips">
-              <span class="chip">OpenAI API</span>
-              <span class="chip">DeepSeek</span>
-              <span class="chip">Kimi</span>
-              <span class="chip">Claude</span>
-            </div>
-          </div>
-        </div>
+        <div class="tool-tabs" id="toolTabs"></div>
+        <div class="tool-grid" id="toolGrid"></div>
       </div>
     </div>
   </section>
@@ -720,6 +817,35 @@
           <li><span>·</span> 加法很简单：建目录 → 放页面 → 在总站这张卡上加一条链接，就多了一个分站</li>
           <li><span>·</span> 代价是共用一套：同一域名下所有页面一起构建、一起发版，某个目录写坏可能连一起 404</li>
         </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= ARG 模式（微信界面） ================= -->
+  <section class="arg" id="view-arg">
+    <div class="wx">
+      <div class="wx-nav">
+        <button class="wx-back" id="wxBack" aria-label="返回">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M15 4l-8 8 8 8"/></svg>
+        </button>
+        <div class="wx-title">文件传输助手</div>
+        <button class="wx-more" aria-label="更多">
+          <svg viewBox="0 0 24 24" fill="currentColor"><circle cx="5" cy="12" r="1.9"/><circle cx="12" cy="12" r="1.9"/><circle cx="19" cy="12" r="1.9"/></svg>
+        </button>
+      </div>
+      <div class="wx-body" id="wxBody"></div>
+      <div class="wx-toolbar">
+        <button class="wx-ico" aria-label="语音">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M12 4v10"/><path d="M8 9v3a4 4 0 0 0 8 0v-3"/><path d="M12 16c-4 0-6-1-7-2M12 16c4 0 6-1 7-2"/></svg>
+        </button>
+        <div class="wx-inputwrap"><input class="wx-input" id="wxInput" placeholder="发消息"></div>
+        <button class="wx-ico" aria-label="表情">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><circle cx="12" cy="12" r="8.5"/><circle cx="9" cy="10" r="1"/><circle cx="15" cy="10" r="1"/><path d="M8.5 14.5c1.5 1.6 5.5 1.6 7 0"/></svg>
+        </button>
+        <button class="wx-send" id="wxSend">发送</button>
+        <button class="wx-plus" id="wxPlus" aria-label="更多功能">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><circle cx="12" cy="12" r="8.6"/><path d="M12 8v8M8 12h8"/></svg>
+        </button>
       </div>
     </div>
   </section>
@@ -881,15 +1007,47 @@ function addMsg(who, text){
   chat.scrollTop = chat.scrollHeight;
 }
 
+/* 本地词库：关键词命中 + 兜底句池 */
+const KB = [
+  {k:/你好|hi|在吗|hello|嗨/, a:['在。今天想先弄哪块？','在的，说吧。','在，我在听。']},
+  {k:/今天|先做|计划|安排/, a:['先把 APIBalance 的检查更新收尾，再留半小时写文档，大的改动放周末。','今天建议只推一件事，别开三个坑。','先把手上那版发出去，再谈下一步。']},
+  {k:/apibalance|余额|api 额/, a:['APIBalance 现在能查六家平台余额，下一步加余额提醒比加平台更有用。','先把自动更新补上，再考虑历史曲线。','余额接口经常改字段，建议加个容错映射表。']},
+  {k:/博客|写作|文章/, a:['叫「小寒的草稿箱」？先写起来，名字以后再换。','先攒三篇再上线，别让首页空着。','写成卡片比写成日记更容易坚持。']},
+  {k:/你是谁|模型|uranium|名字/, a:['我是 RXH-Uranium，帮你理流程、读代码、写文档。','名字就是个代号，能干活就行。']},
+  {k:/代码|报错|bug|崩/, a:['先把报错原文贴出来，别凭印象改。','能复现的 bug 才算 bug，先写最小复现。','十有八九是空指针或者异步没等到。']},
+  {k:/帮我|写个|做个|实现/, a:['给我一句话说清输入和输出，我来拆步骤。','先做能跑的最小版本，美化放后面。','这个可以拆成三步：数据结构、交互、样式。']},
+  {k:/谢谢|感谢|thanks/, a:['不客气，随时找我。','客气了，有事继续说。']},
+  {k:/累|困|睡|休息/, a:['先睡，代码明天还在。','关机一小时，比硬撑三小时强。']},
+  {k:/域名|dns|证书|https/, a:['证书先签下来再开强制 HTTPS，顺序错了会 404。','CNAME 指到 pages 域名，A 记录只留够用的一条就行。']},
+  {k:/github|仓库|pages/, a:['Pages 构建慢的时候先看 builds 状态，别急着改代码。','仓库名和站点名最好别混用，后期会乱。']},
+  {k:/界面|设计|排版|颜色/, a:['先把信息层级排清楚，颜色最后调。','留白不够的时候，先删内容再加装饰。']},
+  {k:/状态页|监控|可用/, a:['检测项别太多，五六个关键的够了。','只测通断不够，延迟趋势更有信息量。']},
+  {k:/arg|微信|模式/, a:['入口藏好，别让人一眼看穿。','先做界面，剧情后面再填。']},
+  {k:/吃|饭|饿/, a:['先吃饭，别空腹改代码。','吃点东西再回来，脑子会清楚很多。']},
+  {k:/哈哈|笑|有趣/, a:['行，你开心就好。','这个我记下了，下次接着聊。']}
+];
+const FALLBACK = [
+  '收到，我记下了。',
+  '这个可以拆成两步走，先做最小可用的版本。',
+  '先别急着改，把现在的现象描述清楚。',
+  '我理解你的意思，先把边界条件列出来。',
+  '听起来可行，先验证一小块。',
+  '这条我留着，等你决定方向再动。',
+  '要不要先做一个能跑的草稿？',
+  '先按最简单的方案来，跑通了再优化。',
+  '时间够的话可以，不够就砍掉一半。',
+  '先记录下来，别在脑子里存着。',
+  '这个问题的关键在数据，不在样式。',
+  '把失败的情况也想一遍，能省很多返工。',
+  '先做，再想怎么讲。',
+  '可以，但别一次改太多。',
+  '我建议先看现有的，再决定要不要重写。',
+  '这一步不用完美，能用就行。'
+];
 function reply(text){
   const t = text.toLowerCase();
-  if(/你好|hi|在吗|hello/.test(t)) return '在。今天想做点什么？';
-  if(/今天|先做|计划/.test(t)) return '先把手上的收尾：APIBalance 的检查更新做完，再留半小时写文档。大的改动放到周末。';
-  if(/apibalance|项目|余额/.test(t)) return 'APIBalance 现在能查六家平台的余额。下一步可以加余额提醒和历史曲线，先把自动更新补上更实用。';
-  if(/博客|名字/.test(t)) return '叫「小寒的草稿箱」怎么样？先写起来，名字以后再换也不迟。';
-  if(/你是谁|模型|uranium/.test(t)) return '我是 RXH-Uranium，平时帮着理流程、读代码、写文档。';
-  if(/谢谢|thanks/.test(t)) return '不客气，随时找我。';
-  return '收到。我记下了，等手上的事收尾就来处理这条。';
+  for(const item of KB){ if(item.k.test(t)) return item.a[Math.floor(Math.random()*item.a.length)]; }
+  return FALLBACK[Math.floor(Math.random()*FALLBACK.length)];
 }
 
 input.addEventListener('input', ()=>{
@@ -939,5 +1097,93 @@ document.querySelectorAll('#sug .sug').forEach(b=>{
 
 document.getElementById('y').textContent = new Date().getFullYear();
 </script>
+
+<script>
+/* ================= 主题 ================= */
+const SUN = '<circle cx="12" cy="12" r="4.2"/><path d="M12 2v2.4M12 19.6v2.4M2 12h2.4M19.6 12h2.4M4.8 4.8l1.7 1.7M17.5 17.5l1.7 1.7M19.2 4.8l-1.7 1.7M6.5 17.5l-1.7 1.7"/>';
+const MOON = '<path d="M15.5 3.2a9 9 0 1 0 6.3 12.2 7 7 0 0 1-6.3-12.2z"/>';
+function applyTheme(dark){
+  document.body.classList.toggle('dark', dark);
+  localStorage.setItem('rxh_theme', dark ? 'dark' : 'light');
+  document.getElementById('themeIcon').innerHTML = dark ? MOON : SUN;
+  document.getElementById('themeLabel').textContent = dark ? '白亮' : '暗夜';
+}
+applyTheme(localStorage.getItem('rxh_theme') === 'dark');
+document.getElementById('themeBtn').addEventListener('click', ()=>{
+  applyTheme(!document.body.classList.contains('dark'));
+});
+
+/* ================= 模式 ================= */
+function setMode(on){
+  document.body.classList.toggle('arg', on);
+  document.getElementById('modeLabel').textContent = on ? 'ARG' : 'GitHub';
+  if(!on) window.scrollTo(0, 0);
+}
+document.getElementById('modeBtn').addEventListener('click', ()=>{
+  setMode(!document.body.classList.contains('arg'));
+});
+document.getElementById('wxBack').addEventListener('click', ()=> setMode(false));
+
+/* ================= 工具箱 ================= */
+const TOOLS = {
+  '开发': [['Kotlin','主力语言','Ko'],['Java','老本行','Ja'],['Android Studio','吃饭工具','AS'],['Gradle','构建配置','Gr']],
+  '日常': [['VS Code','写页面','VC'],['Git','版本管理','Gi'],['Figma','画稿对齐','Fi'],['Markdown','写文档','Md']],
+  'AI':   [['DeepSeek','推理与代码','DS'],['Kimi','长文本','Ki'],['Claude','写文档','Cl'],['火山方舟','国产模型','火']]
+};
+function renderTools(active){
+  const tabs = Object.keys(TOOLS).map(k=>`<button class="tool-tab ${k===active?'on':''}" data-k="${k}">${k} <span style="opacity:.6">${String(TOOLS[k].length).padStart(2,'0')}</span></button>`).join('');
+  document.getElementById('toolTabs').innerHTML = tabs;
+  document.getElementById('toolGrid').innerHTML = TOOLS[active].map(([n,d,s])=>`
+    <div class="titem"><span class="ti">${s}</span><span><b>${n}</b><i>${d}</i></span></div>`).join('');
+  document.getElementById('toolTabs').querySelectorAll('.tool-tab').forEach(b=>{
+    b.addEventListener('click', ()=> renderTools(b.dataset.k));
+  });
+  const total = Object.values(TOOLS).reduce((a,b)=>a+b.length,0);
+  document.getElementById('toolMeta').textContent = total + ' 件在用的东西 · 分 ' + Object.keys(TOOLS).length + ' 组';
+}
+renderTools('开发');
+
+/* ================= 接下来 ================= */
+const NEXT = [
+  {t:'接入 RXH-Uranium', d:'把总站里的对话接到真实模型，先跑通一条链路', p:62, s:'doing', l:'进行中'},
+  {t:'分站体系成型', d:'路径式子站再扩两三个，总站只做入口', p:78, s:'doing', l:'进行中'},
+  {t:'APIBalance 自动更新', d:'检查更新、静默升级，不打断正在用的界面', p:35, s:'queue', l:'排队中'},
+  {t:'开一个真正的博客', d:'把踩过的坑写成能检索的东西', p:12, s:'idea', l:'想法'}
+];
+const NEXT_HTML = NEXT.map(n=>`
+  <div class="ncard">
+    <div class="nrow"><b>${n.t}</b><em class="${n.s}">${n.l}</em></div>
+    <p>${n.d}</p>
+    <div class="nbar"><i data-p="${n.p}"></i></div>
+    <div class="npct"><span>${n.p}%</span><span>${n.p>=70?'接近收尾':n.p>=40?'推进中':'刚起步'}</span></div>
+  </div>`).join('');
+document.getElementById('nextCards').innerHTML = NEXT_HTML;
+requestAnimationFrame(()=> setTimeout(()=>{
+  document.querySelectorAll('.nbar i').forEach(el=> el.style.width = el.dataset.p + '%');
+}, 60));
+
+/* ================= 微信输入 ================= */
+const wxInput = document.getElementById('wxInput');
+const wxSend = document.getElementById('wxSend');
+const wxBody = document.getElementById('wxBody');
+const wxPlus = document.getElementById('wxPlus');
+wxInput.addEventListener('input', ()=> wxSend.classList.toggle('on', wxInput.value.trim().length > 0));
+function sendWx(){
+  const v = wxInput.value.trim();
+  if(!v) return;
+  const row = document.createElement('div');
+  row.className = 'wx-msg';
+  row.innerHTML = '<div class="b"></div>';
+  row.querySelector('.b').textContent = v;
+  wxBody.appendChild(row);
+  wxBody.scrollTop = wxBody.scrollHeight;
+  wxInput.value = '';
+  wxSend.classList.remove('on');
+}
+wxSend.addEventListener('click', sendWx);
+wxInput.addEventListener('keydown', e=>{ if(e.key === 'Enter'){ e.preventDefault(); sendWx(); } });
+wxPlus.addEventListener('click', ()=>{ if(typeof flash === 'function') flash('更多功能还没开'); });
+</script>
+
 </body>
 </html>
