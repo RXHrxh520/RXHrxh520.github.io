@@ -144,6 +144,26 @@
   .console .exit:hover{background:var(--soft)}
   .console .lock{margin:0 18px 12px}
 
+
+  .cpane{padding:0 0 4px}
+  .keybar{display:flex;gap:8px;margin-top:8px}
+  .keybar input{flex:1;height:38px;border:1px solid var(--line);border-radius:9px;padding:0 11px;font-size:12.5px;background:var(--page);color:var(--ink);outline:none}
+  .btnp{display:inline-flex;align-items:center;gap:6px;padding:0 13px;height:38px;border-radius:9px;border:0;cursor:pointer;background:linear-gradient(120deg,var(--brand),var(--brand2));color:#fff;font-size:12.5px;font-weight:600}
+  .btnp svg{width:14px;height:14px}
+  .msgline{font-size:12px;color:var(--sub);margin-top:8px;min-height:16px}
+  .keylist{margin-top:10px;display:grid;gap:8px}
+  .keyrow{display:flex;align-items:center;gap:10px;padding:10px 12px;border:1px solid var(--line);border-radius:10px;background:var(--page);font-size:12px}
+  .keyrow b{font-family:ui-monospace,Menlo,monospace;font-size:12px}
+  .keyrow .meta{color:var(--sub);font-size:11px;margin-left:auto;text-align:right}
+  .keyrow button{width:26px;height:26px;border-radius:8px;border:1px solid var(--line);background:transparent;color:var(--sub);cursor:pointer;display:grid;place-items:center}
+  .keyrow button:hover{color:#cf222e;border-color:#f3b8bc}
+  .keyrow svg{width:13px;height:13px}
+  .codeblock{white-space:pre-wrap;font-family:ui-monospace,Menlo,monospace;font-size:11.5px;line-height:1.7;background:var(--page);border:1px solid var(--line);border-radius:10px;padding:12px;margin-top:8px;color:var(--sub);overflow-x:auto}
+  .docnote{font-size:12px;color:var(--sub);margin:10px 0 0;line-height:1.65}
+  .console-foot{padding:0 18px 16px}
+  .console-foot .exit{margin:0;width:100%;height:38px}
+  .mono{font-family:ui-monospace,Menlo,monospace}
+
   @media (prefers-reduced-motion:reduce){*{animation:none !important;transition:none !important}}
 </style>
 </head>
@@ -219,42 +239,96 @@
   <section class="screen s-preview">
     <div class="console">
       <aside class="side">
-        <div class="side-brand"><span class="mark">R</span> RXH OPEN</div>
-        <div class="nav-item on">概览</div>
-        <div class="nav-item lock">模型广场</div>
-        <div class="nav-item lock">推理调用</div>
-        <div class="nav-item lock">API 密钥</div>
-        <div class="nav-item lock">用量与账单</div>
-        <div class="nav-item lock">接入文档</div>
+        <div class="side-brand"><span class="mark">R</span> RXH.ASIA OPEN</div>
+        <button class="nav-item on" data-panel="overview">概览</button>
+        <button class="nav-item" data-panel="models">模型广场</button>
+        <button class="nav-item" data-panel="keys">API 密钥</button>
+        <button class="nav-item" data-panel="usage">用量</button>
+        <button class="nav-item" data-panel="docs">接入文档</button>
         <div class="side-foot" id="sideUser">访客 · 只读</div>
       </aside>
       <div class="cmain">
         <header class="cbar">
-          <div class="crumb">控制台 / 概览</div>
-          <div class="cbar-right"><span class="tag" id="pvTag">匿名预览</span><button class="mini" data-lock>新建密钥</button></div>
+          <div class="crumb" id="crumb">控制台 / 概览</div>
+          <div class="cbar-right">
+            <span class="tag" id="pvTag">匿名预览</span>
+            <button class="mini" id="loginInline">登录</button>
+          </div>
         </header>
-        <div class="banner" id="pvDesc">临时凭证 30 分钟内有效；只读模式不会写入任何数据。</div>
-        <div class="stat-grid">
-          <div class="stat"><span>本月调用</span><b>0</b></div>
-          <div class="stat"><span>账户余额</span><b>¥ 0.00</b></div>
-          <div class="stat"><span>有效密钥</span><b>0</b></div>
-          <div class="stat"><span>平均首字延迟</span><b>— ms</b></div>
-        </div>
-        <div class="panel-grid">
-          <div class="panel">
-            <h4>模型广场</h4>
-            <div class="mrow"><b>文本生成</b><span>通用对话 / 长文 / 结构化输出</span></div>
-            <div class="mrow"><b>图像理解</b><span>看图问答 / OCR / 版面分析</span></div>
-            <div class="mrow"><b>语音合成</b><span>多音色 · 流式返回</span></div>
-            <div class="mrow"><b>Agent 工具链</b><span>函数调用 / 多步编排</span></div>
+
+        <div class="banner" id="pvDesc">未登录时为只读预览；登录后可创建密钥并调用接口。</div>
+
+        <section class="cpane" id="pn-overview">
+          <div class="stat-grid">
+            <div class="stat"><span>本月调用</span><b>0</b></div>
+            <div class="stat"><span>账户余额</span><b>¥ 0.00</b></div>
+            <div class="stat"><span>有效密钥</span><b id="statKeys">0</b></div>
+            <div class="stat"><span>平均首字延迟</span><b>— ms</b></div>
           </div>
-          <div class="panel">
-            <h4>近期调用</h4>
-            <div class="empty">暂无调用记录<br>登录并创建密钥后可查看</div>
+          <div class="panel-grid">
+            <div class="panel">
+              <h4>模型广场</h4>
+              <div class="mrow"><b>R-Ultra1</b><span>200 万上下文 · 文本 / 音频 / 视频</span></div>
+              <div class="mrow"><b>工具调用</b><span>函数调用 · 多步编排</span></div>
+              <div class="mrow"><b>流式输出</b><span>SSE · 首字即时返回</span></div>
+            </div>
+            <div class="panel">
+              <h4>近期调用</h4>
+              <div class="empty" id="recentEmpty">暂无调用记录<br>创建密钥后即可发起请求</div>
+            </div>
           </div>
+        </section>
+
+        <section class="cpane" id="pn-models" hidden>
+          <div class="panel">
+            <h4>R-Ultra1</h4>
+            <div class="mrow"><b>上下文长度</b><span>2,000,000 tokens（声明）</span></div>
+            <div class="mrow"><b>输入</b><span>文本 · 音频 · 视频</span></div>
+            <div class="mrow"><b>输出</b><span>文本 · 音频 · 视频</span></div>
+            <div class="mrow"><b>工具调用</b><span>支持</span></div>
+            <div class="mrow"><b>接口</b><span class="mono">POST /v1/chat/completions</span></div>
+          </div>
+        </section>
+
+        <section class="cpane" id="pn-keys" hidden>
+          <div class="panel">
+            <h4>API 密钥</h4>
+            <div class="keybar">
+              <input id="keyName" placeholder="密钥备注，例如 default" maxlength="30">
+              <button class="btnp" id="createKey"><svg viewBox="0 0 24 24"><use href="https://www.rxh.asia/assets/icons.svg#i-plus"/></svg>创建密钥</button>
+            </div>
+            <div class="msgline" id="keyMsg"></div>
+            <div class="keylist" id="keyList"><div class="empty">登录后可创建与查看密钥</div></div>
+          </div>
+        </section>
+
+        <section class="cpane" id="pn-usage" hidden>
+          <div class="panel">
+            <h4>用量</h4>
+            <div class="mrow"><b>本月请求</b><span>0 次</span></div>
+            <div class="mrow"><b>计费</b><span>公测期免费</span></div>
+            <div class="mrow"><b>限流</b><span>未启用</span></div>
+            <div class="empty">对话模式固定返回 HelloWould，不做上下文存储。</div>
+          </div>
+        </section>
+
+        <section class="cpane" id="pn-docs" hidden>
+          <div class="panel">
+            <h4>接入文档</h4>
+            <div class="codeblock">curl https://api.rxh.asia/v1/models \
+  -H "Authorization: Bearer sk-rxh-..." 
+
+curl https://api.rxh.asia/v1/chat/completions \
+  -H "Authorization: Bearer sk-rxh-..." \
+  -H "Content-Type: application/json" \
+  -d '{"model":"R-Ultra1","messages":[{"role":"user","content":"hi"}]}'</div>
+            <p class="docnote">固定返回 {"choices":[{"message":{"content":"HelloWould"}}]}；不会保存对话内容。</p>
+          </div>
+        </section>
+
+        <div class="console-foot">
+          <button class="exit" id="exit">退出预览</button>
         </div>
-        <div class="lock">匿名模式不可发起推理、不可创建密钥、不可导出数据。</div>
-        <button class="exit" id="exit">退出预览</button>
       </div>
     </div>
   </section>
@@ -265,9 +339,9 @@
 <script>
 window.TURNSTILE_SITEKEY = "0x4AAAAAAGPRu0xFiTmg5BYn";
 </script>
-<script src="https://www.rxh.asia/assets/auth-modal.js?v=20261124b"></script>
+<script src="https://www.rxh.asia/assets/auth-modal.js?v=20261124c"></script>
 <script src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit" defer></script>
-<script src="https://www.rxh.asia/assets/notice-bar.js?v=20261124" defer></script>
-<script src="app.js?v=20261124b" defer></script>
+<script src="https://www.rxh.asia/assets/notice-bar.js?v=20261124b" defer></script>
+<script src="app.js?v=20261124c" defer></script>
 </body>
 </html>
