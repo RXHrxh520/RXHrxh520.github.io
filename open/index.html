@@ -47,11 +47,11 @@
   .lead .quick button.primary{background:var(--teal);color:#fff;border-color:var(--teal)}
 
   .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:16px}
-  .stat{background:#fff;border:1px solid var(--line);border-radius:10px;padding:16px 18px}
+  .stat{background:#fff;border:1px solid var(--line);border-radius:10px;padding:16px 18px 18px}
   .stat span{font-size:12px;color:var(--ink-3);letter-spacing:.02em}
-  .stat b{display:block;margin-top:8px;font-size:24px;letter-spacing:.01em;color:var(--ink)}
+  .stat b{display:block;margin:8px 0 0;font-size:24px;line-height:1.25;letter-spacing:.01em;color:var(--ink)}
   .stat i{display:block;margin-top:6px;font-style:normal;font-size:12px;color:var(--ink-3)}
-  .stat b.empty{font-size:20px;color:#9aa8a6;letter-spacing:.06em}
+  .stat b.na{font-size:20px;color:#9aa8a6;letter-spacing:.06em;padding:0;text-align:left;line-height:1.2}
 
   .cards{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
   .cap{background:#fff;border:1px solid var(--line);border-radius:10px;padding:18px;display:flex;flex-direction:column;gap:8px}
@@ -178,9 +178,9 @@
     </div>
 
     <div class="stats">
-      <div class="stat"><span>接入状态</span><b class="empty">未开通</b><i>完成签约与实名认证后生效</i></div>
-      <div class="stat"><span>已开通能力</span><b class="empty">—</b><i>开通后按实际授权显示</i></div>
-      <div class="stat"><span>本月调用</span><b class="empty">—</b><i>数据由调用日志统计，当前未接入</i></div>
+      <div class="stat"><span>接入状态</span><b class="na">未开通</b><i>完成签约与实名认证后生效</i></div>
+      <div class="stat"><span>已开通能力</span><b class="na">—</b><i>开通后按实际授权显示</i></div>
+      <div class="stat"><span>本月调用</span><b class="na">—</b><i>数据由调用日志统计，当前未接入</i></div>
     </div>
 
     <div class="cards">
