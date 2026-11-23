@@ -119,7 +119,8 @@
       $('#bell').dataset.newest = newest;
     } catch (e) { }
   }
-  $('#bell').addEventListener('click', () => {
+  $('#bell').addEventListener('click', async () => {
+    await loadNotices();
     openModal($('#noticeModal'));
     const newest = Number($('#bell').dataset.newest || 0);
     if (newest) localStorage.setItem('rxh_nseen', newest);
