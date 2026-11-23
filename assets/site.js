@@ -243,3 +243,49 @@ function bumpAI(){
   if(aiBadge) aiBadge.textContent = aiCount;
 }
 document.getElementById('aiForm').addEventListener('submit', bumpAI);
+
+/* ---------- 公告条（仅管理员配置后显示） ---------- */
+(function(){
+  fetch('https://auth.rxh.asia/api/notice',{cache:'no-store'})
+    .then(r=>r.json()).then(d=>{
+      const items=(d.items||[]).map(i=>i.text).filter(Boolean);
+      if(!items.length) return;
+      const bar=document.createElement('div');
+      bar.id='noticeBar';
+      bar.setAttribute('role','status');
+      bar.style.cssText='position:fixed;top:0;left:0;right:0;z-index:80;display:flex;align-items:center;gap:28px;'+
+        'padding:9px 18px;font-size:12.5px;line-height:1.4;color:#7a4b00;background:linear-gradient(90deg,#fff4dd,#ffe9c4);'+
+        'border-bottom:1px solid #ffe0ad;overflow-x:auto;white-space:nowrap;-webkit-overflow-scrolling:touch';
+      bar.innerHTML=items.map(t=>'<span>'+String(t).replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]))+'</span>').join('');
+      document.body.appendChild(bar);
+      const st=document.createElement('style');
+      st.textContent='body.has-notice .view{padding-top:156px}body.has-notice .navbar{top:56px}'+
+        '@media(max-width:760px){body.has-notice .view{padding-top:138px}body.has-notice .navbar{top:52px}body.has-notice .ctrl{top:54px}}';
+      document.head.appendChild(st);
+      document.body.classList.add('has-notice');
+    }).catch(()=>{});
+})();
+
+/* ---------- 站外链接：居中提示 ---------- */
+(function(){
+  const m=document.getElementById('outm'), urlEl=document.getElementById('outUrl'), go=document.getElementById('outGo');
+  if(!m) return;
+  const close=()=>m.classList.remove('on');
+  document.getElementById('outX').addEventListener('click',close);
+  document.getElementById('outCancel').addEventListener('click',close);
+  m.addEventListener('click',e=>{ if(e.target===m) close(); });
+  document.addEventListener('keydown',e=>{ if(e.key==='Escape') close(); });
+  document.addEventListener('click',e=>{
+    const a=e.target.closest('a[href]');
+    if(!a || a.hasAttribute('data-noout')) return;
+    const href=a.getAttribute('href')||'';
+    if(!/^https?:/i.test(href)) return;
+    let u;
+    try{ u=new URL(href,location.href); }catch{ return; }
+    if(/(^|\.)rxh\.asia$/.test(u.hostname)) return;
+    e.preventDefault();
+    urlEl.textContent=u.href;
+    go.href=u.href;
+    m.classList.add('on');
+  });
+})();
