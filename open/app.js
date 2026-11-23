@@ -35,10 +35,8 @@ document.getElementById('back').addEventListener('click', () => {
 });
 
 document.getElementById('optPwd').addEventListener('click', () => {
-  mountLoginTs();
-  document.getElementById('opts').hidden = true;
-  document.getElementById('pwdForm').hidden = false;
-  document.getElementById('u').focus({ preventScroll: true });
+  if (!window.RXHAuth) return toast('账号组件未加载，请刷新重试');
+  window.RXHAuth.open({ onSuccess: user => { enterConsole(user); toast('已登录 · ' + user.name); } });
 });
 
 /* ---------- 统一账号登录（auth.rxh.asia） ---------- */
@@ -52,60 +50,33 @@ function mountLoginTs() {
   });
 }
 
-function markLoggedIn(user) {
+function enterConsole(user) {
+  sessionStorage.setItem('rxh_open_user', JSON.stringify(user));
   const tag = document.getElementById('pvTag');
   const desc = document.getElementById('pvDesc');
-  if (tag) tag.textContent = '已登录 · ' + user.name;
-  if (desc) desc.textContent = '账号 ' + user.uid + ' · 统一账号服务已接入。';
-  document.querySelectorAll('.row .st').forEach(el => {
-    if (el.textContent === '已锁定') el.textContent = '已开放';
-  });
+  const side = document.getElementById('sideUser');
+  if (tag) tag.textContent = '已登录';
+  if (desc) desc.textContent = '账号 ' + user.uid + ' · 统一账号服务已接入，可在主站与账号中心通用。';
+  if (side) side.textContent = user.name + ' · 正式账号';
+  document.querySelectorAll('.nav-item.lock').forEach(el => el.classList.remove('lock'));
+  document.querySelectorAll('[data-lock]').forEach(el => { el.disabled = false; el.classList.remove('mini'); });
+  setMode('preview');
+}
+function guestConsole() {
+  sessionStorage.setItem('rxh_open_preview', '1');
+  document.getElementById('pvTag').textContent = '匿名预览';
+  document.getElementById('sideUser').textContent = '访客 · 只读';
+  setMode('preview');
 }
 
-document.getElementById('pwdForm').addEventListener('submit', async e => {
-  e.preventDefault();
-  const u = document.getElementById('u').value.trim();
-  const p = document.getElementById('p').value.trim();
-  if (!u || !p) return toast('账号和密码不能为空');
-  if (!loginToken) return toast('请先完成人机验证');
-  const btn = e.target.querySelector('button[type=submit]');
-  btn.disabled = true; btn.textContent = '登录中…';
-  try {
-    const res = await fetch('https://auth.rxh.asia/api/login', {
-      method: 'POST', credentials: 'include',
-      headers: { 'content-type': 'application/json' },
-      body: JSON.stringify({ account: u, password: p, turnstile: loginToken }),
-    });
-    const d = await res.json();
-    if (!d.ok) throw new Error(d.error || '登录失败');
-    if (d.sid) localStorage.setItem('rxh_sid', d.sid);
-    sessionStorage.setItem('rxh_open_user', JSON.stringify(d.user));
-    markLoggedIn(d.user);
-    setMode('preview');
-    toast('已登录 · ' + d.user.name);
-  } catch (err) {
-    toast(err.message || '登录失败');
-    if (window.turnstile && loginWidget !== null) window.turnstile.reset(loginWidget);
-    loginToken = '';
-  } finally {
-    btn.disabled = false; btn.textContent = '登录';
-  }
-});
-
-/* 已登录则直接恢复 */
-(function restore() {
+/* 已登录则直接复用统一账号会话 */
+(async () => {
   const saved = sessionStorage.getItem('rxh_open_user');
-  if (saved) {
-    try { markLoggedIn(JSON.parse(saved)); setMode('preview'); } catch (e) {}
-    return;
-  }
-  const sid = localStorage.getItem('rxh_sid');
-  if (!sid) return;
-  fetch('https://auth.rxh.asia/api/me', { headers: { authorization: 'Bearer ' + sid } })
-    .then(r => r.json()).then(d => {
-      if (d.user) { sessionStorage.setItem('rxh_open_user', JSON.stringify(d.user)); markLoggedIn(d.user); setMode('preview'); }
-      else localStorage.removeItem('rxh_sid');
-    }).catch(() => {});
+  if (saved) { try { enterConsole(JSON.parse(saved)); return; } catch (e) {} }
+  if (sessionStorage.getItem('rxh_open_preview') === '1') { setMode('preview'); return; }
+  if (!window.RXHAuth) return;
+  const u = await window.RXHAuth.check();
+  if (u && !u.banned) enterConsole(u);
 })();
 
 /* ---------- Turnstile ---------- */
@@ -180,9 +151,8 @@ vgo.addEventListener('click', async () => {
     });
     const data = await res.json();
     if (!data.success) throw new Error(data.error || 'verify-failed');
-    sessionStorage.setItem('rxh_open_preview', '1');
-    setMode('preview');
-    toast('验证通过 · 60 分钟只读预览');
+    guestConsole();
+    toast('验证通过 · 30 分钟只读预览');
   } catch (e) {
     toast('验证未通过，请重试');
     if (window.turnstile && tsWidget !== null) window.turnstile.reset(tsWidget);
@@ -204,7 +174,7 @@ document.addEventListener('keydown', e => {
 });
 
 /* 同标签页刷新后仍停在预览 */
-if (sessionStorage.getItem('rxh_open_preview') === '1') app.dataset.mode = 'preview';
+
 
 
 /* ---------- 公告条 ---------- */
