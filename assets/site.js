@@ -34,8 +34,8 @@
 
   function applyPalette(k) {
     const p = PALETTES.find(x => x.k === k) || PALETTES[0];
-    document.documentElement.style.setProperty('--pink', p.c1);
-    document.documentElement.style.setProperty('--pink2', p.c2);
+    document.documentElement.style.setProperty('--glow1', p.c1);
+    document.documentElement.style.setProperty('--glow2', p.c2);
     localStorage.setItem('rxh_palette', p.k);
     $$('.sw').forEach(el => el.classList.toggle('on', el.dataset.k === p.k));
   }
@@ -43,7 +43,7 @@
     $('#paletteGrid').innerHTML = PALETTES.map(p =>
       `<button class="sw" data-k="${p.k}" style="background:linear-gradient(140deg,${p.c1},${p.c2})"><span>${p.n}</span></button>`).join('');
     $$('.sw').forEach(b => b.addEventListener('click', () => applyPalette(b.dataset.k)));
-    applyPalette(localStorage.getItem('rxh_palette') || 'rose');
+    applyPalette(localStorage.getItem('rxh_palette') || 'ocean');
   }
 
   function applyTheme(t) {
