@@ -545,6 +545,22 @@
   .art p{font-size:16px;line-height:1.85;color:#333;margin:0 0 16px}
   .art .src{margin-top:22px;padding-top:14px;border-top:1px solid #eee;font-size:12px;color:#9a9a9a}
 
+
+  .wlist{min-height:100%}
+  .wav.file{background:#d6efd6}
+  .wxbar{flex:0 0 auto;display:flex;align-items:center;gap:7px;background:#f7f7f7;
+    border-top:1px solid #d7d7d7;padding:7px 8px calc(7px + env(safe-area-inset-bottom))}
+  .wxbar.hide{display:none}
+  .wxb{width:34px;height:34px;border:0;background:none;display:grid;place-items:center;color:#2b2b2b;cursor:pointer;flex:0 0 auto}
+  .wxb svg{width:24px;height:24px;opacity:.72}
+  .wxfield{flex:1;min-width:0;height:36px;border:0;border-radius:5px;background:#fff;padding:0 10px;
+    font-size:15px;color:#111;outline:0;font-family:inherit}
+  .wxsend{display:none;height:34px;padding:0 14px;border:0;border-radius:4px;background:#07c160;
+    color:#fff;font-size:14px;cursor:pointer;flex:0 0 auto}
+  .wxsend.on{display:block}
+  .wxplus{width:30px;height:30px;border:0;background:none;display:grid;place-items:center;color:#2b2b2b;cursor:pointer;flex:0 0 auto}
+  .wxplus svg{width:25px;height:25px;opacity:.8}
+
   @media (max-width:520px){
     .argview{padding:0}
     .wx2{width:100%;height:100%;border-radius:0;box-shadow:none}
@@ -934,6 +950,7 @@
     <div class="wx2">
       <div class="wx2-nav" id="wx2Nav"></div>
       <div class="wx2-body" id="wx2Body"></div>
+      <div class="wxbar hide" id="wx2Bar"></div>
       <div class="wx2-tabbar" id="wx2Tab"></div>
     </div>
   </section>
@@ -1304,7 +1321,7 @@ const navHTML = () => {
       <div class="wx2-title">${S.chat.name}</div>
       <button class="wnav-btn" data-more="1"><svg viewBox="0 0 24 24" fill="currentColor"><circle cx="5" cy="12" r="1.8"/><circle cx="12" cy="12" r="1.8"/><circle cx="19" cy="12" r="1.8"/></svg></button>`;
   }
-  const title = S.tab === 'chats' ? '微信(4)' : S.tab === 'contacts' ? '通讯录' : S.tab === 'discover' ? '发现' : '我';
+  const title = S.tab === 'chats' ? '微信' : S.tab === 'contacts' ? '通讯录' : S.tab === 'discover' ? '发现' : '我';
   const right = S.tab === 'chats'
     ? `<button class="wnav-btn" data-more="1"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg></button>`
     : `<button class="wnav-btn"></button>`;
@@ -1407,7 +1424,7 @@ function tabbarHTML(){
   const tabs = [
     {k:'chats', label:'微信', icon:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M20 11.5c0 3.6-3.6 6.5-8 6.5-1 0-2-.16-2.9-.45L5 19l1.2-2.7C4.9 15 4 13.3 4 11.5C4 7.9 7.6 5 12 5s8 2.9 8 6.5z"/><circle cx="9.5" cy="11" r=".9"/><circle cx="14.5" cy="11" r=".9"/></svg>', dot:true},
     {k:'contacts', label:'通讯录', icon:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><circle cx="12" cy="8.5" r="3.4"/><path d="M5 20c1-4 3.8-6 7-6s6 2 7 6"/></svg>'},
-    {k:'discover', label:'发现', icon:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><circle cx="12" cy="12" r="8"/><path d="M15.5 8.5 13 13l-4.5 2.5L11 11l4.5-2.5z"/></svg>'},
+    {k:'discover', label:'发现', icon:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><circle cx="12" cy="12" r="7.8"/><path d="M15.4 8.6 13.2 13.2 8.6 15.4 10.8 10.8z"/></svg>'},
     {k:'me', label:'我', icon:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><circle cx="12" cy="8.6" r="3.5"/><path d="M5.2 19.6c1-3.8 3.8-5.8 6.8-5.8s5.8 2 6.8 5.8"/></svg>'}
   ];
   return tabs.map(t=>`<button class="wtab ${S.tab===t.k && !S.chat && S.art===null ? 'on':''}" data-tab="${t.k}">
@@ -1428,10 +1445,46 @@ function renderWX(){
   tb.classList.toggle('hide', !!S.chat || S.art !== null);
   tb.innerHTML = tabbarHTML();
 
+  body.style.background = (!S.chat && S.art === null && S.tab === 'chats') ? '#fff' : '#ededed';
+  const bar = document.getElementById('wx2Bar');
+  bar.classList.toggle('hide', !S.chat);
+  bar.innerHTML = S.chat ? `<button class="wxb" data-voice="1"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M12 4v9"/><path d="M8.5 9v3a3.5 3.5 0 0 0 7 0v-3"/><path d="M12 15c-3.6 0-5.6-.9-6.4-1.8M12 15c3.6 0 5.6-.9 6.4-1.8"/></svg></button>
+    <input class="wxfield" id="wxField" placeholder="发消息">
+    <button class="wxb" data-emoji="1"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><circle cx="12" cy="12" r="8.4"/><circle cx="9" cy="10" r="1"/><circle cx="15" cy="10" r="1"/><path d="M8.6 14.4c1.4 1.5 5.4 1.5 6.8 0"/></svg></button>
+    <button class="wxsend" id="wxSend">发送</button>
+    <button class="wxplus" data-more="1"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><circle cx="12" cy="12" r="8.6"/><path d="M12 8v8M8 12h8"/></svg></button>` : '';
+
   body.scrollTop = S.chat || S.art !== null ? 0 : body.scrollTop;
 }
 
+document.getElementById('view-arg').addEventListener('input', e=>{
+  if(e.target.id !== 'wxField') return;
+  const btn = document.getElementById('wxSend');
+  if(btn) btn.classList.toggle('on', e.target.value.trim().length > 0);
+});
+document.getElementById('view-arg').addEventListener('keydown', e=>{
+  if(e.target.id === 'wxField' && e.key === 'Enter'){ e.preventDefault(); sendWX(); }
+});
+function sendWX(){
+  const field = document.getElementById('wxField');
+  if(!field) return;
+  const v = field.value.trim();
+  if(!v) return;
+  const body = document.getElementById('wx2Body');
+  const wrap = body.querySelector('.wchat');
+  if(!wrap) return;
+  const div = document.createElement('div');
+  div.className = 'wb me';
+  div.textContent = v;
+  wrap.appendChild(div);
+  field.value = '';
+  const sb = document.getElementById('wxSend');
+  if(sb) sb.classList.remove('on');
+  body.scrollTop = body.scrollHeight;
+}
 document.getElementById('view-arg').addEventListener('click', e=>{
+  const send = e.target.closest('#wxSend');
+  if(send){ sendWX(); return; }
   const tab = e.target.closest('[data-tab]');
   if(tab){ S.tab = tab.dataset.tab; S.chat = null; S.art = null; renderWX(); return; }
   const row = e.target.closest('[data-chat]');
