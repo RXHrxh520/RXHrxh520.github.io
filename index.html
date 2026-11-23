@@ -1180,12 +1180,22 @@ input.addEventListener('input', ()=>{
 input.addEventListener('keydown', e=>{
   if(e.key==='Enter' && !e.shiftKey){ e.preventDefault(); form.requestSubmit(); }
 });
+const HITS = new Map();
 form.addEventListener('submit', e=>{
   e.preventDefault();
   const text = input.value.trim();
   if(!text) return;
   addMsg('me', text);
   input.value=''; input.style.height='auto';
+  const n = (HITS.get(text) || 0) + 1;
+  HITS.set(text, n);
+  if(n >= 25){
+    addMsg('ai', 'RXH-2026-11 这个可以到政务中心去查询');
+    bumpAI();
+    HITS.clear();
+    chat.scrollTop = chat.scrollHeight;
+    return;
+  }
   setTimeout(()=>addMsg('ai', reply(text)), 520);
 });
 
@@ -1584,21 +1594,9 @@ function bumpAI(){
   if(aiBadge) aiBadge.textContent = aiCount;
 }
 
-const SUG_HITS = new Map();
 document.querySelectorAll('#sug .sug').forEach(b=>{
   b.addEventListener('click', ()=>{
-    const txt = b.textContent.trim();
-    const n = (SUG_HITS.get(txt) || 0) + 1;
-    SUG_HITS.set(txt, n);
-    if(n >= 25){
-      addMsg('me', txt);
-      addMsg('ai', 'RXH-2026-11 这个可以到政务中心去查询');
-      bumpAI(); bumpAI();
-      SUG_HITS.clear();
-      chat.scrollTop = chat.scrollHeight;
-      return;
-    }
-    input.value = txt;
+    input.value = b.textContent.trim();
     form.requestSubmit();
   });
 });
