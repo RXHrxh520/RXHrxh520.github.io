@@ -46,7 +46,7 @@
     if (me.is_admin) {
       const a = document.createElement("a");
       a.href = "https://admin.rxh.asia/";
-      a.innerHTML = '<svg viewBox="0 0 24 24"><use href="https://www.rxh.asia/assets/icons.svg#i-shield"/></svg>管理后台';
+      a.innerHTML = '<svg viewBox="0 0 24 24"><use href="#i-shield"/></svg>管理后台';
       $("#app .mini").appendChild(a);
     }
   }
