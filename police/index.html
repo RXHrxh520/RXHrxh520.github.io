@@ -63,7 +63,8 @@
   .tag{display:inline-block;font-size:11.5px;padding:3px 8px;border-radius:999px;background:#eaf1fb;color:#14488f;margin-left:8px}
   .op{border:0;background:none;color:var(--blue);font-size:13.5px;cursor:pointer;padding:0}
   .news{list-style:none;margin:0;padding:6px 16px 12px}
-  .news li{display:flex;gap:10px;justify-content:space-between;padding:11px 0;border-bottom:1px dashed #eef2f8;cursor:pointer;font-size:13.5px}
+  .news li{display:flex;gap:14px;justify-content:space-between;padding:11px 0;border-bottom:1px dashed #eef2f8;cursor:pointer;font-size:13.5px}
+  .news li div{flex:1;min-width:0}
   .news li span{color:var(--ink-3);font-size:12.5px;flex:0 0 auto}
   .news li:last-child{border-bottom:0}
   .notice{margin:0;padding:14px 16px 16px;font-size:13px;color:var(--ink-2);line-height:1.8}
@@ -333,8 +334,8 @@ const CASES = [
   {t:'一男子非法储存烟花爆竹 32 箱被行政拘留', d:'11-15', c:['11 月 14 日，治安大队在云岭镇一处仓库查获非法储存的烟花爆竹 32 箱，无任何安全资质。','当事人对非法储存危险物质的违法行为供认不讳，已被依法行政拘留。','销售、储存烟花爆竹需取得许可，居民发现类似窝点可拨打值班电话举报。']},
   {t:'老人走失 6 小时，派出所与救援队在山道找到', d:'11-12', c:['11 月 11 日下午，一名 78 岁老人独自外出后失联，家属报警。','派出所调取沿路监控，联合救援队在云岭后山道找到老人，送医检查无大碍。','建议为家中老人佩戴写有联系方式的卡片，或使用定位手环。']}
 ];
-$('#news').innerHTML = CASES.slice(0,4).map((c,i)=>`<li data-case="${i}"><span>${c.d}</span><div>${c.t}</div></li>`).join('');
-$('#caseList').innerHTML = CASES.map((c,i)=>`<li data-case="${i}"><span>${c.d}</span><div>${c.t}</div></li>`).join('');
+$('#news').innerHTML = CASES.slice(0,4).map((c,i)=>`<li data-case="${i}"><div>${c.t}</div><span>${c.d}</span></li>`).join('');
+$('#caseList').innerHTML = CASES.map((c,i)=>`<li data-case="${i}"><div>${c.t}</div><span>${c.d}</span></li>`).join('');
 document.addEventListener('click', e => {
   const li = e.target.closest('[data-case]');
   if(!li) return;
@@ -369,7 +370,9 @@ $('#cbtn').addEventListener('click', () => {
   const seq = Number(no.slice(-6));
   if(seq % 3 === 0){
     out.className = 'result ok';
-    out.innerHTML = `<b>${no}</b> · ${ITEMS[seq % ITEMS.length].n}<br>当前环节：窗口受理　受理时间：2026-11-2${seq%9}　预计办结：受理后 5 个工作日<br>经办窗口：云岭镇服务大厅 2 号窗口`;
+    const d0 = new Date(Date.now() - ((seq % 6) + 1) * 86400000);
+    const ds = `${d0.getFullYear()}-${String(d0.getMonth()+1).padStart(2,'0')}-${String(d0.getDate()).padStart(2,'0')}`;
+    out.innerHTML = `<b>${no}</b> · ${ITEMS[seq % ITEMS.length].n}<br>当前环节：窗口受理　受理时间：${ds}　预计办结：受理后 5 个工作日<br>经办窗口：云岭镇服务大厅 2 号窗口`;
   } else {
     out.className = 'result warn';
     out.textContent = '未查询到该编号。线上预审通过的件需窗口受理后才会生成正式编号，请核对短信或受理回执。';
