@@ -201,7 +201,7 @@ async function loadKeys() {
   if (!currentUser) { list.innerHTML = '<div class="empty">登录后可创建与查看密钥</div>'; return; }
   let keys = [];
   try {
-    const r = await fetch('/api/keys', { credentials: 'same-origin', cache: 'no-store' });
+    const r = await fetch('https://auth.rxh.asia/api/keys', { credentials: 'include', cache: 'no-store' });
     const d = await r.json();
     keys = d.keys || d.items || [];
   } catch (e) { list.innerHTML = '<div class="empty">读取密钥失败</div>'; return; }
@@ -214,7 +214,7 @@ async function loadKeys() {
   </div>`).join('');
   list.querySelectorAll('[data-revoke]').forEach(btn => btn.addEventListener('click', async () => {
     if (!confirm('吊销后该密钥立即失效，确定？')) return;
-    const r = await fetch('/api/keys/delete', { method: 'POST', credentials: 'same-origin', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ id: Number(btn.dataset.revoke) }) });
+    const r = await fetch('https://auth.rxh.asia/api/keys/delete', { method: 'POST', credentials: 'include', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ id: Number(btn.dataset.revoke) }) });
     const d = await r.json();
     msgEl.textContent = d.ok ? '密钥已吊销' : (d.error || '操作失败');
     loadKeys();
@@ -228,7 +228,7 @@ document.getElementById('createKey').addEventListener('click', async () => {
   const btn = document.getElementById('createKey');
   btn.disabled = true;
   try {
-    const r = await fetch('/api/keys', { method: 'POST', credentials: 'same-origin', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ name }) });
+    const r = await fetch('https://auth.rxh.asia/api/keys', { method: 'POST', credentials: 'include', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ name }) });
     const d = await r.json();
     if (!d.ok) { msgEl.textContent = d.error || '创建失败'; return; }
     document.getElementById('keyName').value = '';
