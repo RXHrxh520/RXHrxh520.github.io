@@ -58,16 +58,17 @@ h1{margin:0;font-size:32px;letter-spacing:-.6px;font-weight:700}
   background:var(--bg2);font-size:13px;color:var(--sub)}
 .group-h b{color:var(--ink);font-size:14px}
 
-.comp{padding:16px 20px;border-bottom:1px solid var(--line2)}
+.comp{padding:14px 20px;border-bottom:1px solid var(--line2)}
 .comp:last-child{border-bottom:0}
-.comp-top{display:flex;align-items:baseline;gap:10px;margin-bottom:10px}
+.comp-top{display:flex;align-items:baseline;gap:10px;margin-bottom:8px}
 .comp-top .nm{font-size:14.5px;font-weight:600}
 .comp-top .url{font-size:11.5px;color:var(--sub);font-family:ui-monospace,SFMono-Regular,Menlo,monospace}
-.comp-top .st{margin-left:auto;font-size:12.5px;display:flex;align-items:center;gap:7px;white-space:nowrap}
+.comp-top .st{font-size:12.5px;display:flex;align-items:center;gap:7px;white-space:nowrap}
+.comp-top .up{margin-left:auto;font-size:12px;color:var(--sub);white-space:nowrap}
 .comp-top .st.ok{color:var(--ok)} .comp-top .st.warn{color:var(--warn)} .comp-top .st.bad{color:var(--bad)}
 .pip{width:8px;height:8px;border-radius:50%;background:currentColor}
-.bars{display:flex;gap:2px;height:34px;align-items:stretch}
-.bars i{flex:1;border-radius:2px;background:var(--bar-empty);min-width:2px}
+.bars{display:flex;gap:3px;height:26px;align-items:stretch}
+.bars i{flex:1;border-radius:3px;background:var(--bar-empty);min-width:1px}
 .bars i.ok{background:var(--ok)} .bars i.warn{background:var(--warn)} .bars i.bad{background:var(--bad)}
 .bars-scale{display:flex;justify-content:space-between;font-size:11.5px;color:var(--sub);margin-top:6px}
 .legend{display:flex;gap:18px;flex-wrap:wrap;padding:14px 20px;font-size:12px;color:var(--sub);border-top:1px solid var(--line2)}
@@ -136,12 +137,12 @@ h1{margin:0;font-size:32px;letter-spacing:-.6px;font-weight:700}
       <span><em class="warn"></em>偏慢（&gt;800ms）</span>
       <span><em class="bad"></em>失败</span>
       <span><em class="empty"></em>本次无记录</span>
-      <span style="margin-left:auto">柱条为最近 40 次检测</span>
+      <span style="margin-left:auto">柱条为最近 90 次检测</span>
     </div>
   </div>
 
   <div class="inc">
-    <div class="inc-h"><b>故障记录</b><span id="incCount">近 40 次检测</span></div>
+    <div class="inc-h"><b>故障记录</b><span id="incCount">最近 90 次检测</span></div>
     <div id="incBody"><div class="inc-body">还没有发生故障。检测失败时会自动记录在这里。</div></div>
   </div>
 
@@ -155,12 +156,12 @@ h1{margin:0;font-size:32px;letter-spacing:-.6px;font-weight:700}
 
 <script>
 const TARGETS = [
-  {id:'home', grp:'site', name:'总站首页', url:'../', kind:'fetch'},
-  {id:'gov',  grp:'site', name:'政务服务系统', url:'../gov/', kind:'fetch'},
-  {id:'st',   grp:'site', name:'状态页自身', url:'./', kind:'fetch'},
-  {id:'pages',grp:'ext',  name:'GitHub Pages 源站', url:'https://rxhrxh520.github.io/', kind:'nocors'},
-  {id:'ava',  grp:'ext',  name:'GitHub 头像', url:'https://github.com/RXHrxh520.png?size=40', kind:'image'},
-  {id:'cdn',  grp:'ext',  name:'jsDelivr 图标源', url:'https://fastly.jsdelivr.net/npm/simple-icons@latest/icons/github.svg', kind:'nocors'}
+  {id:'home', grp:'site', name:'总站首页', url:'www.rxh.asia/', kind:'fetch', p:'../'},
+  {id:'gov',  grp:'site', name:'政务服务系统', url:'/gov/', kind:'fetch', p:'../gov/'},
+  {id:'st',   grp:'site', name:'状态页', url:'/status/', kind:'fetch', p:'./'},
+  {id:'pages',grp:'ext',  name:'GitHub Pages 源站', url:'rxhrxh520.github.io', kind:'nocors', p:'https://rxhrxh520.github.io/'},
+  {id:'ava',  grp:'ext',  name:'GitHub 头像', url:'github.com/RXHrxh520.png', kind:'image', p:'https://github.com/RXHrxh520.png?size=40'},
+  {id:'cdn',  grp:'ext',  name:'jsDelivr 图标源', url:'fastly.jsdelivr.net', kind:'nocors', p:'https://fastly.jsdelivr.net/npm/simple-icons@latest/icons/github.svg'}
 ];
 
 const KEY = 'rxh_status_samples';
@@ -179,11 +180,11 @@ function probe(t){
       const img = new Image();
       img.onload = ()=>done(true);
       img.onerror = ()=>done(false);
-      img.src = t.url + (t.url.includes('?') ? '&' : '?') + 'r=' + Date.now();
+      img.src = t.p + (t.p.includes('?') ? '&' : '?') + 'r=' + Date.now();
       setTimeout(()=>done(false), 7000);
       return;
     }
-    fetch(t.url + (t.url.includes('?') ? '&' : '?') + 'r=' + Date.now(), {cache:'no-store', mode: t.kind === 'nocors' ? 'no-cors' : 'cors'})
+    fetch(t.p + (t.p.includes('?') ? '&' : '?') + 'r=' + Date.now(), {cache:'no-store', mode: t.kind === 'nocors' ? 'no-cors' : 'cors'})
       .then(()=>done(true))
       .catch(()=>done(false));
     setTimeout(()=>done(false), 9000);
@@ -191,8 +192,8 @@ function probe(t){
 }
 
 function bars(hist){
-  const cells = hist.slice(-40);
-  const pad = Array(Math.max(0, 40 - cells.length)).fill(null).map(()=>`<i></i>`).join('');
+  const cells = hist.slice(-90);
+  const pad = Array(Math.max(0, 90 - cells.length)).fill(null).map(()=>`<i></i>`).join('');
   return pad + cells.map(h=>`<i class="${!h.ok ? 'bad' : (h.ms > 800 ? 'warn' : 'ok')}"></i>`).join('');
 }
 
@@ -208,14 +209,17 @@ function render(){
     const hist = store[t.id];
     const last = hist[hist.length-1];
     const st = statusOf(last);
+    const tot = hist.length, okc = hist.filter(h=>h.ok).length;
+    const up = tot ? (okc / tot * 100).toFixed(1).replace('.0','') : '—';
     return `<div class="comp">
       <div class="comp-top">
         <span class="nm">${t.name}</span>
         <span class="url">${t.url}</span>
+        <span class="up">${up}% 可用</span>
         <span class="st ${st.cls}"><span class="pip" style="background:currentColor"></span>${st.txt}${last && last.ok ? ' · ' + last.ms + ' ms' : ''}</span>
       </div>
       <div class="bars">${bars(hist)}</div>
-      <div class="bars-scale"><span>40 次检测前</span><span>最近一次</span></div>
+      <div class="bars-scale"><span>90 次检测前</span><span>最近一次</span></div>
     </div>`;
   };
   $('.group #grp-site').innerHTML = TARGETS.filter(t=>t.grp==='site').map(mk).join('');
@@ -241,7 +245,7 @@ function render(){
   $('#incBody').innerHTML = fails.length
     ? fails.slice(0,8).map(f=>`<div class="inc-item"><b>${f.name} 无法访问</b><i>${new Date(f.at).toLocaleString('zh-CN')}</i></div>`).join('')
     : '<div class="inc-body">还没有发生故障。检测失败时会自动记录在这里。</div>';
-  $('#incCount').textContent = lasts.length ? '已记录 ' + fails.length + ' 次失败' : '近 40 次检测';
+  $('#incCount').textContent = lasts.length ? '已记录 ' + fails.length + ' 次失败' : '最近 90 次检测';
 }
 
 async function runAll(){
@@ -249,7 +253,7 @@ async function runAll(){
   const results = await Promise.all(TARGETS.map(t=> probe(t).then(r=>({t,r}))));
   results.forEach(({t,r})=>{
     store[t.id].push(r);
-    if(store[t.id].length > 40) store[t.id].shift();
+    if(store[t.id].length > 90) store[t.id].shift();
   });
   save(); render();
   $('#runBtn').disabled = false;
@@ -271,11 +275,14 @@ $('#runBtn').addEventListener('click', ()=>{ runAll(); loop(); });
 /* 主题跟随总站 */
 function applyTheme(){
   const t = localStorage.getItem('rxh_theme');
-  document.documentElement.classList.toggle('dark', t === 'dark');
+  const dark = t === 'dark';
+  document.documentElement.classList.toggle('dark', dark);
+  document.getElementById('themeBtn').textContent = dark ? '白亮' : '暗夜';
 }
 $('#themeBtn').addEventListener('click', ()=>{
   const dark = !document.documentElement.classList.contains('dark');
   document.documentElement.classList.toggle('dark', dark);
+  document.getElementById('themeBtn').textContent = dark ? '白亮' : '暗夜';
   localStorage.setItem('rxh_theme', dark ? 'dark' : 'light');
 });
 
