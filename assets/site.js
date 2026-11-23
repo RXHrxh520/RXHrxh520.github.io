@@ -82,6 +82,7 @@
 
   /* ---------- 公告条 ---------- */
   async function loadNotice() {
+    if (!me) { $('#noticebar').classList.remove('on'); return; }
     try {
       const r = await fetch(AUTH + '/api/notice', { cache: 'no-store' });
       const d = await r.json();
@@ -103,9 +104,19 @@
   };
   const esc = s => String(s || '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 
+  function noticeLock() {
+    const list = $('#noticeList');
+    list.innerHTML = '<div class="n-empty" style="text-align:center">需要登录后查看通知<br><button class="big-btn primary" id="nLogin" style="margin-top:10px;padding:8px 16px;font-size:12.5px">登录 / 注册</button></div>';
+    const b = document.getElementById('nLogin');
+    if (b) b.addEventListener('click', () => window.RXHAuth.open({ onSuccess: afterAuth }));
+    $('#bellDot').classList.remove('on');
+  }
+
   async function loadNotices() {
+    if (!me) return noticeLock();
     try {
-      const r = await fetch(AUTH + '/api/notifications', { cache: 'no-store' });
+      const r = await fetch(AUTH + '/api/notifications', { cache: 'no-store', credentials: 'include', headers: (localStorage.getItem(SID_KEY) ? { Authorization: 'Bearer ' + localStorage.getItem(SID_KEY) } : {}) });
+      if (r.status === 401) return noticeLock();
       const d = await r.json();
       const items = (d.items || []).slice(0, 20);
       const list = $('#noticeList');
@@ -255,7 +266,8 @@
   function showBan(ban) {
     const m = $('#extModal');
     $('#extInfo').textContent = '';
-    $('#extInfo').innerHTML = `<b style="color:var(--bad)">账号已被封禁</b><br>原因：${esc(ban.reason || '未填写')}<br>时间：${esc(ban.start_at)} → ${esc(ban.end_at)}`;
+    $('#extInfo').innerHTML = `<b style="color:var(--bad)">账号已被封禁</b><br>原因：${esc(ban.reason || '未填写')}<br>时间：${esc(ban.start_at)} → ${esc(ban.end_at)}
+      <br><br><a class="big-btn primary" href="https://auth.rxh.asia/appeal/" style="display:inline-flex;padding:8px 14px;font-size:12.5px">提交申诉</a>`;
     $('#extGo').textContent = '知道了'; $('#extGo').href = 'javascript:void(0)';
     openModal(m);
   }
@@ -267,7 +279,7 @@
     window.RXHAuth.open({ onSuccess: afterAuth });
   });
   async function afterAuth(user) {
-    me = user; setAuthBtn(); loadNotices();
+    me = user; setAuthBtn(); loadNotice(); loadNotices();
     location.href = 'https://auth.rxh.asia/account/';
   }
   function renderMe() {
@@ -282,7 +294,7 @@
     }
     if (me.avatar) {
       $('#meAva').outerHTML = `<img class="me-ava" id="meAva" src="${esc(me.avatar)}" alt="">`;
-    } else { $('#meAva').textContent = (me.name || 'U').slice(0, 1); }
+    } else { $('#meAva').outerHTML = `<img class="me-ava" id="meAva" src="https://www.rxh.asia/assets/default-avatar.svg" alt="">`; }
     $('#meName').textContent = me.name;
     $('#meUid').textContent = me.uid + (me.is_admin ? ' · 管理员' : '');
     $('#meActions').innerHTML = `
@@ -297,7 +309,7 @@
     });
   }
 
-  /* ---------- 音乐播放器 ---------- */
+  /* ---------- 音乐播放器（仅控件，不加载音频） ---------- */
   $('#mToggle').addEventListener('click', e => {
     e.stopPropagation();
     $('#music').classList.toggle('open');
@@ -305,6 +317,47 @@
   document.addEventListener('click', e => {
     if (!e.target.closest('#music')) $('#music').classList.remove('open');
   });
+
+  const mPlay = $('#mPlay'), mFill = $('#mFill'), mCur = $('#mCur');
+  let mPlaying = false, mSec = 0, mTimer = null, mTotal = 0;
+  const pad = n => String(Math.floor(n)).padStart(2, '0') + ':' + pad2(Math.round((n % 1) * 60));
+  const pad2 = n => String(n).padStart(2, '0');
+  function paintTime() {
+    mCur.textContent = pad(mSec);
+    mFill.style.width = (mTotal ? Math.min(100, mSec / mTotal * 100) : 0) + '%';
+  }
+  function stopFake() {
+    clearInterval(mTimer); mTimer = null; mPlaying = false;
+    mPlay.innerHTML = '<svg viewBox="0 0 24 24"><use href="https://www.rxh.asia/assets/icons.svg#i-play"/></svg>';
+    mPlay.setAttribute('aria-label', '播放');
+  }
+  mPlay.addEventListener('click', () => {
+    if (mPlaying) { stopFake(); return; }
+    if (!mTotal) { toast('暂无音频，仅演示控件'); }
+    mPlaying = true;
+    mPlay.innerHTML = '<svg viewBox="0 0 24 24"><use href="https://www.rxh.asia/assets/icons.svg#i-pause"/></svg>';
+    mPlay.setAttribute('aria-label', '暂停');
+    mTimer = setInterval(() => {
+      mSec += 1;
+      if (mTotal && mSec >= mTotal) { mSec = 0; stopFake(); }
+      paintTime();
+    }, 1000);
+  });
+  $('#mPrev').addEventListener('click', () => { mSec = 0; paintTime(); toast('播放列表为空'); });
+  $('#mNext').addEventListener('click', () => { mSec = 0; paintTime(); toast('播放列表为空'); });
+  $('#mSeek').addEventListener('click', e => {
+    if (!mTotal) return toast('暂无音频，无法定位');
+    const r = e.currentTarget.getBoundingClientRect();
+    mSec = Math.round((e.clientX - r.left) / r.width * mTotal);
+    paintTime();
+  });
+  $('#vBar').addEventListener('click', e => {
+    e.stopPropagation();
+    const r = e.currentTarget.getBoundingClientRect();
+    const p = Math.max(0, Math.min(1, (e.clientX - r.left) / r.width));
+    $('#vFill').style.width = (p * 100) + '%';
+  });
+  paintTime();
 
   /* ---------- 启动 ---------- */
   initTheme();
