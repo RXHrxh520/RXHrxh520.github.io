@@ -362,6 +362,13 @@
   body.dark .soon code{background:rgba(255,255,255,.06)}
   body.dark .ctrl button{background:rgba(30,27,37,.72);border-color:rgba(255,255,255,.16);color:#efe9f7}
 
+  body.dark .eyebrow{background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.14);color:#cfc8db}
+  body.dark .eyebrow i{background:var(--pink)}
+  body.dark .btn.line{background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.18);color:#f3eef7}
+  body.dark .plate{background:rgba(22,19,26,.88);border-color:rgba(255,255,255,.14);color:#fff}
+  body.dark .plate b{color:#fff}
+  body.dark .portrait .frame{box-shadow:0 30px 70px rgba(0,0,0,.5)}
+
   /* ============ 右上角控制 ============ */
   .ctrl{position:fixed;top:22px;right:26px;z-index:66;display:flex;gap:8px}
   .ctrl button{display:flex;align-items:center;gap:7px;height:38px;padding:0 14px;border-radius:999px;
@@ -406,11 +413,11 @@
   .npct{display:flex;justify-content:space-between;margin-top:5px;font-size:10.5px;color:var(--ink-3)}
 
   /* ============ ARG / 微信界面 ============ */
-  .arg{display:none}
-  body.arg .arg{display:flex}
+  .argview{display:none}
+  body.arg .argview{display:flex}
   body.arg .view,body.arg .navbar,body.arg .footer{display:none !important}
   body.arg .ctrl{top:14px;right:14px}
-  .arg{position:fixed;inset:0;z-index:55;background:#111;
+  .argview{position:fixed;inset:0;z-index:55;background:#111;
     align-items:center;justify-content:center;padding:0}
   .wx{width:min(430px,100%);height:min(880px,100%);background:#ededed;display:flex;flex-direction:column;
     overflow:hidden;box-shadow:0 30px 90px rgba(0,0,0,.55);border-radius:16px;position:relative}
@@ -822,7 +829,7 @@
   </section>
 
   <!-- ================= ARG 模式（微信界面） ================= -->
-  <section class="arg" id="view-arg">
+  <section class="argview" id="view-arg">
     <div class="wx">
       <div class="wx-nav">
         <button class="wx-back" id="wxBack" aria-label="返回">
