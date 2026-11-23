@@ -85,6 +85,11 @@ function guestConsole() {
   const saved = sessionStorage.getItem('rxh_open_user');
   if (saved) { try { enterConsole(JSON.parse(saved)); return; } catch (e) {} }
   if (sessionStorage.getItem('rxh_open_preview') === '1') { guestConsole(); return; }
+  try {
+    const r = await fetch('https://auth.rxh.asia/api/me', { credentials: 'include', cache: 'no-store' });
+    const d = await r.json();
+    if (d.user) return enterConsole(d.user);
+  } catch (e) { }
   if (!window.RXHAuth) return;
   const u = await window.RXHAuth.check();
   if (u && !u.banned) enterConsole(u);
