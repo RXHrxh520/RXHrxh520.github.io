@@ -67,17 +67,18 @@
     </div>
 
     <form id="loginForm">
-      <div class="field"><label for="la">账号（邮箱或 ID）</label><input id="la" autocomplete="username" placeholder="邮箱或 RXH-XXXXXX"></div>
-      <div class="field"><label for="lp">密码</label><input id="lp" type="password" autocomplete="current-password" placeholder="请输入密码"></div>
+      <div class="field"><label for="la">账号（邮箱或 ID）</label><input id="la" autocomplete="username" placeholder="请输入账号、邮箱或用户 ID"></div>
+      <div class="field"><label for="lp">密码</label><input id="lp" type="password" autocomplete="current-password" placeholder="请输入您的密码"></div>
       <button class="btn" id="loginBtn" type="submit" disabled>登录</button>
       <div class="msg" id="loginMsg"></div>
     </form>
 
     <form id="regForm" hidden>
-      <div class="field"><label for="re">邮箱</label><input id="re" type="email" autocomplete="email" placeholder="you@example.com"></div>
-      <div class="field"><label for="rn">昵称（可选）</label><input id="rn" maxlength="32" placeholder="不填则用邮箱前缀"></div>
-      <div class="field"><label for="rp">密码</label><input id="rp" type="password" autocomplete="new-password" placeholder="至少 8 位"></div>
-      <div class="field"><label for="ri">邀请码</label><input id="ri" placeholder="由管理员发放" autocapitalize="characters"></div>
+      <div class="field"><label for="re">邮箱</label><input id="re" type="email" autocomplete="email" placeholder="请输入您的邮箱"></div>
+      <div class="field"><label for="rn">昵称（可选）</label><input id="rn" maxlength="32" placeholder="请输入昵称（可留空）"></div>
+      <div class="field"><label for="rp">密码</label><input id="rp" type="password" autocomplete="new-password" placeholder="请设置至少 8 位密码"></div>
+      <div class="field"><label for="rg">性别</label><select id="rg"><option value="0">男</option><option value="1">女</option></select></div>
+      <div class="field"><label for="ri">邀请码</label><input id="ri" placeholder="请输入邀请码" autocapitalize="characters"></div>
       <button class="btn" id="regBtn" type="submit" disabled>注册</button>
       <div class="msg" id="regMsg"></div>
     </form>
