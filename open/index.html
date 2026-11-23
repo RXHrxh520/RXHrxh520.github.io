@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>RXH 开放平台 · 登录</title>
+<title>开放平台 · rxh.asia</title>
 <meta name="description" content="RXH 开放平台：大模型推理、多模态与 Agent 工具链，一个密钥全部接入。">
 <meta name="theme-color" content="#f7f8fa" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="#101218" media="(prefers-color-scheme: dark)">
@@ -111,6 +111,39 @@
     transition:opacity .2s,transform .2s}
   .toast.on{opacity:1;transform:translate(-50%,0)}
 
+
+  /* ---- 控制台 ---- */
+  .app[data-mode="preview"]{width:min(1060px,100%)}
+  .console{display:grid;grid-template-columns:196px 1fr;gap:0;border:1px solid var(--line);border-radius:20px;overflow:hidden;
+    background:var(--card);box-shadow:0 26px 70px -40px rgba(22,24,29,.45);min-height:70vh}
+  .side{border-right:1px solid var(--line);background:var(--page);padding:16px 12px;display:flex;flex-direction:column;gap:6px}
+  .side-brand{display:flex;align-items:center;gap:8px;font-size:11.5px;letter-spacing:.12em;color:var(--sub);padding:4px 6px 14px}
+  .side-brand .mark{width:22px;height:22px;font-size:11px}
+  .nav-item{display:flex;align-items:center;gap:8px;padding:9px 11px;border-radius:10px;font-size:13px;color:var(--sub);cursor:default}
+  .nav-item.on{background:var(--soft);color:var(--ink);font-weight:600}
+  .nav-item.lock{opacity:.55}
+  .side-foot{margin-top:auto;padding:10px 8px;font-size:11.5px;color:var(--sub);border-top:1px solid var(--line)}
+  .cmain{display:flex;flex-direction:column;min-width:0}
+  .cbar{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:13px 18px;border-bottom:1px solid var(--line)}
+  .crumb{font-size:12.5px;color:var(--sub)}
+  .cbar-right{display:flex;align-items:center;gap:8px}
+  .mini{padding:6px 11px;border-radius:9px;border:1px solid var(--line);background:var(--page);color:var(--sub);font-size:12px;cursor:not-allowed}
+  .banner{margin:14px 18px 0;padding:10px 13px;border-radius:12px;background:var(--soft);color:var(--sub);font-size:12.5px;line-height:1.6}
+  .stat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;padding:14px 18px}
+  .stat{padding:13px 14px;border:1px solid var(--line);border-radius:13px;background:var(--page)}
+  .stat span{font-size:11.5px;color:var(--sub)}
+  .stat b{display:block;font-size:20px;margin-top:4px;font-weight:700;letter-spacing:-.02em}
+  .panel-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:10px;padding:0 18px 18px}
+  .panel{border:1px solid var(--line);border-radius:13px;padding:14px}
+  .panel h4{margin:0 0 10px;font-size:13.5px}
+  .mrow{display:flex;align-items:center;justify-content:space-between;padding:9px 0;border-bottom:1px dashed var(--line);font-size:12.5px;color:var(--sub)}
+  .mrow:last-child{border:0}
+  .mrow b{color:var(--ink);font-weight:600}
+  .empty{font-size:12px;color:var(--sub);padding:22px 0;text-align:center}
+  .console .exit{margin:0 18px 16px;height:40px;border:1px solid var(--line);border-radius:10px;background:transparent;color:var(--sub);font-size:12.5px;cursor:pointer}
+  .console .exit:hover{background:var(--soft)}
+  .console .lock{margin:0 18px 12px}
+
   @media (prefers-reduced-motion:reduce){*{animation:none !important;transition:none !important}}
 </style>
 </head>
@@ -134,7 +167,7 @@
       <div class="head">
         <div>
           <h2>登录 RXH 开放平台</h2>
-          <p>选择一种方式继续</p>
+          <p>账号与主站统一，登录后在所有子站通用</p>
         </div>
         <button class="close" id="close" aria-label="返回">
           <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6l12 12M18 6L6 18"/></svg>
@@ -144,7 +177,7 @@
       <div id="opts">
         <button class="opt" id="optPwd">
           <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><rect x="5" y="10" width="14" height="10" rx="3"/><path d="M8.5 10V7.6a3.5 3.5 0 0 1 7 0V10"/></svg></span>
-          <span><b>账号密码登录</b><span class="sub">使用已开通的 RXH 开发者账号</span></span>
+          <span><b>账号登录</b><span class="sub">使用 rxh.asia 统一账号登录</span></span>
           <span class="ar">›</span>
         </button>
         <button class="opt" id="optGuest">
@@ -184,27 +217,56 @@
   </section>
 
   <section class="screen s-preview">
-    <div class="card">
-      <div class="pv-top"><span class="mark">R</span><span class="tag" id="pvTag">匿名预览</span></div>
-      <div class="pv-title">控制台 · 只读</div>
-      <p class="pv-desc" id="pvDesc">临时凭证 30 分钟后失效，此模式不写入任何数据。</p>
-      <div class="rows">
-        <div class="row"><div><b>模型广场</b><span>文本 / 图像 / 语音 / Agent</span></div><div class="st">只读</div></div>
-        <div class="row"><div><b>推理调用</b><span>QPS、首 token 延迟、错误率</span></div><div class="st">已锁定</div></div>
-        <div class="row"><div><b>API 密钥</b><span>创建、轮换、权限范围</span></div><div class="st">已锁定</div></div>
-        <div class="row"><div><b>用量与配额</b><span>调用量、余额、账单</span></div><div class="st">已锁定</div></div>
+    <div class="console">
+      <aside class="side">
+        <div class="side-brand"><span class="mark">R</span> RXH OPEN</div>
+        <div class="nav-item on">概览</div>
+        <div class="nav-item lock">模型广场</div>
+        <div class="nav-item lock">推理调用</div>
+        <div class="nav-item lock">API 密钥</div>
+        <div class="nav-item lock">用量与账单</div>
+        <div class="nav-item lock">接入文档</div>
+        <div class="side-foot" id="sideUser">访客 · 只读</div>
+      </aside>
+      <div class="cmain">
+        <header class="cbar">
+          <div class="crumb">控制台 / 概览</div>
+          <div class="cbar-right"><span class="tag" id="pvTag">匿名预览</span><button class="mini" data-lock>新建密钥</button></div>
+        </header>
+        <div class="banner" id="pvDesc">临时凭证 30 分钟内有效；只读模式不会写入任何数据。</div>
+        <div class="stat-grid">
+          <div class="stat"><span>本月调用</span><b>0</b></div>
+          <div class="stat"><span>账户余额</span><b>¥ 0.00</b></div>
+          <div class="stat"><span>有效密钥</span><b>0</b></div>
+          <div class="stat"><span>平均首字延迟</span><b>— ms</b></div>
+        </div>
+        <div class="panel-grid">
+          <div class="panel">
+            <h4>模型广场</h4>
+            <div class="mrow"><b>文本生成</b><span>通用对话 / 长文 / 结构化输出</span></div>
+            <div class="mrow"><b>图像理解</b><span>看图问答 / OCR / 版面分析</span></div>
+            <div class="mrow"><b>语音合成</b><span>多音色 · 流式返回</span></div>
+            <div class="mrow"><b>Agent 工具链</b><span>函数调用 / 多步编排</span></div>
+          </div>
+          <div class="panel">
+            <h4>近期调用</h4>
+            <div class="empty">暂无调用记录<br>登录并创建密钥后可查看</div>
+          </div>
+        </div>
+        <div class="lock">匿名模式不可发起推理、不可创建密钥、不可导出数据。</div>
+        <button class="exit" id="exit">退出预览</button>
       </div>
-      <div class="lock">匿名模式不可发起推理、不可创建密钥、不可导出数据。</div>
-      <button class="exit" id="exit">退出预览</button>
     </div>
   </section>
+
 </main>
 
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 <script>
 window.TURNSTILE_SITEKEY = "0x4AAAAAAGPRu0xFiTmg5BYn";
 </script>
+<script src="/assets/auth-modal.js?v=20261124a"></script>
 <script src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit" defer></script>
-<script src="app.js?v=c9ffa7be" defer></script>
+<script src="app.js?v=20261124a" defer></script>
 </body>
 </html>
