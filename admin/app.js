@@ -9,29 +9,7 @@ const esc = s => String(s == null ? "" : s).replace(/[&<>"]/g, c => ({ "&": "&am
 const fmt = t => { if (!t) return "—"; try { return new Date(t).toLocaleString("zh-CN", { hour12: false }); } catch { return t; } };
 const toISO = v => v ? new Date(v).toISOString() : "";
 
-/* Turnstile */
-function whenTs(timeout = 8000) {
-  return new Promise((res, rej) => {
-    if (window.turnstile) return res(window.turnstile);
-    const t0 = Date.now();
-    (function tick() {
-      if (window.turnstile) return res(window.turnstile);
-      if (Date.now() - t0 > timeout) return rej(new Error("timeout"));
-      setTimeout(tick, 120);
-    })();
-  });
-}
-(async () => {
-  try {
-    const ts = await whenTs();
-    tsWidget = ts.render("#tsBox", {
-      sitekey: window.TURNSTILE_SITEKEY,
-      callback: t => { tsToken = t; $("#aLogin").disabled = false; },
-      "expired-callback": () => { tsToken = ""; $("#aLogin").disabled = true; },
-      "error-callback": () => { tsToken = ""; $("#aLogin").disabled = true; },
-    });
-  } catch { msg($("#lmsg"), "人机验证组件加载失败，请刷新"); }
-})();
+/* 管理端登录仅校验账号密码与来源地区 */
 
 /* 登录 */
 $("#aLogin").addEventListener("click", async () => {
@@ -40,7 +18,7 @@ $("#aLogin").addEventListener("click", async () => {
   try {
     const r = await fetch(API + "/login", {
       method: "POST", credentials: "same-origin", headers: { "content-type": "application/json" },
-      body: JSON.stringify({ account: $("#a").value.trim(), password: $("#b").value, turnstile: tsToken }),
+      body: JSON.stringify({ account: $("#a").value.trim(), password: $("#b").value }),
     });
     const d = await r.json();
     if (!d.ok) throw new Error(d.error || "登录失败");
@@ -50,7 +28,7 @@ $("#aLogin").addEventListener("click", async () => {
     }
     enter(d.user);
   } catch (e) { msg($("#lmsg"), e.message); }
-  finally { btn.textContent = "登录"; if (window.turnstile && tsWidget !== null) window.turnstile.reset(tsWidget); tsToken = ""; }
+  finally { btn.textContent = "登录"; }
 });
 
 function enter(u) {
@@ -73,7 +51,7 @@ function enter(u) {
 /* 标签 */
 document.querySelectorAll(".tab").forEach(t => t.addEventListener("click", () => {
   document.querySelectorAll(".tab").forEach(x => x.classList.toggle("on", x === t));
-  ["users", "invites", "notice", "notify", "self"].forEach(p => $("#p-" + p).classList.toggle("hide", p !== t.dataset.p));
+  ["users", "invites", "notice", "notify", "appeals", "self"].forEach(p => $("#p-" + p).classList.toggle("hide", p !== t.dataset.p));
 }));
 
 /* 数据加载 */
@@ -89,7 +67,24 @@ async function loadAll() {
   $("#sBanned").textContent = o.banned ?? "—";
   $("#sSessions").textContent = o.sessions ?? "—";
   $("#sInvites").textContent = o.invites ?? "—";
-  loadUsers(); loadInvites(); loadNotices(); loadNotify();
+  loadUsers(); loadInvites(); loadNotices(); loadNotify(); loadAppeals();
+}
+
+async function loadAppeals() {
+  const d = await get("/admin/appeals");
+  const box = $("#appealList");
+  const items = d.items || [];
+  if (!items.length) { box.innerHTML = '<p class="sub">暂无申诉。</p>'; return; }
+  box.innerHTML = items.map(a => `<div class="ap">
+    <div class="ap-h"><b>${esc(a.email)}</b><span class="pill">${esc(a.uid || "未填 ID")}</span></div>
+    <div class="ap-b">${esc(a.reason)}</div>
+    <div class="ap-f"><span class="sub">${fmt(a.created_at)}</span><button class="btn sm ghost" data-ap="${a.id}">清除</button></div>
+  </div>`).join("");
+  box.querySelectorAll("[data-ap]").forEach(b => b.addEventListener("click", async () => {
+    if (!confirm("确认清除这条申诉？")) return;
+    await post("/admin/appeal/delete", { id: Number(b.dataset.ap) });
+    loadAppeals();
+  }));
 }
 
 async function loadUsers() {
@@ -125,11 +120,18 @@ document.addEventListener("click", async e => {
     loadUsers();
   }
   if (b.dataset.act === "edit") {
-    const newUid = prompt("新的用户 ID（留空则不修改，格式 R-0… 或 R-1…）", uid) || "";
+    const newUid = prompt("新的用户 ID（留空则不修改）\n示例：R-020260003810（0 普通 / 1 管理员 + 年份 + 当日序号 + 性别 + 校验位）", uid) || "";
     const newName = prompt("新的昵称（留空则不修改）", b.dataset.name || "") || "";
     if (!newUid.trim() && !newName.trim()) return;
     const d = await post("/admin/user/update", { uid, newUid: newUid.trim(), name: newName.trim() });
     msg($("#bmsg"), d.ok ? "已更新" : (d.error || "失败"), !!d.ok);
+    loadUsers();
+    return;
+  }
+  if (b.dataset.act === "deluser") {
+    if (!confirm("确定删除该账号？账号、会话与密钥都会被清除，且不可恢复。")) return;
+    const d = await post("/admin/user/delete", { uid });
+    msg($("#bmsg"), d.ok ? "账号已删除" : (d.error || "失败"), !!d.ok);
     loadUsers();
     return;
   }
@@ -217,8 +219,21 @@ async function loadNotices() {
 
 /* 站内通知 */
 const NT = {1:"系统公告",2:"管理员公告",3:"系统通知",4:"安全通知",5:"测试通知"};
+const NTI = {
+  1:'<path d="M4 10v4h3l6 4V6l-6 4H4Z"/><path d="M17 9a4 4 0 0 1 0 6"/>',
+  2:'<path d="M12 3l9 5-9 5-9-5 9-5Z"/><path d="M5 11v5l7 4 7-4v-5"/>',
+  3:'<circle cx="12" cy="12" r="9"/><path d="M12 8v4.5M12 16h.01"/>',
+  4:'<path d="M12 3l7 3v6c0 4-3 7-7 9-7-2-7-5-7-9V6l7-3Z"/><path d="m9 12 2 2 4-4"/>',
+  5:'<path d="M9 3h6M10 3v6L5 19h14L14 9V3"/><path d="M7.5 14h9"/>',
+};
+let ntType = 3;
+document.querySelectorAll(".ntype").forEach(b => b.addEventListener("click", () => {
+  ntType = Number(b.dataset.t);
+  document.querySelectorAll(".ntype").forEach(x => x.classList.toggle("on", x === b));
+}));
+function ntIcon(t){ return `<span class="nt-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7">${NTI[t]||NTI[3]}</svg></span>`; }
 $("#doNotify").addEventListener("click", async () => {
-  const body = { type: Number($("#ntType").value || 3), title: $("#ntTitle").value.trim(), body: $("#ntBody").value.trim() };
+  const body = { type: ntType, title: $("#ntTitle").value.trim(), body: $("#ntBody").value.trim() };
   if (!body.title) return msg($("#ntmsg"), "通知标题不能为空");
   const d = await post("/admin/notification", body);
   msg($("#ntmsg"), d.ok ? "已发布" : (d.error || "失败"), !!d.ok);
@@ -230,7 +245,7 @@ async function loadNotify() {
   const d = await get("/admin/notifications");
   const list = d.items || [];
   $("#ntBodyList").innerHTML = list.map(n => `<tr>
-    <td><span class="pill">${NT[n.type] || n.type}</span></td>
+    <td>${ntIcon(n.type)}<span class="pill">${NT[n.type] || n.type}</span></td>
     <td><b>${esc(n.title)}</b><br><span class="sub">${esc(n.body || "")}</span></td>
     <td>${n.active ? '<span class="pill ok">显示中</span>' : '<span class="pill">已隐藏</span>'}</td>
     <td class="sub">${fmt(n.created_at)}</td>
