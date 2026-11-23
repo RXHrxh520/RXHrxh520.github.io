@@ -328,14 +328,14 @@
   }
   function stopFake() {
     clearInterval(mTimer); mTimer = null; mPlaying = false;
-    mPlay.innerHTML = '<svg viewBox="0 0 24 24"><use href="https://www.rxh.asia/assets/icons.svg#i-play"/></svg>';
+    mPlay.innerHTML = '<svg viewBox="0 0 24 24"><use href="#i-play"/></svg>';
     mPlay.setAttribute('aria-label', '播放');
   }
   mPlay.addEventListener('click', () => {
     if (mPlaying) { stopFake(); return; }
     if (!mTotal) { toast('暂无音频，仅演示控件'); }
     mPlaying = true;
-    mPlay.innerHTML = '<svg viewBox="0 0 24 24"><use href="https://www.rxh.asia/assets/icons.svg#i-pause"/></svg>';
+    mPlay.innerHTML = '<svg viewBox="0 0 24 24"><use href="#i-pause"/></svg>';
     mPlay.setAttribute('aria-label', '暂停');
     mTimer = setInterval(() => {
       mSec += 1;
