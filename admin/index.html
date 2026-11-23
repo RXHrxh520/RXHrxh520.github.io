@@ -55,19 +55,19 @@
     <span class="mark">R</span>
     <div>
       <div class="title">RXH 管理后台</div>
-      <div class="sub">账号 · 封禁 · 邀请码 · 公告</div>
+      <div class="sub">账号 · 封禁 · 邀请码 · 公告 · 通知</div>
     </div>
   </div>
 
   <!-- 登录 -->
   <div class="card login" id="loginCard">
     <h2>管理员登录</h2>
-    <div class="field"><label>账号</label><input id="a" placeholder="RXH"></div>
-    <div class="field"><label>密码</label><input id="b" type="password" placeholder="请输入密码"></div>
+    <div class="field"><label>账号</label><input id="a" placeholder="请输入管理员账号"></div>
+    <div class="field"><label>密码</label><input id="b" type="password" placeholder="请输入您的密码"></div>
     <div class="tsbox" id="tsBox"></div>
     <button class="btn" id="aLogin" disabled style="width:100%">登录</button>
     <div class="msg" id="lmsg"></div>
-    <p class="sub" style="margin-top:12px">仅管理员可进入。普通账号请前往 <a href="https://auth.rxh.asia/">账号中心</a>。</p>
+    <p class="sub" style="margin-top:12px">仅管理员可进入，且仅限中国大陆网络访问。普通账号请前往 <a href="https://auth.rxh.asia/">账号中心</a>。</p>
   </div>
 
   <!-- 控制台 -->
@@ -91,7 +91,8 @@
     <div class="tabs">
       <button class="tab on" data-p="users">用户与封禁</button>
       <button class="tab" data-p="invites">邀请码</button>
-      <button class="tab" data-p="notice">公告</button>
+      <button class="tab" data-p="notice">公告条</button>
+      <button class="tab" data-p="notify">站内通知</button>
       <button class="tab" data-p="self">管理员设置</button>
     </div>
 
@@ -106,7 +107,7 @@
       </div>
       <h2 style="margin-top:18px">封禁 / 解封</h2>
       <div class="grid4">
-        <div class="field"><label>用户 ID</label><input id="bUid" placeholder="RXH-XXXXXX"></div>
+        <div class="field"><label>用户 ID</label><input id="bUid" placeholder="请输入用户 ID"></div>
         <div class="field"><label>开始时间</label><input id="bStart" type="datetime-local"></div>
         <div class="field"><label>结束时间</label><input id="bEnd" type="datetime-local"></div>
         <div class="field"><label>理由</label><input id="bReason" placeholder="例如：滥用接口"></div>
@@ -149,6 +150,25 @@
       <div style="overflow:auto"><table><thead><tr><th>内容</th><th>状态</th><th>时间</th><th>操作</th></tr></thead><tbody id="noticeBody"></tbody></table></div>
     </div>
 
+
+    <!-- 站内通知 -->
+    <div class="card hide" id="p-notify">
+      <h2>发布通知</h2>
+      <p class="sub" style="margin-top:-4px">系统仅自动发布「系统通知」与「安全通知」；管理员可发布全部 5 类。</p>
+      <div class="grid4">
+        <div class="field"><label>类型</label><select id="ntType">
+          <option value="1">系统公告</option><option value="2">管理员公告</option>
+          <option value="3">系统通知</option><option value="4">安全通知</option><option value="5">测试通知</option>
+        </select></div>
+        <div class="field"><label>标题</label><input id="ntTitle" placeholder="请输入通知标题"></div>
+      </div>
+      <div class="field"><label>内容（可空）</label><textarea id="ntBody" placeholder="请输入通知正文"></textarea></div>
+      <button class="btn" id="doNotify">发布通知</button>
+      <div class="msg" id="ntmsg"></div>
+      <h2 style="margin-top:18px">通知记录</h2>
+      <div style="overflow:auto"><table><thead><tr><th>类型</th><th>标题 / 内容</th><th>状态</th><th>时间</th><th>操作</th></tr></thead><tbody id="ntBodyList"></tbody></table></div>
+    </div>
+
     <!-- 管理员 -->
     <div class="card hide" id="p-self">
       <h2>修改管理员密码</h2>
@@ -156,7 +176,7 @@
       <div class="field"><label>新密码（至少 8 位）</label><input id="pNew" type="password"></div>
       <button class="btn" id="doPwd">更新密码</button>
       <div class="msg" id="pmsg"></div>
-      <p class="sub" style="margin-top:14px">管理员 ID 固定为 RXH0001，不可修改；昵称可在账号中心修改。</p>
+      <p class="sub" style="margin-top:14px">管理员 ID 可在「用户与封禁」里单独修改（普通用户无权修改自己的 ID）；昵称也可在账号中心修改。</p>
     </div>
   </div>
 </div>
@@ -165,6 +185,6 @@
 window.TURNSTILE_SITEKEY = "0x4AAAAAAGPRu0xFiTmg5BYn";
 </script>
 <script src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit" defer></script>
-<script src="app.js?v=d49d81de" defer></script>
+<script src="app.js?v=20261124a" defer></script>
 </body>
 </html>
