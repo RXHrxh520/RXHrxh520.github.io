@@ -144,12 +144,12 @@ form.addEventListener('submit', e=>{
   const n = (HITS.get(text) || 0) + 1;
   HITS.set(text, n);
   if(n >= 25){
-    addMsg('ai', 'RXH-2026-11 这个可以到政务中心去查询');
+    addMsg('ai', 'RXH-2026-11 这个编号，记着就行。');
     if(!document.getElementById('eggNote')){
       const tip = document.createElement('div');
       tip.className = 'egg';
       tip.id = 'eggNote';
-      tip.innerHTML = '内部流转编号 · 可到政务中心查询<b>RXH-2026-11</b>';
+      tip.innerHTML = '内部流转编号<b>RXH-2026-11</b>';
       chat.parentNode.insertBefore(tip, chat);
     }
     bumpAI();
@@ -227,8 +227,7 @@ document.getElementById('benchGrid').innerHTML = BENCH.map(([k,v])=>
 
 /* ================= 更新日志 ================= */
 const LOGS = [
-  {d:'11-24', t:'开放平台上线', n:'玄河开放平台上线，四个栏目：预览、充值、账单、文档。'},
-  {d:'11-23', t:'政务服务大厅重做', n:'按政务门户常见版式重排，办件查询拆成普通办件与内部流转单两套。'},
+  {d:'11-24', t:'开放平台改版', n:'RXH 开放平台改为登录页：账密登录 + 匿名只读预览，匿名入口需过人机验证。'},
   {d:'11-22', t:'系统状态页', n:'按 GitHub Status 的结构做：分组、90 格色条、可用率与故障记录。'},
   {d:'11-20', t:'路径式分站', n:'不再一个站一个域名，仓库里一个目录就是一个分站。'},
   {d:'11-18', t:'总站上线', n:'玻璃拟态悬浮导航、四视图、绑定 www.rxh.asia 并开启强制 HTTPS。'}
