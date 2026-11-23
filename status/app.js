@@ -48,7 +48,7 @@ function row(s){
   const code = s.http_code ? `HTTP ${s.http_code}` : '无响应';
   return `<div class="comp">
     <div class="comp-top">
-      <span class="nm">${s.name}</span>
+      <span class="nm">${svcName(s.name)}</span>
       <span class="url">${s.url.replace(/^https?:\/\//,'')}</span>
       <span class="ping">Ping <b>${ping}</b> · ${code}</span>
       <span class="st ${cls}">${txt}</span>
