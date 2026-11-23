@@ -38,6 +38,37 @@
   a:focus-visible,button:focus-visible,textarea:focus-visible{outline:2px solid var(--pink);outline-offset:3px}
   .wrap{width:min(1160px,calc(100% - 48px));margin:0 auto}
 
+  /* ============ 顶部账号入口 ============ */
+  .authbtn{
+    display:inline-flex;align-items:center;justify-content:center;
+    height:44px;padding:0 18px;border-radius:999px;text-decoration:none;
+    font-size:13.5px;font-weight:650;letter-spacing:.02em;
+    transition:transform .18s,box-shadow .18s,background .18s;
+  }
+  .authbtn.login{color:var(--ink);background:rgba(255,255,255,.72);border:1px solid rgba(255,255,255,.9);
+    box-shadow:0 10px 26px rgba(40,20,40,.10)}
+  .authbtn.login:hover{transform:translateY(-1px)}
+  .authbtn.reg{color:#fff;border:0;background:linear-gradient(135deg,#ff8fb3,#ff5f92);
+    box-shadow:0 10px 24px rgba(255,95,146,.32)}
+  .authbtn.reg:hover{transform:translateY(-1px);box-shadow:0 14px 28px rgba(255,95,146,.38)}
+
+  /* ============ 站外跳转提示 ============ */
+  .outm{position:fixed;inset:0;z-index:90;background:rgba(18,14,24,.42);backdrop-filter:blur(3px);
+    display:none;place-items:center;padding:20px}
+  .outm.on{display:grid}
+  .outbox{width:min(420px,100%);background:#fff;border-radius:18px;padding:22px 20px;position:relative;
+    box-shadow:0 30px 70px rgba(20,10,30,.28)}
+  body.dark .outbox{background:#1b1720;color:#f2ecf6}
+  .outbox h3{margin:0;font-size:16px}
+  .outbox p{margin:10px 0 0;font-size:13px;line-height:1.7;color:#7b7385}
+  .outbox .u{margin-top:8px;font-size:12px;word-break:break-all;color:#a39aae}
+  .outbox .acts{display:flex;gap:10px;margin-top:18px}
+  .outbox .acts a,.outbox .acts button{flex:1;height:42px;border-radius:11px;border:0;cursor:pointer;font-size:13.5px;font-weight:650;
+    display:flex;align-items:center;justify-content:center;text-decoration:none}
+  .outbox .go{background:linear-gradient(135deg,#ff8fb3,#ff5f92);color:#fff}
+  .outbox .cancel{background:#f3f0f6;color:#5d5468;border:1px solid #e6e0ec}
+  .outbox .x{position:absolute;right:12px;top:12px;width:32px;height:32px;border:0;border-radius:9px;background:transparent;cursor:pointer;color:#9b93a5;font-size:16px}
+
   /* ============ 悬浮玻璃导航 ============ */
   .navbar{
     position:fixed;top:18px;left:50%;transform:translateX(-50%) translateZ(0);
@@ -553,6 +584,8 @@
 
 <!-- ============ 右上控制：明暗 / 模式 ============ -->
 <div class="ctrl">
+  <a class="authbtn login" href="https://auth.rxh.asia/">登录</a>
+  <a class="authbtn reg" href="https://auth.rxh.asia/?tab=reg">注册</a>
   <button id="themeBtn" aria-label="切换明暗">
     <svg id="themeIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><circle cx="12" cy="12" r="4.2"/><path d="M12 2v2.4M12 19.6v2.4M2 12h2.4M19.6 12h2.4M4.8 4.8l1.7 1.7M17.5 17.5l1.7 1.7M19.2 4.8l-1.7 1.7M6.5 17.5l-1.7 1.7"/></svg>
     <span id="themeLabel">暗夜</span>
@@ -896,12 +929,25 @@
   </div>
 </footer>
 
+<div class="outm" id="outm">
+  <div class="outbox">
+    <button class="x" id="outX" aria-label="关闭">✕</button>
+    <h3>即将离开 rxh.asia</h3>
+    <p>你正在前往站外链接，目标站点不受本站管理，请注意账号与隐私安全。</p>
+    <div class="u" id="outUrl"></div>
+    <div class="acts">
+      <button class="cancel" id="outCancel">留在本站</button>
+      <a class="go" id="outGo" href="#" target="_blank" rel="noopener noreferrer">继续访问</a>
+    </div>
+  </div>
+</div>
+
 <div class="toast" id="toast">已复制</div>
 
 
 
 
 
-<script src="/assets/site.js?v=23dbae8d" defer></script>
+<script src="/assets/site.js?v=ab7d398d" defer></script>
 </body>
 </html>
