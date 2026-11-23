@@ -64,7 +64,7 @@ function enter(u) {
 /* 标签 */
 document.querySelectorAll(".tab").forEach(t => t.addEventListener("click", () => {
   document.querySelectorAll(".tab").forEach(x => x.classList.toggle("on", x === t));
-  ["users", "invites", "notice", "self"].forEach(p => $("#p-" + p).classList.toggle("hide", p !== t.dataset.p));
+  ["users", "invites", "notice", "notify", "self"].forEach(p => $("#p-" + p).classList.toggle("hide", p !== t.dataset.p));
 }));
 
 /* 数据加载 */
@@ -80,7 +80,7 @@ async function loadAll() {
   $("#sBanned").textContent = o.banned ?? "—";
   $("#sSessions").textContent = o.sessions ?? "—";
   $("#sInvites").textContent = o.invites ?? "—";
-  loadUsers(); loadInvites(); loadNotices();
+  loadUsers(); loadInvites(); loadNotices(); loadNotify();
 }
 
 async function loadUsers() {
@@ -94,7 +94,8 @@ async function loadUsers() {
       <td>${u.status === "active" ? '<span class="pill ok">正常</span>' : '<span class="pill bad">停用</span>'}${u.is_admin ? ' <span class="pill">管理员</span>' : ""}</td>
       <td>${ban ? `<span class="pill bad">封禁中</span><br><span class="sub">${esc(ban.reason || "")}<br>${fmt(ban.start_at)} → ${fmt(ban.end_at)}</span>` : '<span class="sub">—</span>'}</td>
       <td><button class="btn sm ghost" data-uid="${esc(u.uid)}" data-act="fill">填入封禁</button>
-          <button class="btn sm ghost" data-uid="${esc(u.uid)}" data-act="unban">解封</button></td>
+          <button class="btn sm ghost" data-uid="${esc(u.uid)}" data-act="unban">解封</button>
+          <button class="btn sm ghost" data-uid="${esc(u.uid)}" data-name="${esc(u.name)}" data-act="edit">改资料/ID</button></td>
     </tr>`;
   }).join("");
 }
@@ -113,6 +114,15 @@ document.addEventListener("click", async e => {
     const d = await post("/admin/unban", { uid });
     msg($("#bmsg"), d.ok ? "已解封" : (d.error || "失败"), !!d.ok);
     loadUsers();
+  }
+  if (b.dataset.act === "edit") {
+    const newUid = prompt("新的用户 ID（留空则不修改，格式 R-0… 或 R-1…）", uid) || "";
+    const newName = prompt("新的昵称（留空则不修改）", b.dataset.name || "") || "";
+    if (!newUid.trim() && !newName.trim()) return;
+    const d = await post("/admin/user/update", { uid, newUid: newUid.trim(), name: newName.trim() });
+    msg($("#bmsg"), d.ok ? "已更新" : (d.error || "失败"), !!d.ok);
+    loadUsers();
+    return;
   }
   if (b.dataset.act === "invdel") {
     const d = await post("/admin/invite/delete", { code: b.dataset.code });
@@ -196,9 +206,43 @@ async function loadNotices() {
   </tr>`).join("") || '<tr><td colspan="4" class="sub">暂无公告</td></tr>';
 }
 
+/* 站内通知 */
+const NT = {1:"系统公告",2:"管理员公告",3:"系统通知",4:"安全通知",5:"测试通知"};
+$("#doNotify").addEventListener("click", async () => {
+  const body = { type: Number($("#ntType").value || 3), title: $("#ntTitle").value.trim(), body: $("#ntBody").value.trim() };
+  if (!body.title) return msg($("#ntmsg"), "通知标题不能为空");
+  const d = await post("/admin/notification", body);
+  msg($("#ntmsg"), d.ok ? "已发布" : (d.error || "失败"), !!d.ok);
+  if (d.ok) { $("#ntTitle").value = ""; $("#ntBody").value = ""; }
+  loadNotify();
+});
+
+async function loadNotify() {
+  const d = await get("/admin/notifications");
+  const list = d.items || [];
+  $("#ntBodyList").innerHTML = list.map(n => `<tr>
+    <td><span class="pill">${NT[n.type] || n.type}</span></td>
+    <td><b>${esc(n.title)}</b><br><span class="sub">${esc(n.body || "")}</span></td>
+    <td>${n.active ? '<span class="pill ok">显示中</span>' : '<span class="pill">已隐藏</span>'}</td>
+    <td class="sub">${fmt(n.created_at)}</td>
+    <td><button class="btn sm ghost" data-act="ntg" data-id="${n.id}" data-on="${n.active ? 1 : 0}">${n.active ? "隐藏" : "显示"}</button>
+        <button class="btn sm ghost" data-act="ntdel" data-id="${n.id}">删除</button></td>
+  </tr>`).join("") || '<tr><td colspan="5" class="sub">暂无通知</td></tr>';
+}
+
+document.addEventListener("click", async e => {
+  const b = e.target.closest("[data-act='ntg'],[data-act='ntdel']");
+  if (!b) return;
+  const d = b.dataset.act === "ntg"
+    ? await post("/admin/notification/toggle", { id: Number(b.dataset.id), active: b.dataset.on === "1" ? 0 : 1 })
+    : await post("/admin/notification/delete", { id: Number(b.dataset.id) });
+  msg($("#ntmsg"), d.ok ? "已更新" : (d.error || "失败"), !!d.ok);
+  loadNotify();
+});
+
 /* 密码 */
 $("#doPwd").addEventListener("click", async () => {
-  const d = await post("/password", { old: $("#pOld").value, next: $("#pNew").value });
+  const d = await post("/admin/password", { old: $("#pOld").value, next: $("#pNew").value });
   msg($("#pmsg"), d.ok ? "密码已更新" : (d.error || "失败"), !!d.ok);
 });
 
