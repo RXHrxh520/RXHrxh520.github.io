@@ -3,85 +3,195 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>个人中心 · RXH</title>
+<title>账号中心 · rxh.asia</title>
 <meta name="robots" content="noindex">
-<meta name="color-scheme" content="light dark">
 <style>
-  :root{--ink:#16181d;--sub:#606a78;--line:#e6e9ef;--card:#fff;--page:#f7f8fa;--soft:#f0f3ff;--brand:#3d63ff;--brand2:#7b5cff;--danger:#cf222e}
-  @media (prefers-color-scheme:dark){:root{--ink:#e8ecf4;--sub:#98a3b5;--line:#242a36;--card:#161a23;--page:#0f1117;--soft:#1a2030}}
-  *{box-sizing:border-box}
-  body{margin:0;min-height:100dvh;padding:26px 16px 40px;display:grid;place-items:center;
-    background:radial-gradient(1000px 480px at 50% -10%,var(--soft),var(--page) 60%);color:var(--ink);
-    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;-webkit-font-smoothing:antialiased}
-  .wrap{width:min(520px,100%)}
-  .brand{display:flex;align-items:center;gap:9px;font-size:12px;letter-spacing:.16em;color:var(--sub);text-transform:uppercase}
-  .mark{width:26px;height:26px;border-radius:8px;background:linear-gradient(135deg,var(--brand),var(--brand2));color:#fff;display:grid;place-items:center;font-weight:800;font-size:13px}
-  .card{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:20px;margin-top:14px;box-shadow:0 24px 60px -36px rgba(22,24,29,.28)}
-  .top{display:flex;align-items:center;gap:14px}
-  .avatar{width:56px;height:56px;border-radius:16px;object-fit:cover;background:var(--soft);border:1px solid var(--line)}
-  .top h1{margin:0;font-size:18px}
-  .top p{margin:4px 0 0;font-size:12.5px;color:var(--sub)}
-  .badge{margin-left:auto;font-size:11.5px;padding:4px 9px;border-radius:999px;background:var(--soft);color:var(--brand);border:1px solid var(--line)}
-  .kv{margin-top:16px;display:grid;gap:10px}
-  .row{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:11px 13px;border:1px solid var(--line);border-radius:12px;background:var(--page)}
-  .row b{font-size:13px}
-  .row span{font-size:12px;color:var(--sub)}
-  .code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12.5px}
-  h2{margin:22px 0 0;font-size:15px}
-  .field{margin-top:11px}
-  .field label{display:block;font-size:12.5px;color:var(--sub);margin-bottom:6px}
-  .field input{width:100%;height:42px;border:1px solid var(--line);border-radius:11px;padding:0 12px;background:var(--page);color:var(--ink);font-size:13.5px;outline:none}
-  .field input:focus{border-color:#b9c6ff;box-shadow:0 0 0 4px rgba(61,99,255,.1)}
-  .btn{margin-top:14px;width:100%;height:44px;border:0;border-radius:12px;cursor:pointer;color:#fff;font-size:14.5px;font-weight:650;
-    background:linear-gradient(120deg,var(--brand),var(--brand2))}
-  .btn.ghost{background:transparent;color:var(--sub);border:1px solid var(--line)}
-  .msg{margin-top:10px;font-size:12.5px;min-height:18px}
-  .msg.err{color:var(--danger)}.msg.ok{color:#1a7f37}
-  .out{margin-top:18px;font-size:12px;color:var(--sub);text-align:center}
-  .out a{color:var(--sub)}
+:root{--bg:#0b0e18;--panel:rgba(255,255,255,.055);--line:rgba(255,255,255,.11);--txt:#eef1fb;--dim:#98a2bd;
+  --pink:#ff7ab8;--pink2:#b45cff;--ok:#37e0a0;--bad:#ff6470;--warn:#ffc35c}
+*{box-sizing:border-box}
+html,body{margin:0;min-height:100%}
+body{
+  background:radial-gradient(900px 560px at 8% -8%,color-mix(in srgb,var(--pink) 20%,transparent),transparent 68%),
+             radial-gradient(800px 520px at 96% 4%,color-mix(in srgb,var(--pink2) 18%,transparent),transparent 66%),
+             linear-gradient(165deg,#0a0d16,#0d1224 48%,#0a0d16);
+  color:var(--txt);font:14.5px/1.65 "PingFang SC","HarmonyOS Sans SC","Microsoft YaHei",system-ui,sans-serif;
+  padding:28px 18px 56px;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+input{font:inherit}
+::selection{background:color-mix(in srgb,var(--pink) 36%,transparent)}
+.wrap{max-width:960px;margin:0 auto}
+.top{display:flex;align-items:center;gap:10px;margin-bottom:20px}
+.back{display:inline-flex;align-items:center;gap:6px;padding:7px 12px;border-radius:10px;border:1px solid var(--line);background:var(--panel);color:var(--dim);font-size:12.5px}
+.back:hover{color:var(--txt);background:rgba(255,255,255,.1)}
+.brand{margin-left:auto;font-size:12px;letter-spacing:.1em;color:var(--dim)}
+.grid{display:grid;grid-template-columns:308px 1fr;gap:16px;align-items:start}
+.card{border:1px solid var(--line);background:var(--panel);border-radius:20px;backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px)}
+.profile{padding:22px;position:sticky;top:20px}
+.ava{width:76px;height:76px;border-radius:20px;object-fit:cover;border:1px solid var(--line);background:rgba(255,255,255,.08);display:block}
+.ava-fallback{width:76px;height:76px;border-radius:20px;border:1px solid var(--line);background:rgba(255,255,255,.08);display:grid;place-items:center;font-size:26px;font-weight:700;color:#cfd7ee}
+.pname{margin:14px 0 2px;font-size:20px;font-weight:700;letter-spacing:-.01em;word-break:break-all}
+.pmail{font-size:12.5px;color:var(--dim);word-break:break-all}
+.badge{display:inline-flex;align-items:center;gap:5px;margin-top:10px;font-size:11.5px;padding:3px 9px;border-radius:999px;
+  border:1px solid color-mix(in srgb,var(--pink) 40%,transparent);background:color-mix(in srgb,var(--pink) 14%,transparent);color:#ffc3e2}
+.badge svg{width:12px;height:12px}
+.idbox{margin-top:16px;padding:12px 13px;border-radius:13px;border:1px dashed var(--line);background:rgba(255,255,255,.04)}
+.idbox span{display:block;font-size:11px;color:var(--dim);letter-spacing:.06em}
+.idrow{display:flex;align-items:center;gap:8px;margin-top:5px}
+.idrow b{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:14px;letter-spacing:.06em}
+.copy{margin-left:auto;width:28px;height:28px;border-radius:9px;border:1px solid var(--line);display:grid;place-items:center;color:var(--dim)}
+.copy:hover{color:var(--txt);background:rgba(255,255,255,.1)}
+.copy svg{width:14px;height:14px}
+.mini{margin-top:16px;display:grid;gap:8px}
+.mini a,.mini button{display:flex;align-items:center;gap:9px;padding:10px 12px;border-radius:11px;border:1px solid var(--line);background:rgba(255,255,255,.03);font-size:13px;color:var(--dim);text-align:left}
+.mini a:hover,.mini button:hover{color:var(--txt);background:rgba(255,255,255,.08)}
+.mini svg{width:15px;height:15px;flex:0 0 auto}
+.logout{margin-top:14px;width:100%;padding:10px;border-radius:11px;border:1px solid var(--line);color:var(--dim);font-size:13px;display:flex;align-items:center;justify-content:center;gap:7px}
+.logout:hover{color:var(--bad);border-color:color-mix(in srgb,var(--bad) 45%,transparent);background:color-mix(in srgb,var(--bad) 10%,transparent)}
+.logout svg{width:15px;height:15px}
+
+.panel{padding:6px}
+.tabs{display:flex;gap:4px;padding:6px;border-bottom:1px solid var(--line)}
+.tab{flex:1;padding:9px 10px;border-radius:10px;font-size:13px;color:var(--dim);transition:.16s}
+.tab:hover{background:rgba(255,255,255,.06);color:var(--txt)}
+.tab.on{background:linear-gradient(135deg,color-mix(in srgb,var(--pink) 34%,transparent),color-mix(in srgb,var(--pink2) 28%,transparent));color:#fff;font-weight:600}
+.pane{padding:20px}
+.pane h2{margin:0;font-size:16px;display:flex;align-items:center;gap:8px}
+.pane h2 svg{width:17px;height:17px;color:var(--pink)}
+.pane .sub{margin:5px 0 0;font-size:12.5px;color:var(--dim);line-height:1.6}
+.field{margin-top:14px}
+.field label{display:block;font-size:12px;color:var(--dim);margin-bottom:6px}
+.field input{width:100%;height:44px;padding:0 13px;border-radius:11px;border:1px solid var(--line);background:rgba(255,255,255,.05);color:var(--txt);font-size:13.5px;outline:none;transition:.16s}
+.field input::placeholder{color:#6d7798}
+.field input:focus{border-color:color-mix(in srgb,var(--pink) 55%,transparent);background:rgba(255,255,255,.08)}
+.hint{margin-top:6px;font-size:11.5px;color:var(--dim)}
+.actions{display:flex;gap:10px;margin-top:18px;flex-wrap:wrap}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:10px 18px;border-radius:11px;font-size:13.5px;font-weight:600;
+  background:linear-gradient(135deg,var(--pink),var(--pink2));color:#140e1e;border:0}
+.btn:hover{filter:brightness(1.06)}
+.btn svg{width:15px;height:15px}
+.btn.ghost{background:transparent;border:1px solid var(--line);color:var(--dim);font-weight:500}
+.btn.ghost:hover{color:var(--txt);background:rgba(255,255,255,.07)}
+.btn.danger{background:transparent;border:1px solid color-mix(in srgb,var(--bad) 50%,transparent);color:var(--bad);font-weight:600}
+.btn.danger:hover{background:color-mix(in srgb,var(--bad) 12%,transparent)}
+.btn[disabled]{opacity:.5;cursor:not-allowed}
+.msg{margin-top:12px;font-size:12.5px;min-height:18px;color:var(--dim)}
+.msg.ok{color:var(--ok)}.msg.err{color:var(--bad)}
+.tip{margin-top:16px;padding:12px 14px;border-radius:12px;border:1px solid var(--line);background:rgba(255,255,255,.035);font-size:12.5px;color:var(--dim);line-height:1.7;display:flex;gap:9px}
+.tip svg{width:16px;height:16px;color:var(--warn);flex:0 0 auto;margin-top:2px}
+.danger-zone{margin-top:20px;border:1px solid color-mix(in srgb,var(--bad) 28%,transparent);border-radius:14px;padding:16px;background:color-mix(in srgb,var(--bad) 6%,transparent)}
+.danger-zone h3{margin:0;font-size:14px;color:#ffb3ba;display:flex;align-items:center;gap:7px}
+.danger-zone h3 svg{width:16px;height:16px}
+.danger-zone p{margin:6px 0 0;font-size:12.5px;color:var(--dim);line-height:1.65}
+.loading{padding:40px;text-align:center;color:var(--dim);font-size:13px}
+.kv{display:grid;gap:9px;margin-top:14px}
+.kvrow{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:11px 13px;border:1px solid var(--line);border-radius:11px;background:rgba(255,255,255,.03)}
+.kvrow span{font-size:12.5px;color:var(--dim)}
+.kvrow b{font-size:13px;font-weight:600}
+@media(max-width:780px){
+  .grid{grid-template-columns:1fr}
+  .profile{position:static;display:flex;gap:16px;align-items:center;flex-wrap:wrap;padding:18px}
+  .ava,.ava-fallback{width:60px;height:60px;border-radius:16px}
+  .pname{margin-top:0}
+  .idbox,.mini,.logout{width:100%}
+  body{padding:18px 12px 40px}
+}
 </style>
 </head>
 <body>
 <div class="wrap">
-  <div class="brand"><span class="mark">R</span> RXH ACCOUNT</div>
-
-  <div class="card" id="loading">
-    <p style="font-size:13px;color:var(--sub)">正在读取账号…</p>
+  <div class="top">
+    <a class="back" href="https://www.rxh.asia/">
+      <svg width="14" height="14" viewBox="0 0 24 24"><path d="M15 6l-6 6 6 6" fill="none" stroke="currentColor" stroke-width="2"/></svg>
+      返回主站
+    </a>
+    <span class="brand">rxh.asia · 账号中心</span>
   </div>
 
-  <div class="card" id="main" hidden>
-    <div class="top">
-      <img class="avatar" id="avatar" alt="头像">
+  <div id="loading" class="card loading">正在读取账号…</div>
+
+  <div class="grid" id="app" hidden>
+    <aside class="card profile">
+      <img class="ava" id="ava" alt="头像" src="https://www.rxh.asia/assets/default-avatar.svg">
       <div>
-        <h1 id="name">—</h1>
-        <p id="email">—</p>
+        <div class="pname" id="pname">—</div>
+        <div class="pmail" id="pmail">—</div>
+        <span class="badge" id="role">
+          <svg viewBox="0 0 24 24"><use href="https://www.rxh.asia/assets/icons.svg#i-user"/></svg>
+          成员
+        </span>
       </div>
-      <span class="badge" id="role">成员</span>
-    </div>
+      <div class="idbox">
+        <span>账号 ID（唯一，不可修改）</span>
+        <div class="idrow">
+          <b id="uid">—</b>
+          <button class="copy" id="copyUid" title="复制 ID">
+            <svg viewBox="0 0 24 24"><use href="https://www.rxh.asia/assets/icons.svg#i-copy"/></svg>
+          </button>
+        </div>
+      </div>
+      <div class="mini">
+        <a href="https://www.rxh.asia/"><svg viewBox="0 0 24 24"><use href="https://www.rxh.asia/assets/icons.svg#i-home"/></svg>站点首页</a>
+        <a href="https://open.rxh.asia/"><svg viewBox="0 0 24 24"><use href="https://www.rxh.asia/assets/icons.svg#i-api"/></svg>开放平台与密钥</a>
+      </div>
+      <button class="logout" id="logout">
+        <svg viewBox="0 0 24 24"><use href="https://www.rxh.asia/assets/icons.svg#i-logout"/></svg>
+        退出登录
+      </button>
+    </aside>
 
-    <div class="kv">
-      <div class="row"><div><b>账号 ID</b><br><span>唯一标识，不可修改</span></div><span class="code" id="uid">—</span></div>
-    </div>
+    <section class="card panel">
+      <div class="tabs">
+        <button class="tab on" data-p="profile">资料</button>
+        <button class="tab" data-p="security">安全</button>
+        <button class="tab" data-p="account">账号</button>
+      </div>
 
-    <h2>资料设置</h2>
-    <div class="field"><label for="nname">昵称</label><input id="nname" maxlength="32" placeholder="请输入新昵称"></div>
-    <div class="field"><label for="nava">头像 URL</label><input id="nava" placeholder="请输入头像图片的 https 链接"></div>
-    <button class="btn" id="saveProfile">保存资料</button>
-    <div class="msg" id="pmsg"></div>
+      <div class="pane" id="p-profile">
+        <h2><svg viewBox="0 0 24 24"><use href="https://www.rxh.asia/assets/icons.svg#i-edit"/></svg>资料设置</h2>
+        <p class="sub">昵称会显示在站点与通知里；头像需要填写可公开访问的图片链接。</p>
+        <div class="field"><label for="nname">昵称</label><input id="nname" maxlength="32" placeholder="请输入新的昵称"></div>
+        <div class="field"><label for="nava">头像链接</label><input id="nava" placeholder="请输入头像图片的 https 链接"><div class="hint">留空则使用站点默认头像。</div></div>
+        <div class="actions">
+          <button class="btn" id="saveProfile"><svg viewBox="0 0 24 24"><use href="https://www.rxh.asia/assets/icons.svg#i-check"/></svg>保存资料</button>
+          <button class="btn ghost" id="resetAvatar">恢复默认头像</button>
+        </div>
+        <div class="msg" id="pmsg"></div>
+      </div>
 
-    <h2>修改密码</h2>
-    <div class="field"><label for="old">原密码</label><input id="old" type="password" autocomplete="current-password" placeholder="请输入原密码"></div>
-    <div class="field"><label for="next">新密码（至少 8 位）</label><input id="next" type="password" autocomplete="new-password" placeholder="请设置至少 8 位新密码"></div>
-    <button class="btn" id="savePwd">更新密码</button>
-    <div class="msg" id="wmsg"></div>
+      <div class="pane" id="p-security" hidden>
+        <h2><svg viewBox="0 0 24 24"><use href="https://www.rxh.asia/assets/icons.svg#i-shield"/></svg>修改密码</h2>
+        <p class="sub">修改成功后，其他设备的登录状态会立即失效，并生成一条安全通知。</p>
+        <div class="field"><label for="old">原密码</label><input id="old" type="password" autocomplete="current-password" placeholder="请输入原密码"></div>
+        <div class="field"><label for="next">新密码</label><input id="next" type="password" autocomplete="new-password" placeholder="请设置至少 8 位新密码"></div>
+        <div class="actions"><button class="btn" id="savePwd"><svg viewBox="0 0 24 24"><use href="https://www.rxh.asia/assets/icons.svg#i-shield"/></svg>更新密码</button></div>
+        <div class="msg" id="wmsg"></div>
+        <div class="tip"><svg viewBox="0 0 24 24"><use href="https://www.rxh.asia/assets/icons.svg#i-alert"/></svg>
+          <span>不要在公共设备上保存密码；若怀疑账号被盗，请先改密，再联系管理员封禁异常会话。</span></div>
+      </div>
 
-    <button class="btn ghost" id="logout" style="margin-top:20px">退出登录</button>
+      <div class="pane" id="p-account" hidden>
+        <h2><svg viewBox="0 0 24 24"><use href="https://www.rxh.asia/assets/icons.svg#i-user"/></svg>账号信息</h2>
+        <p class="sub">账号 ID 由系统在注册时生成，用户不能修改；如需变更请联系管理员。</p>
+        <div class="kv">
+          <div class="kvrow"><span>账号 ID</span><b id="uid2" style="font-family:ui-monospace,Menlo,monospace">—</b></div>
+          <div class="kvrow"><span>登录邮箱</span><b id="email2">—</b></div>
+          <div class="kvrow"><span>账号类型</span><b id="role2">成员</b></div>
+        </div>
+        <div class="danger-zone">
+          <h3><svg viewBox="0 0 24 24"><use href="https://www.rxh.asia/assets/icons.svg#i-trash"/></svg>注销账号</h3>
+          <p>注销会立即删除账号、登录会话与 API 密钥，且不可恢复。请输入登录密码并输入「注销」确认。</p>
+          <div class="field"><label for="delPwd">登录密码</label><input id="delPwd" type="password" placeholder="请输入登录密码"></div>
+          <div class="field"><label for="delWord">确认文字</label><input id="delWord" placeholder="请输入：注销"></div>
+          <div class="actions"><button class="btn danger" id="deleteAccount"><svg viewBox="0 0 24 24"><use href="https://www.rxh.asia/assets/icons.svg#i-trash"/></svg>永久注销</button></div>
+          <div class="msg" id="dmsg"></div>
+        </div>
+      </div>
+    </section>
   </div>
-
-  <div class="out"><a href="https://www.rxh.asia/">← 返回总站</a></div>
 </div>
 
-<script src="app.js?v=9f5da83e" defer></script>
-<script src="https://www.rxh.asia/assets/notice-bar.js?v=20261124"></script>
+<script src="app.js?v=20261124a" defer></script>
+<script src="https://www.rxh.asia/assets/notice-bar.js?v=20261124b" defer></script>
 </body>
 </html>
