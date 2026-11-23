@@ -61,6 +61,15 @@ function enter(u) {
   loadAll();
 }
 
+/* 已有会话直接恢复 */
+(async () => {
+  try {
+    const r = await fetch(API + "/me", { credentials: "same-origin", cache: "no-store" });
+    const d = await r.json();
+    if (d.user && d.user.is_admin) enter(d.user);
+  } catch (e) { }
+})();
+
 /* 标签 */
 document.querySelectorAll(".tab").forEach(t => t.addEventListener("click", () => {
   document.querySelectorAll(".tab").forEach(x => x.classList.toggle("on", x === t));
