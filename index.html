@@ -312,6 +312,11 @@
     background:#fff7f0;border:1px solid #ffe6cc;color:#c9832f;margin-bottom:16px}
   .soon h4{margin:0;font-size:17px}
   .soon p{font-size:13px;color:var(--ink-2);margin:10px 0 14px;flex:1}
+  a.soon{border-style:solid;border-color:#ffe1e9;transition:.22s;display:flex;flex-direction:column}
+  a.soon:hover{transform:translateY(-3px);box-shadow:0 16px 34px rgba(255,77,121,.12);border-color:#ffc2d3}
+  .soon .badge.live{background:#f0fbf4;border-color:#c8ebd5;color:#12864c}
+  .soon .go{margin-top:auto;font-size:12.5px;font-weight:700;color:var(--pink)}
+  .explain .bullets li span{width:16px;flex:0 0 auto}
   .soon code{font-size:12px;color:var(--pink);background:#fff;border:1px solid var(--pink-line);padding:3px 8px;border-radius:8px;align-self:flex-start}
   .explain{
     margin-top:20px;background:rgba(255,255,255,.72);border:1px solid rgba(255,255,255,.9);
@@ -463,7 +468,7 @@
           <span class="eyebrow"><i></i>RXH.ASIA · 个人总站</span>
           <h1>你好，我是<em>软小寒</em></h1>
           <div class="subname">RXHrxh520 · Independent Developer</div>
-          <p class="desc">安卓小工具爱好者，白天写 Java，晚上折腾点 AI。喜欢把复杂的东西做成点两下就能用的样子——代码写得慢，但会一直写下去。</p>
+          <p class="desc">像我这种老实人，做好事从来没回报；做一丁点坏事，立马就有报应。</p>
 
           <div class="facts">
             <span class="fact">性别 <b>女</b></span>
@@ -678,36 +683,40 @@
       <div class="page-head">
         <div class="page-kicker">SUB-SITES</div>
         <h2 class="page-title">分站</h2>
-        <p class="page-desc">总站是入口，分站慢慢长出来。这个位置先留着。</p>
+        <p class="page-desc">不再一个站一个域名、一个仓库。全部挂在 rxh.asia 同一个域名下，一个目录就是一个分站，点进去就能用。</p>
       </div>
 
       <div class="soon-grid">
+        <a class="soon" href="./gov/" target="_self">
+          <span class="badge live">已上线 · 演示</span>
+          <h4>政务服务系统</h4>
+          <p>按常见政务门户的排法做的界面：服务大厅、通知公告、办事列表、快捷入口。全部是虚构示例，不办理任何业务。</p>
+          <code>/gov/</code>
+          <span class="go">进入分站 →</span>
+        </a>
+        <a class="soon" href="./status/" target="_self">
+          <span class="badge live">已上线</span>
+          <h4>站点状态</h4>
+          <p>每 60 秒实测一次各页面的连通性与响应时间，用柱条记录最近 12 次结果，失败了会直接标红。</p>
+          <code>/status/</code>
+          <span class="go">进入分站 →</span>
+        </a>
         <div class="soon">
-          <span class="badge">规划中</span>
-          <h4>博客</h4>
-          <p>踩过的坑、学到的东西，打算一篇篇写下来。</p>
-          <code>blog.rxh.asia</code>
-        </div>
-        <div class="soon">
-          <span class="badge">规划中</span>
-          <h4>小工具</h4>
-          <p>自用的小工具集合，等稳定了再放上来。</p>
-          <code>tools.rxh.asia</code>
-        </div>
-        <div class="soon">
-          <span class="badge">规划中</span>
-          <h4>笔记 / 图床</h4>
-          <p>留给零碎内容和素材，想到再补。</p>
-          <code>note.rxh.asia</code>
+          <span class="badge">排队中</span>
+          <h4>下一个目录</h4>
+          <p>想放什么就再建一个目录。名字、封面、说明都由总站这张卡负责引流。</p>
+          <code>/lab/</code>
+          <span class="go" style="color:var(--ink-3)">待创建</span>
         </div>
       </div>
 
       <div class="explain">
-        <h3>分站会长成什么样</h3>
+        <h3>路径式分站怎么运作</h3>
         <ul class="bullets">
-          <li><span>·</span> 每个分站是一个独立仓库，绑定自己的子域名</li>
-          <li><span>·</span> 每条子域名一条 CNAME 解析，证书由 GitHub 自动签发</li>
-          <li><span>·</span> 总站只负责入口和介绍，内容留在各自的分站里</li>
+          <li><span>·</span> 一个目录就是一个分站：仓库里建 <b>/gov/</b>、<b>/status/</b>，各放一个 index.html 即可访问</li>
+          <li><span>·</span> 不占域名、不占仓库：不用买子域名、不用新建仓库，证书和 CDN 全部跟总站共用</li>
+          <li><span>·</span> 加法很简单：建目录 → 放页面 → 在总站这张卡上加一条链接，就多了一个分站</li>
+          <li><span>·</span> 代价是共用一套：同一域名下所有页面一起构建、一起发版，某个目录写坏可能连一起 404</li>
         </ul>
       </div>
     </div>
