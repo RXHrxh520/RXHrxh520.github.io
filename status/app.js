@@ -137,3 +137,18 @@ $('#themeBtn').addEventListener('click', ()=>{
 applyTheme();
 load(false);
 loop();
+
+/* ---------- 公告条 ---------- */
+(function(){
+  fetch('https://auth.rxh.asia/api/notice',{cache:'no-store'}).then(r=>r.json()).then(d=>{
+    const items=(d.items||[]).map(i=>i.text).filter(Boolean);
+    if(!items.length) return;
+    const bar=document.createElement('div');
+    bar.style.cssText='position:fixed;top:0;left:0;right:0;z-index:80;display:flex;align-items:center;gap:26px;'+
+      'padding:9px 16px;font-size:12.5px;color:#7a4b00;background:linear-gradient(90deg,#fff4dd,#ffe9c4);'+
+      'border-bottom:1px solid #ffe0ad;overflow-x:auto;white-space:nowrap';
+    bar.innerHTML=items.map(t=>'<span>'+String(t).replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]))+'</span>').join('');
+    document.body.appendChild(bar);
+    document.body.style.paddingTop='42px';
+  }).catch(()=>{});
+})();
