@@ -3,131 +3,151 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>站点状态 · 软小寒</title>
-<meta name="description" content="rxh.asia 各页面可用性与响应时间检测，每 60 秒在本机实测一次。">
+<title>系统状态 · 软小寒</title>
+<meta name="description" content="rxh.asia 各服务可用性状态与响应时间。">
 <style>
 :root{
-  --bg:#f6f7f9; --card:#fff; --line:#e6e8ec; --ink:#1c2026; --sub:#6b7381;
-  --ok:#12a150; --warn:#d98a00; --bad:#d92d20; --pink:#ff4d79;
+  --bg:#ffffff;--bg2:#f6f8fa;--card:#ffffff;--line:#d8dee4;--line2:#eaeef2;
+  --ink:#1f2328;--sub:#59636e;--ok:#1a7f37;--okbg:#dafbe1;--warn:#9a6700;--warnbg:#fff8c5;
+  --bad:#cf222e;--badbg:#ffebe9;--link:#0969da;--bar-empty:#eaeef2;
 }
-*{box-sizing:border-box}
+html.dark{
+  --bg:#0d1117;--bg2:#161b22;--card:#161b22;--line:#30363d;--line2:#21262d;
+  --ink:#e6edf3;--sub:#8b949e;--ok:#3fb950;--okbg:#12261a;--warn:#d29922;--warnbg:#2b2110;
+  --bad:#f85149;--badbg:#2d1214;--link:#4493f8;--bar-empty:#21262d;
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 body{margin:0;background:var(--bg);color:var(--ink);
-  font-family:-apple-system,"PingFang SC","Microsoft YaHei",system-ui,sans-serif;
-  -webkit-tap-highlight-color:transparent}
-a{color:inherit}
-.wrap{max-width:980px;margin:0 auto;padding:0 20px}
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;
+  line-height:1.6;-webkit-font-smoothing:antialiased}
+a{color:var(--link);text-decoration:none}
+a:hover{text-decoration:underline}
+button{font-family:inherit}
+.wrap{max-width:1012px;margin:0 auto;padding:0 24px}
 
-.top{background:#fff;border-bottom:1px solid var(--line)}
-.top .wrap{display:flex;align-items:center;gap:14px;height:64px}
-.brand{font-weight:800;letter-spacing:-.2px}
-.brand span{color:var(--pink)}
-.top .spacer{flex:1}
-.back{font-size:13px;color:var(--sub);border:1px solid var(--line);
-  padding:7px 14px;border-radius:8px;text-decoration:none}
-.back:hover{border-color:#cdd3dc;color:var(--ink)}
+.topbar{border-bottom:1px solid var(--line2);background:var(--bg2)}
+.topbar .wrap{display:flex;align-items:center;gap:12px;height:56px}
+.logo{font-weight:700;font-size:15px;letter-spacing:-.2px}
+.logo span{color:#ff4f86}
+.topbar .nav{display:flex;gap:18px;font-size:13.5px;color:var(--sub);margin-left:12px}
+.topbar .nav a:hover{color:var(--ink);text-decoration:none}
+.spacer{flex:1}
+.tools{display:flex;gap:8px}
+.tbtn{border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:6px;
+  padding:6px 12px;font-size:12.5px;cursor:pointer}
+.tbtn:hover{border-color:#b6bfc9}
 
-.hero{padding:34px 0 6px}
-.hero h1{margin:0;font-size:28px;letter-spacing:-.5px}
-.hero p{margin:9px 0 0;color:var(--sub);font-size:13.5px;line-height:1.7}
+main{padding:44px 0 60px}
+h1{margin:0;font-size:32px;letter-spacing:-.6px;font-weight:700}
+.lead{margin:8px 0 0;color:var(--sub);font-size:14px}
 
-.banner{margin:20px 0 18px;background:#fff;border:1px solid var(--line);border-left:4px solid var(--ok);
-  border-radius:10px;padding:18px 20px;display:flex;align-items:center;gap:16px;flex-wrap:wrap}
-.banner.bad{border-left-color:var(--bad)}
-.banner.warn{border-left-color:var(--warn)}
-.banner b{font-size:17px}
-.banner .meta{margin-left:auto;font-size:12.5px;color:var(--sub);text-align:right;line-height:1.8}
-.dot{width:10px;height:10px;border-radius:50%;background:var(--ok);display:inline-block;
-  box-shadow:0 0 0 4px rgba(18,161,80,.14);flex:0 0 auto}
-.dot.warn{background:var(--warn);box-shadow:0 0 0 4px rgba(217,138,0,.14)}
-.dot.bad{background:var(--bad);box-shadow:0 0 0 4px rgba(217,45,32,.16)}
+/* 状态横幅 */
+.banner{margin:26px 0 30px;padding:26px 30px;border:1px solid var(--line);border-radius:10px;background:var(--card);
+  display:flex;align-items:center;gap:20px}
+.bicon{width:56px;height:56px;border-radius:50%;background:var(--okbg);color:var(--ok);display:grid;place-items:center;flex:0 0 auto}
+.bicon.warn{background:var(--warnbg);color:var(--warn)}
+.bicon.bad{background:var(--badbg);color:var(--bad)}
+.bicon svg{width:28px;height:28px}
+.btext b{display:block;font-size:20px;letter-spacing:-.2px}
+.btext span{display:block;margin-top:4px;font-size:13px;color:var(--sub)}
+.bmeta{margin-left:auto;text-align:right;font-size:12.5px;color:var(--sub);line-height:1.9}
 
-.panel{background:#fff;border:1px solid var(--line);border-radius:12px;overflow:hidden}
-.panel-h{display:flex;align-items:center;justify-content:space-between;gap:12px;
-  padding:14px 18px;border-bottom:1px solid var(--line);font-size:13px;color:var(--sub)}
-.panel-h strong{color:var(--ink);font-size:14.5px}
-.btn{border:1px solid var(--line);background:#fff;border-radius:8px;padding:6px 13px;
-  font-size:12.5px;color:var(--ink);cursor:pointer}
-.btn:hover{border-color:#cbd1da}
-.btn:disabled{opacity:.5;cursor:default}
+/* 组件区 */
+.group{border:1px solid var(--line);border-radius:10px;background:var(--card);overflow:hidden;margin-bottom:18px}
+.group-h{display:flex;align-items:center;justify-content:space-between;padding:13px 20px;border-bottom:1px solid var(--line2);
+  background:var(--bg2);font-size:13px;color:var(--sub)}
+.group-h b{color:var(--ink);font-size:14px}
 
-.row{display:grid;grid-template-columns:1fr 96px 78px 150px;gap:12px;align-items:center;
-  padding:13px 18px;border-bottom:1px solid #f1f3f6;font-size:13.5px}
-.row:last-child{border-bottom:0}
-.row:hover{background:#fbfcfd}
-.name b{display:block;font-weight:600}
-.name i{display:block;margin-top:3px;font-size:11.5px;color:#98a0ad;font-style:normal;
-  font-family:ui-monospace,SFMono-Regular,Menlo,monospace;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.state{display:flex;align-items:center;gap:8px;font-size:12.5px;color:var(--sub)}
-.state.ok{color:#0f8748}
-.state.bad{color:var(--bad)}
-.ms{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12.5px;color:var(--sub);text-align:right}
-.spark{display:flex;gap:2px;align-items:flex-end;height:22px;justify-content:flex-end}
-.spark i{width:5px;border-radius:2px;background:#d8efdf;display:block}
-.spark i.ok{background:#12a150}
-.spark i.slow{background:#e8b25a}
-.spark i.bad{background:#e3796f}
-
-.legend{display:flex;gap:16px;flex-wrap:wrap;padding:14px 18px;font-size:12px;color:var(--sub)}
+.comp{padding:16px 20px;border-bottom:1px solid var(--line2)}
+.comp:last-child{border-bottom:0}
+.comp-top{display:flex;align-items:baseline;gap:10px;margin-bottom:10px}
+.comp-top .nm{font-size:14.5px;font-weight:600}
+.comp-top .url{font-size:11.5px;color:var(--sub);font-family:ui-monospace,SFMono-Regular,Menlo,monospace}
+.comp-top .st{margin-left:auto;font-size:12.5px;display:flex;align-items:center;gap:7px;white-space:nowrap}
+.comp-top .st.ok{color:var(--ok)} .comp-top .st.warn{color:var(--warn)} .comp-top .st.bad{color:var(--bad)}
+.pip{width:8px;height:8px;border-radius:50%;background:currentColor}
+.bars{display:flex;gap:2px;height:34px;align-items:stretch}
+.bars i{flex:1;border-radius:2px;background:var(--bar-empty);min-width:2px}
+.bars i.ok{background:var(--ok)} .bars i.warn{background:var(--warn)} .bars i.bad{background:var(--bad)}
+.bars-scale{display:flex;justify-content:space-between;font-size:11.5px;color:var(--sub);margin-top:6px}
+.legend{display:flex;gap:18px;flex-wrap:wrap;padding:14px 20px;font-size:12px;color:var(--sub);border-top:1px solid var(--line2)}
 .legend span{display:flex;align-items:center;gap:7px}
+.legend em{width:12px;height:12px;border-radius:2px;display:inline-block;background:var(--ok)}
+.legend em.warn{background:var(--warn)} .legend em.bad{background:var(--bad)} .legend em.empty{background:var(--bar-empty)}
 
-.foot{color:var(--sub);font-size:12px;line-height:1.9;padding:22px 0 40px}
-.toast{position:fixed;left:50%;bottom:30px;transform:translate(-50%,12px);opacity:0;
-  background:#1f2329;color:#fff;font-size:12.5px;padding:9px 16px;border-radius:8px;
-  transition:.25s;pointer-events:none}
+/* 事件 */
+.inc{border:1px solid var(--line);border-radius:10px;background:var(--card);overflow:hidden}
+.inc-h{display:flex;align-items:center;justify-content:space-between;padding:14px 20px;border-bottom:1px solid var(--line2);background:var(--bg2)}
+.inc-h b{font-size:14px}
+.inc-h span{font-size:12.5px;color:var(--sub)}
+.inc-body{padding:18px 20px;font-size:13.5px;color:var(--sub)}
+.inc-item{padding:14px 20px;border-bottom:1px solid var(--line2);font-size:13.5px}
+.inc-item:last-child{border-bottom:0}
+.inc-item b{display:block;font-size:14px}
+.inc-item i{font-style:normal;font-size:12px;color:var(--sub)}
+
+.foot{margin-top:34px;padding-top:18px;border-top:1px solid var(--line2);font-size:12.5px;color:var(--sub);
+  display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
+.toast{position:fixed;left:50%;bottom:28px;transform:translate(-50%,12px);opacity:0;background:var(--ink);color:var(--bg);
+  font-size:12.5px;padding:9px 16px;border-radius:6px;transition:.24s;pointer-events:none}
 .toast.show{opacity:1;transform:translate(-50%,0)}
 
 @media (max-width:720px){
-  .row{grid-template-columns:1fr auto;row-gap:6px}
-  .spark{display:none}
-  .ms{text-align:left}
-  .banner .meta{margin-left:0;text-align:left;width:100%}
+  .banner{padding:20px;gap:14px;flex-wrap:wrap}
+  .bmeta{margin-left:0;text-align:left;width:100%}
+  h1{font-size:26px}
+  .topbar .nav{display:none}
+  .comp-top{flex-wrap:wrap}
+  .comp-top .st{margin-left:0;width:100%}
 }
 </style>
 </head>
 <body>
 
-<div class="top"><div class="wrap">
-  <div class="brand">软小寒<span>.</span>status</div>
+<div class="topbar"><div class="wrap">
+  <div class="logo">软小寒<span> · </span>status</div>
+  <div class="nav"><a href="../">总站</a><a href="../gov/">政务服务</a></div>
   <div class="spacer"></div>
-  <a class="back" href="../">← 返回总站</a>
+  <div class="tools">
+    <button class="tbtn" id="themeBtn">暗夜</button>
+    <button class="tbtn" id="runBtn">立即检测</button>
+  </div>
 </div></div>
 
 <main class="wrap">
-  <div class="hero">
-    <h1>站点状态</h1>
-    <p>每 60 秒由当前浏览器实测一次，记录响应时间与成败。<br>
-       数据只代表你这条网络链路的视角，不代表服务端监控。</p>
-  </div>
+  <h1>系统状态</h1>
+  <p class="lead">所有检测由你的浏览器实时发起，结果保存在本机；换网络、换设备看到的可能不同。</p>
 
   <div class="banner" id="banner">
-    <span class="dot" id="bdot"></span>
-    <b id="btext">正在检测…</b>
-    <div class="meta">
-      上次检查 <span id="last">—</span><br>
-      下次检查 <span id="next">—</span>
+    <div class="bicon" id="bicon">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M4 12.5l5 5 11-11"/></svg>
+    </div>
+    <div class="btext"><b id="bTitle">正在检测各项服务…</b><span id="bSub">正在发起请求</span></div>
+    <div class="bmeta">上次检测 <span id="lastTime">—</span><br>下次检测 <span id="nextTime">—</span></div>
+  </div>
+
+  <div class="group">
+    <div class="group-h"><b>站点与子站</b><span>同源页面 · 直接计时</span></div>
+    <div id="grp-site"></div>
+    <div class="group-h" style="border-top:1px solid var(--line2)"><b>外部依赖</b><span>跨域资源 · 仅判断通断</span></div>
+    <div id="grp-ext"></div>
+    <div class="legend">
+      <span><em></em>正常</span>
+      <span><em class="warn"></em>偏慢（&gt;800ms）</span>
+      <span><em class="bad"></em>失败</span>
+      <span><em class="empty"></em>本次无记录</span>
+      <span style="margin-left:auto">柱条为最近 40 次检测</span>
     </div>
   </div>
 
-  <section class="panel">
-    <div class="panel-h">
-      <strong>检测项</strong>
-      <div>
-        <button class="btn" id="run">立即检测</button>
-      </div>
-    </div>
-    <div id="rows"></div>
-    <div class="legend">
-      <span><i class="dot" style="width:8px;height:8px;box-shadow:none"></i> 正常</span>
-      <span><i class="dot warn" style="width:8px;height:8px;box-shadow:none"></i> 偏慢（&gt;800ms）</span>
-      <span><i class="dot bad" style="width:8px;height:8px;box-shadow:none"></i> 失败</span>
-      <span>右侧柱条为最近 12 次结果</span>
-    </div>
-  </section>
+  <div class="inc">
+    <div class="inc-h"><b>故障记录</b><span id="incCount">近 40 次检测</span></div>
+    <div id="incBody"><div class="inc-body">还没有发生故障。检测失败时会自动记录在这里。</div></div>
+  </div>
 
   <div class="foot">
-    检测方式：同源页面用 <code>fetch</code> 直接计时；跨域资源用图片探测，只能判断通断、拿不到状态码。<br>
-    当前会话整体可用率 <b id="uptime">—</b>（样本量 <span id="samples">0</span> 次）。<br>
-    本站托管在 GitHub Pages，没有 SLA 承诺，偶发 502/超时属平台侧波动。
+    <span>自制状态页 · 无服务端监控，数据只代表本机网络视角</span>
+    <span><a href="../">← 返回总站</a> · 2026</span>
   </div>
 </main>
 
@@ -135,114 +155,132 @@ a{color:inherit}
 
 <script>
 const TARGETS = [
-  { id:'home',  name:'总站首页',     url:'./?probe=1',              kind:'fetch' },
-  { id:'gov',   name:'政务服务演示', url:'../gov/',                 kind:'fetch' },
-  { id:'st',    name:'状态页自身',   url:'./?probe=1',              kind:'fetch' },
-  { id:'pages', name:'GitHub Pages', url:'https://rxhrxh520.github.io/', kind:'no-cors' },
-  { id:'ava',   name:'GitHub 头像',  url:'https://github.com/RXHrxh520.png?size=40', kind:'image' }
+  {id:'home', grp:'site', name:'总站首页', url:'../', kind:'fetch'},
+  {id:'gov',  grp:'site', name:'政务服务系统', url:'../gov/', kind:'fetch'},
+  {id:'st',   grp:'site', name:'状态页自身', url:'./', kind:'fetch'},
+  {id:'pages',grp:'ext',  name:'GitHub Pages 源站', url:'https://rxhrxh520.github.io/', kind:'nocors'},
+  {id:'ava',  grp:'ext',  name:'GitHub 头像', url:'https://github.com/RXHrxh520.png?size=40', kind:'image'},
+  {id:'cdn',  grp:'ext',  name:'jsDelivr 图标源', url:'https://fastly.jsdelivr.net/npm/simple-icons@latest/icons/github.svg', kind:'nocors'}
 ];
 
-const state = {};
-TARGETS.forEach(t=> state[t.id] = {hist:[], fails:0, total:0});
+const KEY = 'rxh_status_samples';
+const store = JSON.parse(localStorage.getItem(KEY) || '{}');
+TARGETS.forEach(t=>{ if(!store[t.id]) store[t.id] = []; });
+function save(){ localStorage.setItem(KEY, JSON.stringify(store)); }
+
+const $ = s => document.querySelector(s);
 
 function probe(t){
   const t0 = performance.now();
   return new Promise(resolve=>{
-    const done = ok => resolve({ok, ms: Math.round(performance.now()-t0)});
+    let settled = false;
+    const done = ok => { if(settled) return; settled = true; resolve({ok, ms: Math.round(performance.now()-t0), at: Date.now()}); };
     if(t.kind === 'image'){
       const img = new Image();
       img.onload = ()=>done(true);
       img.onerror = ()=>done(false);
       img.src = t.url + (t.url.includes('?') ? '&' : '?') + 'r=' + Date.now();
-      setTimeout(()=>done(false), 6000);
+      setTimeout(()=>done(false), 7000);
       return;
     }
-    fetch(t.url + (t.url.includes('?') ? '&' : '?') + 'r=' + Date.now(),
-      {cache:'no-store', mode: t.kind === 'no-cors' ? 'no-cors' : 'cors'})
+    fetch(t.url + (t.url.includes('?') ? '&' : '?') + 'r=' + Date.now(), {cache:'no-store', mode: t.kind === 'nocors' ? 'no-cors' : 'cors'})
       .then(()=>done(true))
       .catch(()=>done(false));
+    setTimeout(()=>done(false), 9000);
   });
 }
 
-function bar(hist){
-  return hist.slice(-12).map(h=>{
-    const cls = !h.ok ? 'bad' : (h.ms > 800 ? 'slow' : 'ok');
-    const hgt = 6 + Math.min(16, Math.round((h.ms||900)/60));
-    return `<i class="${cls}" style="height:${hgt}px"></i>`;
-  }).join('');
+function bars(hist){
+  const cells = hist.slice(-40);
+  const pad = Array(Math.max(0, 40 - cells.length)).fill(null).map(()=>`<i></i>`).join('');
+  return pad + cells.map(h=>`<i class="${!h.ok ? 'bad' : (h.ms > 800 ? 'warn' : 'ok')}"></i>`).join('');
 }
 
-function draw(){
-  document.getElementById('rows').innerHTML = TARGETS.map(t=>{
-    const s = state[t.id];
-    const last = s.hist[s.hist.length-1];
-    const cls = !last ? '' : (!last.ok ? 'bad' : (last.ms > 800 ? 'warn' : 'ok'));
-    const label = !last ? '待检测' : (!last.ok ? '无法访问' : (last.ms > 800 ? '偏慢' : '正常'));
-    return `<div class="row">
-      <div class="name"><b>${t.name}</b><i>${t.url}</i></div>
-      <div class="state ${cls==='ok'?'ok':(cls==='bad'?'bad':'')}">
-        <span class="dot ${cls==='ok'?'':cls}"></span>${label}
+function statusOf(h){
+  if(!h) return {cls:'', txt:'待检测'};
+  if(!h.ok) return {cls:'bad', txt:'失败'};
+  if(h.ms > 800) return {cls:'warn', txt:'偏慢'};
+  return {cls:'ok', txt:'正常'};
+}
+
+function render(){
+  const mk = t => {
+    const hist = store[t.id];
+    const last = hist[hist.length-1];
+    const st = statusOf(last);
+    return `<div class="comp">
+      <div class="comp-top">
+        <span class="nm">${t.name}</span>
+        <span class="url">${t.url}</span>
+        <span class="st ${st.cls}"><span class="pip" style="background:currentColor"></span>${st.txt}${last && last.ok ? ' · ' + last.ms + ' ms' : ''}</span>
       </div>
-      <div class="ms">${last ? (last.ok ? last.ms + ' ms' : '失败') : '—'}</div>
-      <div class="spark">${bar(s.hist)}</div>
+      <div class="bars">${bars(hist)}</div>
+      <div class="bars-scale"><span>40 次检测前</span><span>最近一次</span></div>
     </div>`;
-  }).join('');
-}
+  };
+  $('.group #grp-site').innerHTML = TARGETS.filter(t=>t.grp==='site').map(mk).join('');
+  $('#grp-ext').innerHTML = TARGETS.filter(t=>t.grp==='ext').map(mk).join('');
 
-function summary(){
-  const all = TARGETS.map(t=> state[t.id].hist[state[t.id].hist.length-1]).filter(Boolean);
-  const bad = all.filter(h=>!h.ok).length;
-  const slow = all.filter(h=>h.ok && h.ms > 800).length;
-  const banner = document.getElementById('banner');
-  const dot = document.getElementById('bdot');
-  const txt = document.getElementById('btext');
-  dot.className = 'dot'; banner.className = 'banner';
-  if(bad){ dot.classList.add('bad'); banner.classList.add('bad'); txt.textContent = bad + ' 项无法访问'; }
-  else if(slow){ dot.classList.add('warn'); banner.classList.add('warn'); txt.textContent = '全部可用 · ' + slow + ' 项偏慢'; }
-  else if(all.length){ txt.textContent = '全部正常'; }
-  else txt.textContent = '正在检测…';
+  // 汇总
+  const lasts = TARGETS.map(t=> store[t.id][store[t.id].length-1]).filter(Boolean);
+  const bad = lasts.filter(h=>!h.ok);
+  const slow = lasts.filter(h=>h.ok && h.ms > 800);
+  const bicon = $('#bicon'), bTitle = $('#bTitle'), bSub = $('#bSub');
+  bicon.className = 'bicon'; bTitle.textContent = '正在检测各项服务…';
+  if(lasts.length){
+    if(bad.length){ bicon.classList.add('bad'); bTitle.textContent = bad.length + ' 项服务异常'; bSub.textContent = '建议稍后重试，或检查本地网络'; }
+    else if(slow.length){ bicon.classList.add('warn'); bTitle.textContent = '所有服务可用 · ' + slow.length + ' 项响应偏慢'; bSub.textContent = '偏慢多为首次握手或跨域探测造成，可忽略'; }
+    else { bTitle.textContent = '所有系统运行正常'; bSub.textContent = '全部服务响应正常'; }
+  }
+  $('#lastTime').textContent = new Date().toLocaleTimeString('zh-CN',{hour12:false});
 
-  let total = 0, ok = 0;
-  TARGETS.forEach(t=>{ total += state[t.id].total; ok += state[t.id].total - state[t.id].fails; });
-  document.getElementById('uptime').textContent = total ? (ok/total*100).toFixed(1) + '%' : '—';
-  document.getElementById('samples').textContent = total;
-  document.getElementById('last').textContent = new Date().toLocaleTimeString('zh-CN',{hour12:false});
+  // 故障记录
+  const fails = [];
+  TARGETS.forEach(t=> store[t.id].forEach(h=>{ if(!h.ok) fails.push({name:t.name, at:h.at}); }));
+  fails.sort((a,b)=>b.at-a.at);
+  $('#incBody').innerHTML = fails.length
+    ? fails.slice(0,8).map(f=>`<div class="inc-item"><b>${f.name} 无法访问</b><i>${new Date(f.at).toLocaleString('zh-CN')}</i></div>`).join('')
+    : '<div class="inc-body">还没有发生故障。检测失败时会自动记录在这里。</div>';
+  $('#incCount').textContent = lasts.length ? '已记录 ' + fails.length + ' 次失败' : '近 40 次检测';
 }
 
 async function runAll(){
-  const btn = document.getElementById('run');
-  btn.disabled = true;
-  const results = await Promise.all(TARGETS.map(t=>probe(t).then(r=>({t,r}))));
+  $('#runBtn').disabled = true;
+  const results = await Promise.all(TARGETS.map(t=> probe(t).then(r=>({t,r}))));
   results.forEach(({t,r})=>{
-    const s = state[t.id];
-    s.hist.push(r); if(s.hist.length > 12) s.hist.shift();
-    s.total++; if(!r.ok) s.fails++;
+    store[t.id].push(r);
+    if(store[t.id].length > 40) store[t.id].shift();
   });
-  draw(); summary();
-  btn.disabled = false;
-  toast('检测完成');
+  save(); render();
+  $('#runBtn').disabled = false;
+  const el = $('#toast'); el.textContent = '检测完成'; el.classList.add('show');
+  setTimeout(()=>el.classList.remove('show'), 1400);
 }
 
 let timer, tick = 60;
 function loop(){
-  clearInterval(timer);
-  tick = 60;
+  clearInterval(timer); tick = 60;
   timer = setInterval(()=>{
-    tick--;
-    document.getElementById('next').textContent = tick + ' 秒';
+    tick--; $('#nextTime').textContent = tick + ' 秒';
     if(tick <= 0){ tick = 60; runAll(); }
   }, 1000);
 }
 
-let tt;
-function toast(m){
-  const el = document.getElementById('toast');
-  el.textContent = m; el.classList.add('show');
-  clearTimeout(tt); tt = setTimeout(()=>el.classList.remove('show'), 1400);
-}
+$('#runBtn').addEventListener('click', ()=>{ runAll(); loop(); });
 
-document.getElementById('run').addEventListener('click',()=>{ runAll(); loop(); });
-draw(); runAll(); loop();
+/* 主题跟随总站 */
+function applyTheme(){
+  const t = localStorage.getItem('rxh_theme');
+  document.documentElement.classList.toggle('dark', t === 'dark');
+}
+$('#themeBtn').addEventListener('click', ()=>{
+  const dark = !document.documentElement.classList.contains('dark');
+  document.documentElement.classList.toggle('dark', dark);
+  localStorage.setItem('rxh_theme', dark ? 'dark' : 'light');
+});
+
+applyTheme();
+render(); runAll(); loop();
 </script>
 </body>
 </html>
