@@ -16,6 +16,8 @@
   --dim:#9aa4c0;
   --pink:#ff7ab8;
   --pink2:#b45cff;
+  --glow1:#ff7ab8;
+  --glow2:#b45cff;
   --ok:#37e0a0;
   --warn:#ffc35c;
   --bad:#ff6470;
@@ -25,8 +27,8 @@
 html,body{margin:0;min-height:100%}
 body{
   background:
-    radial-gradient(1000px 620px at 12% -8%, color-mix(in srgb, var(--pink) 22%, transparent), transparent 68%),
-    radial-gradient(900px 560px at 92% 4%, color-mix(in srgb, var(--pink2) 20%, transparent), transparent 66%),
+    radial-gradient(1000px 620px at 12% -8%, color-mix(in srgb, var(--glow1) 22%, transparent), transparent 68%),
+    radial-gradient(900px 560px at 92% 4%, color-mix(in srgb, var(--glow2) 20%, transparent), transparent 66%),
     linear-gradient(160deg,#0a0d16,#0d1224 46%,#0a0d16);
   color:var(--txt);
   font:15px/1.65 "PingFang SC","HarmonyOS Sans SC","Microsoft YaHei",system-ui,-apple-system,sans-serif;
@@ -204,8 +206,8 @@ body.light{
   --txt:#171d33;
   --dim:#5c6684;
   background:
-    radial-gradient(900px 560px at 10% -10%, color-mix(in srgb, var(--pink) 26%, transparent), transparent 70%),
-    radial-gradient(800px 520px at 92% 0%, color-mix(in srgb, var(--pink2) 20%, transparent), transparent 68%),
+    radial-gradient(900px 560px at 10% -10%, color-mix(in srgb, var(--glow1) 26%, transparent), transparent 70%),
+    radial-gradient(800px 520px at 92% 0%, color-mix(in srgb, var(--glow2) 20%, transparent), transparent 68%),
     linear-gradient(165deg,#f7f8fd,#eef1fa 45%,#f6f7fc);
 }
 body.light header.top{background:rgba(250,251,255,.72)}
