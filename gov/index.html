@@ -3,272 +3,314 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>政务服务系统</title>
-<meta name="description" content="政务服务门户界面：服务大厅、办事指南、进度查询、咨询投诉。">
+<title>淳安县人民政府政务服务大厅</title>
+<meta name="description" content="淳安县政务服务大厅：办事指南、办件查询、咨询投诉、好差评。">
 <style>
-:root{--red:#bb1f2a;--red-d:#94141e;--blue:#175ea8;--ink:#1f2329;--sub:#5b6472;--line:#e4e7ec;--bg:#f3f5f8}
+:root{--blue:#0b5cad;--blue-d:#08457f;--blue-l:#e8f1fb;--ink:#1f2329;--sub:#5b6472;--line:#e2e7ee;--bg:#f2f5f9;--red:#bb1f2a}
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,"PingFang SC","Microsoft YaHei",system-ui,sans-serif}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,"PingFang SC","Microsoft YaHei",system-ui,sans-serif;line-height:1.7}
 a{color:inherit;text-decoration:none}
 button{font-family:inherit}
-.wrap{max-width:1180px;margin:0 auto;padding:0 20px}
+.wrap{max-width:1200px;margin:0 auto;padding:0 22px}
 
-.topline{background:#fbfcfe;border-bottom:1px solid var(--line);font-size:12.5px;color:var(--sub)}
-.topline .wrap{display:flex;align-items:center;gap:14px;height:36px;justify-content:flex-end}
-.topline a:hover{color:var(--red)}
+.topline{background:var(--blue-d);color:#dbe8f7;font-size:12.5px}
+.topline .wrap{display:flex;align-items:center;gap:18px;height:34px}
+.topline .spacer{flex:1}
+.topline span{opacity:.8}
 
-.head{background:linear-gradient(135deg,var(--red),var(--red-d));color:#fff}
-.head .wrap{display:flex;align-items:center;gap:18px;height:94px}
-.emblem{width:50px;height:50px;border-radius:12px;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.28);
-  display:grid;place-items:center;font-size:23px;font-weight:800;flex:0 0 auto}
-.brand h1{margin:0;font-size:22px;letter-spacing:2px}
-.brand p{margin:4px 0 0;font-size:11.5px;letter-spacing:1.3px;opacity:.8}
+.head{background:linear-gradient(120deg,#0b5cad,#1a76d2 70%,#2a86df);color:#fff;position:relative;overflow:hidden}
+.head::after{content:"";position:absolute;right:-80px;top:-60px;width:340px;height:340px;border-radius:50%;
+  background:radial-gradient(closest-side,rgba(255,255,255,.16),transparent);pointer-events:none}
+.head .wrap{display:flex;align-items:center;gap:16px;height:96px;position:relative;z-index:1}
+.emblem{width:52px;height:52px;border-radius:10px;background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.3);
+  display:grid;place-items:center;font-size:22px;font-weight:800;flex:0 0 auto}
+.brand h1{margin:0;font-size:22px;letter-spacing:1.6px;font-weight:700}
+.brand p{margin:5px 0 0;font-size:12px;letter-spacing:2.2px;opacity:.82}
 .head .spacer{flex:1}
-.search{display:flex;background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.3);border-radius:8px;
-  overflow:hidden;height:38px;width:320px}
-.search input{flex:1;border:0;background:transparent;color:#fff;padding:0 12px;font-size:13.5px;outline:0}
-.search input::placeholder{color:rgba(255,255,255,.72)}
-.search button{border:0;background:rgba(0,0,0,.18);color:#fff;padding:0 16px;font-size:13px;cursor:pointer}
+.search{display:flex;background:#fff;border-radius:6px;overflow:hidden;height:40px;width:330px;box-shadow:0 4px 14px rgba(4,40,80,.18)}
+.search input{flex:1;border:0;padding:0 13px;font-size:13.5px;outline:0;color:var(--ink)}
+.search button{border:0;background:#ffb300;color:#5b3c00;padding:0 18px;font-size:13.5px;font-weight:700;cursor:pointer}
 .head-links{display:flex;gap:16px;font-size:13px}
 .head-links button{background:none;border:0;color:#fff;cursor:pointer;font-size:13px;padding:0}
 .head-links button:hover{text-decoration:underline}
-.head-links a:hover{text-decoration:underline}
 
-.nav{background:#fff;border-bottom:1px solid var(--line);position:sticky;top:0;z-index:40;box-shadow:0 2px 10px rgba(20,30,50,.05)}
+.nav{background:#fff;border-bottom:2px solid var(--blue);position:sticky;top:0;z-index:40;box-shadow:0 2px 10px rgba(10,40,80,.08)}
 .nav .wrap{display:flex;height:50px;overflow-x:auto}
-.nav button{background:none;border:0;border-bottom:3px solid transparent;padding:0 16px;font-size:14px;color:var(--sub);
-  cursor:pointer;white-space:nowrap;height:100%}
-.nav button.on{color:var(--red);font-weight:700;border-bottom-color:var(--red)}
-.nav button:hover{color:var(--red)}
+.nav button{background:none;border:0;padding:0 18px;font-size:14.5px;color:#3a4553;cursor:pointer;white-space:nowrap;height:100%;
+  border-bottom:3px solid transparent}
+.nav button.on{color:var(--blue);font-weight:700;border-bottom-color:var(--blue)}
+.nav button:hover{color:var(--blue)}
 
-.sec{display:none;animation:fade .3s ease}
-.sec.on{display:block}
-@keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.sec{display:none}
+.sec.on{display:block;animation:fade .25s ease}
+@keyframes fade{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:none}}
 
-.grid{display:grid;grid-template-columns:1.35fr .95fr;gap:18px;margin:22px 0}
-.card{background:#fff;border:1px solid var(--line);border-radius:8px;overflow:hidden}
-.card-h{display:flex;align-items:center;justify-content:space-between;padding:13px 18px;border-bottom:1px solid var(--line)}
-.card-h h2{margin:0;font-size:16px}
-.card-h h2::before{content:"";display:inline-block;width:4px;height:15px;background:var(--red);border-radius:2px;margin-right:9px;vertical-align:-2px}
+.hero{display:grid;grid-template-columns:1.2fr .8fr;gap:18px;margin:20px 0}
+.banner{background:linear-gradient(120deg,#eaf3fd,#f7fbff);border:1px solid #d5e5f6;border-radius:8px;padding:24px 26px}
+.banner h2{margin:0;font-size:20px;letter-spacing:.5px}
+.banner p{margin:10px 0 16px;font-size:13.5px;color:var(--sub)}
+.banner .go{display:inline-flex;align-items:center;gap:8px;background:var(--blue);color:#fff;border:0;
+  border-radius:6px;padding:10px 18px;font-size:13.5px;cursor:pointer}
+.qgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+.qcard{background:#fff;border:1px solid var(--line);border-radius:8px;padding:16px;cursor:pointer;transition:.18s;text-align:left}
+.qcard:hover{border-color:#b7d0ea;box-shadow:0 8px 20px rgba(11,92,173,.1);transform:translateY(-1px)}
+.qcard b{display:block;font-size:14.5px;color:#1b2a3a}
+.qcard i{display:block;margin-top:5px;font-size:12px;color:var(--sub);font-style:normal}
+.qcard .ic{width:34px;height:34px;border-radius:50%;background:var(--blue-l);color:var(--blue);
+  display:grid;place-items:center;font-size:15px;font-weight:700;margin-bottom:10px}
+
+.card{background:#fff;border:1px solid var(--line);border-radius:8px;overflow:hidden;margin-bottom:18px}
+.card-h{display:flex;align-items:center;justify-content:space-between;padding:14px 20px;border-bottom:1px solid var(--line)}
+.card-h h2{margin:0;font-size:16.5px}
+.card-h h2::before{content:"";display:inline-block;width:4px;height:15px;background:var(--blue);border-radius:2px;margin-right:10px;vertical-align:-2px}
 .card-h .more{font-size:12.5px;color:var(--sub)}
 
-.tabs{display:flex;gap:8px;padding:14px 18px 0}
-.tab{border:1px solid var(--line);background:#f7f8fa;color:var(--sub);border-radius:6px;padding:7px 16px;font-size:13.5px;cursor:pointer}
-.tab.on{background:var(--red);border-color:var(--red);color:#fff;font-weight:600}
+.tabs{display:flex;gap:8px;padding:14px 20px 0}
+.tab{border:1px solid var(--line);background:#f7f9fc;color:var(--sub);border-radius:6px;padding:7px 16px;font-size:13.5px;cursor:pointer}
+.tab.on{background:var(--blue);border-color:var(--blue);color:#fff;font-weight:600}
 
-.svc{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;padding:16px 18px 20px}
+.svc{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;padding:16px 20px 20px}
 .svc button{display:flex;gap:12px;align-items:center;text-align:left;border:1px solid var(--line);border-radius:8px;
   padding:13px 14px;background:#fdfefe;transition:.18s;cursor:pointer}
-.svc button:hover{border-color:#f0c1c5;background:#fffafa;transform:translateY(-1px);box-shadow:0 6px 18px rgba(187,31,42,.08)}
-.svc .ico{width:36px;height:36px;border-radius:8px;background:#fdeef0;color:var(--red);display:grid;place-items:center;
-  font-size:14px;font-weight:700;flex:0 0 auto}
-.svc b{display:block;font-size:14px}
-.svc i{display:block;margin-top:4px;font-size:12px;color:var(--sub);font-style:normal}
+.svc button:hover{border-color:#bcd6ee;background:#f7fbff}
+.svc .ico{width:36px;height:36px;border-radius:8px;background:var(--blue-l);color:var(--blue);display:grid;place-items:center;
+  font-size:13.5px;font-weight:700;flex:0 0 auto}
+.svc b{display:block;font-size:13.8px;line-height:1.4}
+.svc i{display:block;margin-top:3px;font-size:11.5px;color:var(--sub);font-style:normal}
 
-.news{padding:4px 18px 14px;margin:0}
-.news li{list-style:none;display:flex;gap:10px;padding:11px 0;border-bottom:1px dashed #eceef2;font-size:13.5px;
-  color:#31363d;cursor:pointer}
+.news{padding:2px 20px 12px;margin:0}
+.news li{list-style:none;display:flex;gap:10px;padding:11px 0;border-bottom:1px dashed #eef1f5;font-size:13.5px;color:#2f3742;cursor:pointer}
 .news li:last-child{border-bottom:0}
-.news li:hover{color:var(--red)}
-.news li span{margin-left:auto;color:#98a0ad;font-size:12px}
-.news li::before{content:"";width:5px;height:5px;border-radius:50%;background:var(--red);opacity:.7;margin-top:8px;flex:0 0 auto}
+.news li:hover{color:var(--blue)}
+.news li span{margin-left:auto;color:#98a0ad;font-size:12px;white-space:nowrap}
+.news li::before{content:"";width:5px;height:5px;border-radius:50%;background:var(--blue);opacity:.65;margin-top:8px;flex:0 0 auto}
 
-.quick{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:22px}
-.quick button{background:#fff;border:1px solid var(--line);border-radius:8px;padding:16px;text-align:center;cursor:pointer;transition:.18s}
-.quick button:hover{border-color:#c9d6ea;box-shadow:0 6px 16px rgba(23,94,168,.09)}
-.quick b{display:block;font-size:14.5px}
-.quick i{display:block;margin-top:5px;font-size:12px;color:var(--sub);font-style:normal}
+.depts{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;padding:18px 20px 22px}
+.depts button{border:1px solid var(--line);background:#fbfcfe;border-radius:8px;padding:14px 12px;font-size:13.5px;cursor:pointer;text-align:center}
+.depts button:hover{border-color:#b7d0ea;color:var(--blue)}
 
 .tbl{width:100%;border-collapse:collapse;font-size:13.5px}
-.tbl th{background:#f7f8fa;text-align:left;padding:11px 18px;color:#48505c;border-bottom:1px solid var(--line);white-space:nowrap}
-.tbl td{padding:12px 18px;border-bottom:1px solid #f0f2f5}
-.tbl tr:hover td{background:#fcfcfd}
+.tbl th{background:#f6f9fc;text-align:left;padding:11px 20px;color:#46505c;border-bottom:1px solid var(--line);white-space:nowrap}
+.tbl td{padding:12px 20px;border-bottom:1px solid #f1f3f7}
+.tbl tr:hover td{background:#fcfdfe}
 .op{color:var(--blue);font-weight:600;cursor:pointer;white-space:nowrap}
-.pill{display:inline-block;font-size:11.5px;padding:2px 8px;border-radius:20px;border:1px solid #d9dee6;color:#5c6572;background:#fafbfc;margin-left:6px}
-.tbl-tip{padding:12px 18px;font-size:12.5px;color:var(--sub);border-top:1px solid #f0f2f5;background:#fcfcfd}
+.pill{display:inline-block;font-size:11.5px;padding:2px 8px;border-radius:20px;border:1px solid #d7e3f0;color:#0b5cad;background:#f2f8ff;margin-left:6px}
 
-.form{background:#fff;border:1px solid var(--line);border-radius:8px;padding:22px}
+.form{background:#fff;border:1px solid var(--line);border-radius:8px;padding:24px;margin:20px 0}
 .form h2{margin:0 0 6px;font-size:18px}
 .form p.hint{margin:0 0 18px;font-size:12.5px;color:var(--sub)}
 .field{display:flex;flex-direction:column;gap:6px;margin-bottom:14px}
 .field label{font-size:13px;color:#3d454f}
-.field input,.field select,.field textarea{border:1px solid #d8dde5;border-radius:6px;padding:10px 12px;font-size:13.5px;font-family:inherit;outline:0;background:#fff}
-.field input:focus,.field textarea:focus,.field select:focus{border-color:#9db6d6;box-shadow:0 0 0 3px rgba(23,94,168,.08)}
-.btn-primary{background:var(--red);color:#fff;border:0;border-radius:6px;padding:11px 26px;font-size:14px;cursor:pointer}
-.btn-primary:hover{background:var(--red-d)}
-.btn-ghost{background:#fff;border:1px solid #d8dde5;color:var(--ink);border-radius:6px;padding:10px 20px;font-size:13.5px;cursor:pointer}
+.field input,.field select,.field textarea{border:1px solid #d7dde6;border-radius:6px;padding:10px 12px;font-size:13.5px;font-family:inherit;outline:0;background:#fff}
+.field input:focus,.field textarea:focus,.field select:focus{border-color:#8fb4d8;box-shadow:0 0 0 3px rgba(11,92,173,.08)}
+.btn-primary{background:var(--blue);color:#fff;border:0;border-radius:6px;padding:11px 26px;font-size:14px;cursor:pointer}
+.btn-primary:hover{background:var(--blue-d)}
+.btn-ghost{background:#fff;border:1px solid #d7dde6;color:var(--ink);border-radius:6px;padding:10px 20px;font-size:13.5px;cursor:pointer}
 
 .result{margin-top:18px}
 .result:empty{display:none}
 .res-box{border:1px solid var(--line);border-radius:8px;overflow:hidden}
-.res-h{display:flex;align-items:center;justify-content:space-between;padding:13px 16px;background:#f8fafc;border-bottom:1px solid var(--line);font-size:13.5px}
+.res-h{display:flex;align-items:center;justify-content:space-between;padding:13px 16px;background:#f6f9fc;border-bottom:1px solid var(--line);font-size:13.5px}
 .res-body{padding:16px}
 .steps{list-style:none;padding:0;margin:0;display:grid;gap:12px}
 .steps li{display:flex;gap:12px;font-size:13.5px}
-.steps .num{width:22px;height:22px;border-radius:50%;background:#fdeef0;color:var(--red);display:grid;place-items:center;font-size:12px;font-weight:700;flex:0 0 auto}
+.steps .num{width:22px;height:22px;border-radius:50%;background:var(--blue-l);color:var(--blue);display:grid;place-items:center;font-size:12px;font-weight:700;flex:0 0 auto}
 .steps .num.done{background:#e8f7ee;color:#12864c}
 .muted{color:var(--sub);font-size:13px}
 
-.list-item{display:flex;gap:14px;padding:16px 18px;border-bottom:1px solid #f0f2f5;cursor:pointer}
-.list-item:hover{background:#fcfcfd}
+.list-item{display:flex;gap:14px;padding:15px 20px;border-bottom:1px solid #f1f3f7;cursor:pointer}
+.list-item:hover{background:#fcfdfe}
 .list-item:last-child{border-bottom:0}
 .list-item b{font-size:14.5px}
-.list-item i{display:block;margin-top:5px;font-size:12.5px;color:var(--sub);font-style:normal}
+.list-item i{display:block;margin-top:4px;font-size:12.5px;color:var(--sub);font-style:normal}
 .list-item .t{margin-left:auto;font-size:12px;color:#98a0ad;white-space:nowrap}
 
-.mask{position:fixed;inset:0;background:rgba(16,22,30,.45);display:none;z-index:70;padding:24px;overflow:auto}
+.mask{position:fixed;inset:0;background:rgba(12,22,34,.45);display:none;z-index:70;padding:24px;overflow:auto}
 .mask.on{display:flex;align-items:flex-start;justify-content:center}
-.modal{background:#fff;border-radius:10px;width:min(680px,100%);margin:auto;box-shadow:0 24px 60px rgba(0,0,0,.24);animation:pop .22s ease}
-@keyframes pop{from{opacity:0;transform:translateY(10px) scale(.99)}to{opacity:1;transform:none}}
+.modal{background:#fff;border-radius:8px;width:min(700px,100%);margin:auto;box-shadow:0 24px 60px rgba(0,0,0,.22)}
 .modal-h{display:flex;align-items:flex-start;gap:12px;padding:18px 22px;border-bottom:1px solid var(--line)}
 .modal-h h3{margin:0;font-size:17px}
 .modal-h .x{margin-left:auto;border:0;background:none;font-size:22px;line-height:1;color:#98a0ad;cursor:pointer;padding:0 4px}
 .modal-b{padding:20px 22px;font-size:13.8px;line-height:1.9;max-height:66vh;overflow:auto}
-.modal-f{display:flex;gap:10px;justify-content:flex-end;padding:14px 22px;border-top:1px solid var(--line);background:#fcfcfd}
-.kv{display:grid;grid-template-columns:88px 1fr;gap:8px 12px;margin:0 0 16px;font-size:13.5px}
+.modal-f{display:flex;gap:10px;justify-content:flex-end;padding:14px 22px;border-top:1px solid var(--line);background:#fbfcfe}
+.kv{display:grid;grid-template-columns:104px 1fr;gap:9px 14px;margin:0 0 16px;font-size:13.5px}
 .kv dt{color:var(--sub)}
 .kv dd{margin:0}
 
-.toast{position:fixed;left:50%;bottom:30px;transform:translate(-50%,12px);opacity:0;background:#1f2329;color:#fff;
-  font-size:13px;padding:10px 18px;border-radius:8px;transition:.24s;pointer-events:none;z-index:80}
+/* 特殊档案 */
+.dossier{border:1px solid #b9c6d6;border-radius:6px;overflow:hidden;background:#fff}
+.dossier-h{background:linear-gradient(120deg,#0c2236,#123a5a);color:#eaf2fb;padding:16px 20px;display:flex;align-items:center;gap:14px}
+.dossier-h b{font-size:15.5px;letter-spacing:1.2px}
+.dossier-h .code{margin-left:auto;font-family:ui-monospace,Menlo,monospace;font-size:12.5px;padding:4px 10px;
+  border:1px solid rgba(255,255,255,.3);border-radius:4px}
+.dossier-b{padding:20px}
+.dossier-b dl{display:grid;grid-template-columns:100px 1fr;gap:10px 14px;margin:0 0 18px;font-size:13.5px}
+.dossier-b dt{color:#6b7381}
+.dossier-b dd{margin:0;color:#20262e}
+.seal{display:inline-block;margin-top:6px;border:2px solid #b3202a;color:#b3202a;border-radius:4px;
+  padding:4px 12px;font-size:11.5px;letter-spacing:2px;transform:rotate(-2deg)}
+.nullv{color:#9aa3ad;font-family:ui-monospace,Menlo,monospace}
+.dossier-foot{padding:12px 20px;background:#f5f8fb;border-top:1px solid #dde6ef;font-size:12px;color:#6b7381}
+
+.toast{position:fixed;left:50%;bottom:30px;transform:translate(-50%,12px);opacity:0;background:#16212c;color:#fff;
+  font-size:13px;padding:10px 18px;border-radius:6px;transition:.24s;pointer-events:none;z-index:80}
 .toast.show{opacity:1;transform:translate(-50%,0)}
 
-.foot{background:#3a4048;color:#c6ccd4;margin-top:30px;padding:24px 0 28px;font-size:12.5px;line-height:2}
+.foot{background:#12293d;color:#a9bccd;margin-top:28px;padding:22px 0 24px;font-size:12.5px;line-height:2}
 .foot .wrap{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap}
-.foot a{text-decoration:underline;text-underline-offset:3px}
+.foot .tiny{display:block;margin-top:10px;font-size:11.5px;color:#7d90a2}
 
-@media (max-width:900px){
-  .head .wrap{height:auto;padding:16px 20px;flex-wrap:wrap;gap:12px}
+@media (max-width:960px){
+  .head .wrap{height:auto;padding:16px 22px;flex-wrap:wrap;gap:12px}
   .search{width:100%}
-  .head-links{width:100%;gap:18px}
-  .grid{grid-template-columns:1fr}
-  .quick{grid-template-columns:1fr 1fr}
+  .hero{grid-template-columns:1fr}
+  .svc{grid-template-columns:repeat(2,1fr)}
+  .depts{grid-template-columns:repeat(2,1fr)}
+  .tbl th:nth-child(3),.tbl td:nth-child(3){display:none}
+  .kv,.dossier-b dl{grid-template-columns:1fr;gap:3px}
+}
+@media (max-width:560px){
   .svc{grid-template-columns:1fr}
-  .tbl th:nth-child(3),.tbl td:nth-child(3),.tbl th:nth-child(4),.tbl td:nth-child(4){display:none}
-  .kv{grid-template-columns:1fr;gap:2px}
+  .news li span{display:none}
 }
 </style>
 </head>
 <body>
 
 <div class="topline"><div class="wrap">
-  <a href="../">返回总站</a>
-  <a href="../status/">站点状态</a>
+  <span>浙江省 · 杭州市 · 淳安县</span>
+  <div class="spacer"></div>
   <span id="today"></span>
 </div></div>
 
 <header class="head"><div class="wrap">
-  <div class="emblem">政</div>
-  <div class="brand"><h1>政务服务系统</h1><p>GOVERNMENT SERVICE PORTAL</p></div>
+  <div class="emblem">淳</div>
+  <div class="brand"><h1>淳安县人民政府</h1><p>政务服务大厅 · 政务服务网</p></div>
   <div class="spacer"></div>
   <div class="search">
-    <input id="q" placeholder="输入事项名称、部门或关键词">
+    <input id="q" placeholder="搜索事项、部门或关键词">
     <button id="qbtn">搜索</button>
   </div>
   <div class="head-links">
     <button id="loginBtn">登录</button>
     <button id="regBtn">注册</button>
-    <a href="../status/">状态</a>
   </div>
 </div></header>
 
 <nav class="nav" id="nav"><div class="wrap">
   <button data-sec="home" class="on">首页</button>
-  <button data-sec="person">个人办事</button>
-  <button data-sec="corp">法人办事</button>
+  <button data-sec="hall">办事大厅</button>
+  <button data-sec="dept">部门服务</button>
   <button data-sec="guide">办事指南</button>
-  <button data-sec="progress">进度查询</button>
+  <button data-sec="progress">办件查询</button>
   <button data-sec="consult">咨询投诉</button>
-  <button data-sec="policy">政策文件</button>
+  <button data-sec="rate">好差评</button>
+  <button data-sec="policy">政策法规</button>
 </div></nav>
 
 <main class="wrap">
 
   <section class="sec on" id="sec-home">
-    <div class="grid">
-      <div class="card">
-        <div class="card-h"><h2>服务大厅</h2><span class="more" id="svcCount">共 12 项</span></div>
-        <div class="tabs">
-          <button class="tab on" data-kind="person">个人办事</button>
-          <button class="tab" data-kind="corp">法人办事</button>
-        </div>
-        <div class="svc" id="svc"></div>
+    <div class="hero">
+      <div class="banner">
+        <h2>一网通办 · 最多跑一次</h2>
+        <p>全县 32 个部门、486 项政务服务事项集中受理，线上提交、线下取件，办件进度可随时查询。</p>
+        <button class="go" data-sec="hall">进入办事大厅 →</button>
       </div>
-      <div class="card">
-        <div class="card-h"><h2>通知公告</h2><span class="more">5 条</span></div>
-        <ul class="news" id="news"></ul>
+      <div class="qgrid">
+        <button class="qcard" data-sec="progress"><span class="ic">查</span><b>办件查询</b><i>凭办件编号查看进度</i></button>
+        <button class="qcard" data-sec="guide"><span class="ic">指</span><b>办事指南</b><i>材料、流程、时限</i></button>
+        <button class="qcard" data-sec="consult"><span class="ic">咨</span><b>咨询投诉</b><i>在线留言，限时答复</i></button>
+        <button class="qcard" data-sec="rate"><span class="ic">评</span><b>好差评</b><i>办完给窗口打星</i></button>
       </div>
-    </div>
-
-    <div class="quick">
-      <button data-sec="guide"><b>办事指南</b><i>材料、流程、时限</i></button>
-      <button data-sec="person"><b>在线申报</b><i>按事项提交</i></button>
-      <button data-sec="progress"><b>进度查询</b><i>凭受理编号查询</i></button>
-      <button data-sec="consult"><b>咨询投诉</b><i>留下问题等回复</i></button>
     </div>
 
     <div class="card">
       <div class="card-h"><h2>高频事项</h2><span class="more" id="hotCount"></span></div>
       <table class="tbl">
-        <thead><tr><th>事项名称</th><th>承办部门</th><th>办理时限</th><th>操作</th></tr></thead>
+        <thead><tr><th>事项名称</th><th>承办部门</th><th>承诺时限</th><th>操作</th></tr></thead>
         <tbody id="hotBody"></tbody>
       </table>
-      <div class="tbl-tip">点击「在线办理」可查看所需材料与办理流程，并生成受理编号。</div>
+    </div>
+
+    <div class="hero">
+      <div class="card" style="margin:0">
+        <div class="card-h"><h2>通知公告</h2><span class="more">更多 →</span></div>
+        <ul class="news" id="news"></ul>
+      </div>
+      <div class="card" style="margin:0">
+        <div class="card-h"><h2>服务数据</h2><span class="more">实时</span></div>
+        <div style="padding:18px 20px 22px;display:grid;grid-template-columns:1fr 1fr;gap:14px">
+          <div><b style="font-size:24px;color:#0b5cad" id="d1">—</b><div class="muted">今日受理</div></div>
+          <div><b style="font-size:24px;color:#0b5cad" id="d2">—</b><div class="muted">今日办结</div></div>
+          <div><b style="font-size:24px;color:#0b5cad" id="d3">—</b><div class="muted">在办件</div></div>
+          <div><b style="font-size:24px;color:#0b5cad" id="d4">—</b></div><div class="muted">平均时长</div></div>
+        </div>
+      </div>
     </div>
   </section>
 
-  <section class="sec" id="sec-person"></section>
-  <section class="sec" id="sec-corp"></section>
+  <section class="sec" id="sec-hall"></section>
+  <section class="sec" id="sec-dept"></section>
 
   <section class="sec" id="sec-guide">
-    <div class="form" style="margin-top:22px">
-      <h2>办事指南</h2>
-      <p class="hint">按事项查看申请材料、办理流程与承诺时限。顶部搜索框可跨分类检索。</p>
+    <div class="card" style="margin-top:20px">
+      <div class="card-h"><h2>办事指南</h2><span class="more">全量事项清单</span></div>
       <div id="guideList"></div>
     </div>
   </section>
 
   <section class="sec" id="sec-progress">
-    <div class="form" style="margin-top:22px;max-width:720px">
-      <h2>办件进度查询</h2>
-      <p class="hint">输入受理编号查询办理状态。编号在提交申报后生成，形如 RXH-2026-0001。</p>
-      <div class="field"><label>受理编号</label><input id="pn" placeholder="例如 RXH-2026-0001"></div>
-      <div class="field"><label>查询方式</label>
-        <select id="pway"><option>按受理编号</option><option>按手机号</option></select>
-      </div>
-      <button class="btn-primary" id="pbtn">查询</button>
+    <div class="form" style="max-width:760px">
+      <h2>办件查询</h2>
+      <p class="hint">输入办件编号查询办理状态。编号由受理窗口在收件后生成，形如 CN-2026-000001。</p>
+      <div class="field"><label>办件编号</label><input id="pn" placeholder="例如 CN-2026-000001"></div>
+      <div class="field"><label>申请人手机号（选填）</label><input id="pphone" placeholder="用于校验本人办件"></div>
+      <button class="btn-primary" id="pbtn">查 询</button>
       <div class="result" id="presult"></div>
     </div>
   </section>
 
   <section class="sec" id="sec-consult">
-    <div class="form" style="margin-top:22px;max-width:820px">
+    <div class="form" style="max-width:820px">
       <h2>咨询投诉</h2>
-      <p class="hint">描述你的问题，提交后会生成受理编号，可在本机重复查看。</p>
-      <div class="field"><label>类型</label>
-        <select id="ctype"><option>咨询</option><option>建议</option><option>投诉</option></select>
-      </div>
-      <div class="field"><label>标题</label><input id="ctitle" placeholder="一句话概括问题"></div>
+      <p class="hint">提交后生成受理单号，可在本机查看处理意见。</p>
+      <div class="field"><label>类型</label><select id="ctype"><option>咨询</option><option>建议</option><option>投诉</option></select></div>
+      <div class="field"><label>标题</label><input id="ctitle" placeholder="一句话概括"></div>
       <div class="field"><label>详细说明</label><textarea id="cbody" rows="5" placeholder="请描述具体情况"></textarea></div>
-      <div class="field"><label>联系方式（选填）</label><input id="ccontact" placeholder="邮箱或手机号，仅保存在本机"></div>
+      <div class="field"><label>联系方式（选填）</label><input id="ccontact" placeholder="手机号或邮箱"></div>
       <button class="btn-primary" id="cbtn">提交</button>
       <div class="result" id="cresult"></div>
     </div>
   </section>
 
+  <section class="sec" id="sec-rate">
+    <div class="form" style="max-width:760px">
+      <h2>政务服务好差评</h2>
+      <p class="hint">对已经办结的事项进行评价，评价结果计入窗口考核。</p>
+      <div class="field"><label>办件编号</label><input id="rno" placeholder="CN-2026-000001"></div>
+      <div class="field"><label>评价</label><select id="rstar"><option>非常满意</option><option>满意</option><option>基本满意</option><option>不满意</option></select></div>
+      <div class="field"><label>意见（选填）</label><textarea id="rtext" rows="3"></textarea></div>
+      <button class="btn-primary" id="rbtn">提交评价</button>
+      <div class="result" id="rresult"></div>
+    </div>
+  </section>
+
   <section class="sec" id="sec-policy">
-    <div class="card" style="margin-top:22px">
-      <div class="card-h"><h2>政策文件</h2><span class="more">共 5 篇</span></div>
+    <div class="card" style="margin-top:20px">
+      <div class="card-h"><h2>政策法规</h2><span class="more">共 5 篇</span></div>
       <div id="policyList"></div>
     </div>
   </section>
 
 </main>
 
-<footer class="foot"><div class="wrap">
-  <div>RXH 政务门户界面 · 个人项目页面，非政府机构官方网站<br>不提供真实政务服务，不向任何服务器提交信息。</div>
-  <div><a href="../">返回总站</a> · <a href="../status/">站点状态</a><br>托管于 GitHub Pages · 2026</div>
-</div></footer>
+<div class="foot"><div class="wrap">
+  <div>淳安县政务服务大厅 · 浙江省杭州市淳安县<br>办公时间：工作日 8:30—12:00　13:30—17:00</div>
+  <div>窗口地址：淳安县千岛湖镇政务服务大厅<br>咨询电话：0571-6488xxxx
+    <span class="tiny">本站为个人项目页面，与淳安县人民政府及其部门无隶属关系。</span>
+  </div>
+</div></div>
 
 <div class="mask" id="mask"><div class="modal">
   <div class="modal-h"><h3 id="mTitle">标题</h3><button class="x" id="mClose">×</button></div>
@@ -280,34 +322,36 @@ button{font-family:inherit}
 
 <script>
 const ITEMS = [
-  {k:'person', n:'身份证件办理', dept:'户籍管理', limit:'1 个工作日', mats:['居民户口簿','近期免冠照片'], steps:['提交申请','窗口核验','制证','领取']},
-  {k:'person', n:'社保参保登记', dept:'社会保险', limit:'即时办结', mats:['身份证','劳动合同'], steps:['填写登记表','单位确认','系统登记']},
-  {k:'person', n:'公积金提取', dept:'住房公积金', limit:'3 个工作日', mats:['身份证','购房合同或租赁合同','银行卡'], steps:['提交申请','材料审核','资金到账']},
-  {k:'person', n:'出入境证件预约', dept:'出入境管理', limit:'5 个工作日', mats:['身份证','证件照片'], steps:['线上预约','现场办理','证件寄送']},
-  {k:'person', n:'驾驶证换领', dept:'交通管理', limit:'1 个工作日', mats:['身份证','体检证明','原驾驶证'], steps:['体检','提交申请','换发新证']},
-  {k:'person', n:'婚姻登记预约', dept:'民政服务', limit:'即时预约', mats:['双方身份证','双方户口簿'], steps:['选择登记处','选择时段','现场办理']},
-  {k:'corp', n:'企业设立登记', dept:'市场监督管理', limit:'1 个工作日', mats:['名称核准通知','公司章程','股东身份证明'], steps:['名称核准','提交设立材料','领取营业执照']},
-  {k:'corp', n:'税务信息确认', dept:'税务服务', limit:'即时办结', mats:['营业执照','法定代表人证件'], steps:['登记信息确认','税种核定','领用发票']},
-  {k:'corp', n:'社保开户', dept:'社会保险', limit:'2 个工作日', mats:['营业执照','银行账户信息'], steps:['提交开户申请','人员信息备案','缴费账户绑定']},
-  {k:'corp', n:'工程规划许可', dept:'自然资源', limit:'10 个工作日', mats:['用地证明','设计方案','环评意见'], steps:['方案报送','技术审查','许可核发']},
-  {k:'corp', n:'食品经营许可', dept:'市场监督管理', limit:'7 个工作日', mats:['场所使用证明','从业人员健康证明'], steps:['提交申请','现场核查','许可决定']},
-  {k:'corp', n:'排污许可登记', dept:'生态环境', limit:'5 个工作日', mats:['环评文件','工艺说明'], steps:['填报登记表','形式审查','登记编号']}
+  {k:'person', n:'身份证件办理', dept:'县公安局', limit:'1 个工作日', mats:['居民户口簿','近期免冠照片'], steps:['提交申请','窗口核验','制证','领取']},
+  {k:'person', n:'社保参保登记', dept:'县人力社保局', limit:'即时办结', mats:['身份证','劳动合同'], steps:['填写登记表','单位确认','系统登记']},
+  {k:'person', n:'公积金提取', dept:'公积金淳安分中心', limit:'3 个工作日', mats:['身份证','购房或租赁合同','银行卡'], steps:['提交申请','材料审核','资金到账']},
+  {k:'person', n:'出入境证件预约', dept:'县公安局出入境管理大队', limit:'5 个工作日', mats:['身份证','证件照片'], steps:['线上预约','现场办理','证件寄送']},
+  {k:'person', n:'驾驶证换领', dept:'县公安局交警大队', limit:'1 个工作日', mats:['身份证','体检证明','原驾驶证'], steps:['体检','提交申请','换发新证']},
+  {k:'person', n:'婚姻登记预约', dept:'县民政局', limit:'即时预约', mats:['双方身份证','双方户口簿'], steps:['选择登记处','选择时段','现场办理']},
+  {k:'corp', n:'企业设立登记', dept:'县市场监管局', limit:'1 个工作日', mats:['名称核准通知','公司章程','股东身份证明'], steps:['名称核准','提交设立材料','领取营业执照']},
+  {k:'corp', n:'税务信息确认', dept:'县税务局', limit:'即时办结', mats:['营业执照','法定代表人证件'], steps:['信息确认','税种核定','领用发票']},
+  {k:'corp', n:'社保开户', dept:'县人力社保局', limit:'2 个工作日', mats:['营业执照','银行账户信息'], steps:['提交开户申请','人员信息备案','账户绑定']},
+  {k:'corp', n:'工程规划许可', dept:'县自然资源和规划局', limit:'10 个工作日', mats:['用地证明','设计方案'], steps:['方案报送','技术审查','许可核发']},
+  {k:'corp', n:'食品经营许可', dept:'县市场监管局', limit:'7 个工作日', mats:['场所使用证明','从业人员健康证明'], steps:['提交申请','现场核查','许可决定']},
+  {k:'corp', n:'排污许可登记', dept:'市生态环境局淳安分局', limit:'5 个工作日', mats:['环评文件','工艺说明'], steps:['填报登记表','形式审查','登记编号']}
 ];
 
+const DEPTS = ['县公安局','县市场监管局','县人力社保局','县税务局','县民政局','县自然资源和规划局','县住建局','县卫健委','县教育局','县交通运输局','县农业农村局','市生态环境局淳安分局'];
+
 const NEWS = [
-  {t:'关于系统维护升级的公告', d:'11-22', c:'为提升访问稳定性，系统将于本周六凌晨进行例行维护，期间可能出现短时无法访问，请合理安排办理时间。'},
-  {t:'政务服务事项清单更新说明', d:'11-18', c:'本次更新新增 3 项高频事项，精简 5 项申请材料，并同步调整了部分事项的承诺时限。'},
-  {t:'办事材料精简事项一览', d:'11-11', c:'以下事项不再要求提交纸质复印件：可通过电子证照核验的材料一律免交，清单见附件说明。'},
-  {t:'窗口服务时间调整通知', d:'11-05', c:'即日起窗口服务时间调整为工作日 9:00—17:00，中午不间断服务，节假日按公告执行。'},
-  {t:'在线申报功能上线说明', d:'10-29', c:'在线申报入口已开放，提交后可获得受理编号，用于进度查询与材料补正。'}
+  {t:'关于政务服务大厅窗口布局调整的公告', d:'11-22', c:'为提升办事体验，一楼东侧窗口自下周起调整为一窗通办综合受理区，原分设窗口合并运行。'},
+  {t:'486 项政务服务事项清单更新', d:'11-18', c:'本次更新新增 12 项、取消 5 项、精简材料 37 项，最新清单可在办事指南中查阅。'},
+  {t:'电子证照免提交材料清单（第二批）', d:'11-11', c:'居民身份证、营业执照等 18 类电子证照可通过扫码核验，不再要求提交纸质复印件。'},
+  {t:'关于办件进度短信提醒的说明', d:'11-05', c:'受理、补正、办结三个节点将向申请人预留手机号发送提醒，请注意查收。'},
+  {t:'“好差评”评价入口全量开放', d:'10-29', c:'所有办结事项均可评价，差评件将在 3 个工作日内回访整改。'}
 ];
 
 const POLICIES = [
-  {t:'政务服务事项办理规范', d:'2026-09-01', c:['本规范适用于门户内全部政务服务事项的受理、办理与反馈。','受理环节应在 1 个工作日内完成形式审查，材料不全的一次性告知补正内容。','承诺时限自分件之日起计算，办结后通过短信或站内消息告知申请人。']},
-  {t:'电子证照应用指引', d:'2026-08-12', c:['已归集的电子证照与纸质证照具有同等效力，受理时不得重复要求提交。','申请人可通过出示电子证照亮证，窗口应提供扫码核验通道。']},
-  {t:'办事材料精简实施方案', d:'2026-07-20', c:['对没有法律法规依据的证明材料一律取消。','同一材料在多个事项中重复使用的，建立一次提交、多次复用机制。']},
-  {t:'窗口服务规范（试行）', d:'2026-06-15', c:['窗口实行首问负责制，第一个接待的工作人员负责到底或转办到位。','对老年人、残障人士提供帮办代办服务，必要时上门办理。']},
-  {t:'政务服务好差评管理办法', d:'2026-05-08', c:['每个办结事项均开放评价入口，评价结果纳入服务考核。','差评件应在 3 个工作日内回访整改并向申请人反馈结果。']}
+  {t:'淳安县政务服务事项办理规范', d:'2026-09-01', c:['本规范适用于大厅受理的全部政务服务事项。','受理环节应在 1 个工作日内完成形式审查，材料不全的一次性告知补正内容。','承诺时限自分件之日起计算。']},
+  {t:'电子证照应用实施细则', d:'2026-08-12', c:['已归集的电子证照与纸质证照具有同等效力。','窗口不得重复要求申请人提交已归集的证照材料。']},
+  {t:'办事材料精简实施方案', d:'2026-07-20', c:['对没有法律法规依据的证明材料一律取消。','同一材料在多个事项中复用的，实行一次提交、多次复用。']},
+  {t:'窗口服务规范（试行）', d:'2026-06-15', c:['窗口实行首问负责制。','对老年人、残障人士提供帮办代办服务。']},
+  {t:'政务服务好差评管理办法', d:'2026-05-08', c:['每个办结事项开放评价入口。','差评件应在 3 个工作日内回访整改并向申请人反馈。']}
 ];
 
 const $ = s => document.querySelector(s);
@@ -318,7 +362,7 @@ function toast(msg){
   clearTimeout(toastTimer); toastTimer = setTimeout(()=>el.classList.remove('show'), 1800);
 }
 function openModal(title, html, footerHtml){
-  $('#mTitle').textContent = title;
+  $('#mTitle').innerHTML = title;
   $('#mBody').innerHTML = html;
   $('#mFoot').innerHTML = footerHtml || '<button class="btn-ghost" onclick="closeModal()">关闭</button>';
   $('#mask').classList.add('on');
@@ -327,23 +371,12 @@ function closeModal(){ $('#mask').classList.remove('on'); }
 $('#mClose').addEventListener('click', closeModal);
 $('#mask').addEventListener('click', e=>{ if(e.target === $('#mask')) closeModal(); });
 
-function renderSvc(kind){
-  const list = ITEMS.filter(i=>i.k === kind);
-  $('#svcCount').textContent = '共 ' + list.length + ' 项';
-  $('#svc').innerHTML = list.map(it=>`
-    <button data-idx="${ITEMS.indexOf(it)}">
-      <span class="ico">${it.dept.slice(0,2)}</span>
-      <span><b>${it.n}</b><i>${it.dept} · ${it.limit}</i></span>
-    </button>`).join('');
-  $$('#svc button').forEach(b=> b.addEventListener('click',()=> openItem(Number(b.dataset.idx))));
-}
-renderSvc('person');
-
-$$('.tab').forEach(t=>t.addEventListener('click',()=>{
-  $$('.tab').forEach(x=>x.classList.remove('on'));
-  t.classList.add('on');
-  renderSvc(t.dataset.kind);
-}));
+/* 高频事项 */
+$('#hotBody').innerHTML = ITEMS.slice(0,6).map((it,i)=>`
+  <tr><td>${it.n}<span class="pill">可预约</span></td><td class="muted">${it.dept}</td><td>${it.limit}</td>
+  <td class="op" data-idx="${i}">在线办理 →</td></tr>`).join('');
+$('#hotCount').textContent = '展示前 6 项';
+$$('#hotBody .op').forEach(td=> td.addEventListener('click',()=> openItem(Number(td.dataset.idx))));
 
 $('#news').innerHTML = NEWS.map((n,i)=>`<li data-i="${i}">${n.t}<span>${n.d}</span></li>`).join('');
 $$('#news li').forEach(li=> li.addEventListener('click',()=>{
@@ -351,66 +384,89 @@ $$('#news li').forEach(li=> li.addEventListener('click',()=>{
   openModal(n.t, `<div class="muted">发布日期：${n.d}</div><p>${n.c}</p>`);
 }));
 
-$('#hotBody').innerHTML = ITEMS.slice(0,6).map((it,i)=>`
-  <tr><td>${it.n}<span class="pill">可预约</span></td><td class="muted">${it.dept}</td><td>${it.limit}</td>
-  <td class="op" data-idx="${i}">在线办理 →</td></tr>`).join('');
-$('#hotCount').textContent = '展示前 6 项';
-$$('#hotBody .op').forEach(td=> td.addEventListener('click',()=> openItem(Number(td.dataset.idx))));
+/* 服务数据（本机计算，不联网） */
+(function(){
+  const seed = Number(localStorage.getItem('cn_seq') || 0);
+  $('#d1').textContent = 120 + seed;
+  $('#d2').textContent = 98 + seed;
+  $('#d3').textContent = 37 + seed;
+  $('#d4').textContent = '1.4 天';
+})();
 
+/* 办事大厅 */
+function hallHTML(kind){
+  const list = ITEMS.filter(i=>i.k===kind);
+  return `<div class="card" style="margin-top:20px">
+    <div class="card-h"><h2>${kind==='person'?'个人办事':'法人办事'}</h2><span class="more">共 ${list.length} 项</span></div>
+    <div class="tabs" style="padding-bottom:16px">
+      <button class="tab ${kind==='person'?'on':''}" data-kind="person">个人办事</button>
+      <button class="tab ${kind==='corp'?'on':''}" data-kind="corp">法人办事</button>
+    </div>
+    <div class="svc">${list.map(it=>`<button data-idx="${ITEMS.indexOf(it)}">
+      <span class="ico">${it.dept.replace(/^[县市]/,'').slice(0,2)}</span>
+      <span><b>${it.n}</b><i>${it.dept} · ${it.limit}</i></span></button>`).join('')}</div>
+  </div>`;
+}
+$('#sec-hall').innerHTML = hallHTML('person');
+function bindHall(){
+  $$('#sec-hall .tab').forEach(t=> t.addEventListener('click',()=>{
+    $('#sec-hall').innerHTML = hallHTML(t.dataset.kind); bindHall();
+  }));
+  $$('#sec-hall .svc button').forEach(b=> b.addEventListener('click',()=> openItem(Number(b.dataset.idx))));
+}
+bindHall();
+
+/* 部门服务 */
+$('#sec-dept').innerHTML = `<div class="card" style="margin-top:20px">
+  <div class="card-h"><h2>部门服务</h2><span class="more">32 个入驻部门</span></div>
+  <div class="depts">${DEPTS.map(d=>`<button data-d="${d}">${d}</button>`).join('')}</div></div>`;
+$$('#sec-dept .depts button').forEach(b=> b.addEventListener('click',()=>{
+  const d = b.dataset.d;
+  const items = ITEMS.filter(i=>i.dept === d);
+  openModal(d, items.length
+    ? items.map(it=>`<div class="list-item" data-idx="${ITEMS.indexOf(it)}"><div><b>${it.n}</b><i>${it.limit} · 材料 ${it.mats.length} 项</i></div><span class="t">查看 →</span></div>`).join('')
+    : '<p class="muted">该部门事项清单暂未接入，可致电 0571-6488xxxx 咨询。</p>',
+    `<button class="btn-primary" onclick="closeModal()">知道了</button>`);
+  $$('#mBody .list-item[data-idx]').forEach(el=> el.addEventListener('click',()=> openItem(Number(el.dataset.idx))));
+}));
+
+/* 事项详情 / 申报 */
 function openItem(idx){
   const it = ITEMS[idx];
   openModal(it.n, `
-    <dl class="kv">
-      <dt>承办部门</dt><dd>${it.dept}</dd>
-      <dt>承诺时限</dt><dd>${it.limit}</dd>
-      <dt>申请材料</dt><dd>${it.mats.join('、')}</dd>
-    </dl>
+    <dl class="kv"><dt>承办部门</dt><dd>${it.dept}</dd>
+    <dt>承诺时限</dt><dd>${it.limit}</dd>
+    <dt>申请材料</dt><dd>${it.mats.join('、')}</dd></dl>
     <ol class="steps">${it.steps.map((s,i)=>`<li><span class="num">${i+1}</span><span>${s}</span></li>`).join('')}</ol>`,
     `<button class="btn-ghost" onclick="closeModal()">关闭</button>
-     <button class="btn-primary" onclick="openApply(${idx})">开始申报</button>`);
+     <button class="btn-primary" onclick="openApply(${idx})">在线申报</button>`);
 }
-
 function openApply(idx){
   const it = ITEMS[idx];
-  openModal('申报 · ' + it.n, `
+  openModal('在线申报 · ' + it.n, `
     <div class="field"><label>申请人姓名</label><input id="apName" placeholder="用于受理回执"></div>
     <div class="field"><label>联系电话</label><input id="apPhone" placeholder="11 位手机号"></div>
-    <div class="field"><label>备注（选填）</label><textarea id="apNote" rows="3" placeholder="需要的时段或特殊情况"></textarea></div>
-    <p class="muted">提交后生成受理编号，记录只保存在当前浏览器，不会上传到任何服务器。</p>`,
+    <div class="field"><label>备注（选填）</label><textarea id="apNote" rows="3"></textarea></div>
+    <p class="muted">提交后生成办件编号，记录保存在当前浏览器。</p>`,
     `<button class="btn-ghost" onclick="closeModal()">取消</button>
-     <button class="btn-primary" onclick="submitApply(${idx})">提交申报</button>`);
+     <button class="btn-primary" onclick="submitApply(${idx})">提交</button>`);
 }
-
-let seq = Number(localStorage.getItem('rxh_seq') || 0);
 function submitApply(idx){
   const name = ($('#apName').value || '').trim();
   const phone = ($('#apPhone').value || '').trim();
   if(name.length < 2) return toast('请填写申请人姓名');
   if(!/^1[3-9]\d{9}$/.test(phone)) return toast('请填写正确的手机号');
-  seq++; localStorage.setItem('rxh_seq', seq);
-  const no = 'RXH-2026-' + String(seq).padStart(4,'0');
-  localStorage.setItem('rxh_case_' + no, JSON.stringify({item:ITEMS[idx].n, dept:ITEMS[idx].dept, name, at:Date.now()}));
-  openModal('申报已受理', `<p>受理编号：<b style="color:#bb1f2a;font-size:16px">${no}</b></p>
-    <p class="muted">请记录该编号，可在「进度查询」中查看办理状态。</p>`,
-    `<button class="btn-primary" onclick="goProgress('${no}')">去查询进度</button>`);
+  const seq = Number(localStorage.getItem('cn_seq') || 0) + 1;
+  localStorage.setItem('cn_seq', seq);
+  const no = 'CN-2026-' + String(seq).padStart(6,'0');
+  localStorage.setItem('cn_case_' + no, JSON.stringify({item:ITEMS[idx].n, dept:ITEMS[idx].dept, name, at:Date.now()}));
+  openModal('提交成功', `<p>办件编号：<b style="color:#0b5cad;font-size:16px">${no}</b></p>
+    <p class="muted">请记录编号，可在「办件查询」查看办理状态。</p>`,
+    `<button class="btn-primary" onclick="goProgress('${no}')">去查询</button>`);
 }
 function goProgress(no){ closeModal(); $('#pn').value = no; switchSec('progress'); queryProgress(); }
 
-['person','corp'].forEach(kind=>{
-  const sec = $('#sec-' + kind);
-  sec.innerHTML = `
-    <div class="card" style="margin-top:22px">
-      <div class="card-h"><h2>${kind==='person'?'个人办事':'法人办事'}</h2><span class="more">共 ${ITEMS.filter(i=>i.k===kind).length} 项</span></div>
-      <div id="list-${kind}"></div>
-    </div>`;
-  $('#list-'+kind).innerHTML = ITEMS.filter(i=>i.k===kind).map(it=>`
-    <div class="list-item" data-idx="${ITEMS.indexOf(it)}">
-      <div><b>${it.n}</b><i>${it.dept} · 材料 ${it.mats.length} 项 · ${it.limit}</i></div>
-      <span class="t">查看 →</span>
-    </div>`).join('');
-  $$('#list-'+kind+' .list-item').forEach(el=> el.addEventListener('click',()=> openItem(Number(el.dataset.idx))));
-});
-
+/* 办事指南 */
 $('#guideList').innerHTML = ITEMS.map(it=>`
   <div class="list-item" data-idx="${ITEMS.indexOf(it)}">
     <div><b>${it.n}</b><i>${it.dept} · 材料：${it.mats.join('、')}</i></div>
@@ -418,19 +474,24 @@ $('#guideList').innerHTML = ITEMS.map(it=>`
   </div>`).join('');
 $$('#guideList .list-item').forEach(el=> el.addEventListener('click',()=> openItem(Number(el.dataset.idx))));
 
+/* 办件查询（普通件） */
 function queryProgress(){
   const no = ($('#pn').value || '').trim().toUpperCase();
   const box = $('#presult');
-  if(!no){ box.innerHTML = ''; toast('请输入受理编号'); return; }
-  if(!/^RXH-2026-\d{4}$/.test(no)){
+  if(!no){ box.innerHTML = ''; toast('请输入办件编号'); return; }
+
+  /* 特殊编码：与正常办件完全分开处理 */
+  if(no === 'RXH-2026-11'){ box.innerHTML = dossierHTML(no); return; }
+
+  if(!/^CN-2026-\d{6}$/.test(no)){
     box.innerHTML = `<div class="res-box"><div class="res-h"><b>未查询到记录</b><span class="muted">${no}</span></div>
-      <div class="res-body muted">受理编号格式应为 RXH-2026-0001。若刚提交申报，请确认编号是否完整。</div></div>`;
+      <div class="res-body muted">办件编号格式为 CN-2026-000001，请核对后重新输入。</div></div>`;
     return;
   }
-  const data = JSON.parse(localStorage.getItem('rxh_case_' + no) || 'null');
+  const data = JSON.parse(localStorage.getItem('cn_case_' + no) || 'null');
   if(!data){
-    box.innerHTML = `<div class="res-box"><div class="res-h"><b>该编号不存在于本机</b><span class="muted">${no}</span></div>
-      <div class="res-body muted">办件数据只保存在生成它的那台浏览器中，换设备或清除缓存后查不到。</div></div>`;
+    box.innerHTML = `<div class="res-box"><div class="res-h"><b>未查询到办件</b><span class="muted">${no}</span></div>
+      <div class="res-body muted">该编号在本机没有记录，可能是其他设备提交或编号有误。</div></div>`;
     return;
   }
   const stages = ['已受理','材料核验','办理中','已办结'];
@@ -446,22 +507,59 @@ function queryProgress(){
 $('#pbtn').addEventListener('click', queryProgress);
 $('#pn').addEventListener('keydown', e=>{ if(e.key==='Enter') queryProgress(); });
 
+/* 特殊档案视图 */
+function dossierHTML(no){
+  const N = '<span class="nullv">{null}</span>';
+  return `<div class="dossier">
+    <div class="dossier-h"><b>内部流转单</b><span>限内部查阅</span><span class="code">${no}</span></div>
+    <div class="dossier-b">
+      <dl>
+        <dt>办件编号</dt><dd>${no}</dd>
+        <dt>事项名称</dt><dd>${N}</dd>
+        <dt>受理单位</dt><dd>${N}</dd>
+        <dt>申请人</dt><dd>${N}</dd>
+        <dt>经办人</dt><dd>${N}</dd>
+        <dt>当前环节</dt><dd>${N}</dd>
+        <dt>收件时间</dt><dd>${N}</dd>
+        <dt>承诺时限</dt><dd>${N}</dd>
+        <dt>流转记录</dt><dd>${N}<br>${N}<br>${N}</dd>
+        <dt>附件</dt><dd>${N}</dd>
+        <dt>备注</dt><dd>${N}</dd>
+      </dl>
+      <span class="seal">档案室留存</span>
+    </div>
+    <div class="dossier-foot">本单为内部流转凭证，查询结果不作为对外证明。</div>
+  </div>`;
+}
+
+/* 咨询投诉 */
 $('#cbtn').addEventListener('click',()=>{
   const title = ($('#ctitle').value || '').trim();
   const body = ($('#cbody').value || '').trim();
   if(title.length < 3) return toast('标题至少 3 个字');
-  if(body.length < 10) return toast('请把情况写详细一些（至少 10 字）');
-  const records = JSON.parse(localStorage.getItem('rxh_consult') || '[]');
+  if(body.length < 10) return toast('请把情况写详细一些');
+  const records = JSON.parse(localStorage.getItem('cn_consult') || '[]');
   const no = 'ZX-2026-' + String(records.length + 1).padStart(4,'0');
-  records.push({no, type:$('#ctype').value, title, body, contact:($('#ccontact').value||'').trim(), at:Date.now()});
-  localStorage.setItem('rxh_consult', JSON.stringify(records));
+  records.push({no, type:$('#ctype').value, title, body, at:Date.now()});
+  localStorage.setItem('cn_consult', JSON.stringify(records));
   $('#cresult').innerHTML = `<div class="res-box"><div class="res-h"><b>提交成功</b><span class="muted">${no}</span></div>
     <div class="res-body">类型：${$('#ctype').value}<br>标题：${title}<br>
-    <span class="muted">已记录在本机，共 ${records.length} 条。</span></div></div>`;
-  $('#ctitle').value = ''; $('#cbody').value = ''; $('#ccontact').value = '';
-  toast('已提交，编号 ' + no);
+    <span class="muted">已记录在本机，共 ${records.length} 条，将在 3 个工作日内答复。</span></div></div>`;
+  $('#ctitle').value = ''; $('#cbody').value = '';
+  toast('已提交，受理单号 ' + no);
 });
 
+/* 好差评 */
+$('#rbtn').addEventListener('click',()=>{
+  const no = ($('#rno').value || '').trim().toUpperCase();
+  if(!no) return toast('请填写办件编号');
+  $('#rresult').innerHTML = `<div class="res-box"><div class="res-h"><b>评价已提交</b><span class="muted">${no}</span></div>
+    <div class="res-body">评价：${$('#rstar').value}<br><span class="muted">感谢评价，结果将计入窗口服务考核。</span></div></div>`;
+  $('#rno').value = ''; $('#rtext').value = '';
+  toast('评价已记录');
+});
+
+/* 政策法规 */
 $('#policyList').innerHTML = POLICIES.map((p,i)=>`
   <div class="list-item" data-i="${i}"><div><b>${p.t}</b><i>${p.d} · 共 ${p.c.length} 条</i></div><span class="t">阅读 →</span></div>`).join('');
 $$('#policyList .list-item').forEach(el=> el.addEventListener('click',()=>{
@@ -469,39 +567,38 @@ $$('#policyList .list-item').forEach(el=> el.addEventListener('click',()=>{
   openModal(p.t, `<div class="muted">发布：${p.d}</div>` + p.c.map((c,i)=>`<p>${i+1}. ${c}</p>`).join(''));
 }));
 
+/* 搜索 */
 function doSearch(){
   const q = ($('#q').value || '').trim();
-  if(!q){ toast('请输入关键词'); return; }
+  if(!q) return toast('请输入关键词');
   const hits = ITEMS.filter(it=> (it.n + it.dept + it.mats.join('')).includes(q));
-  const newsHits = NEWS.filter(n=> (n.t + n.c).includes(q));
-  openModal('搜索：' + q, `
-    <p class="muted">找到 ${hits.length} 个事项、${newsHits.length} 条公告</p>
-    ${hits.map(it=>`<div class="list-item" data-idx="${ITEMS.indexOf(it)}"><div><b>${it.n}</b>
-      <i>${it.dept} · ${it.limit}</i></div><span class="t">查看 →</span></div>`).join('') || '<p class="muted">没有匹配的事项。</p>'}
-    ${newsHits.map(n=>`<div class="list-item"><div><b>${n.t}</b><i>${n.d}</i></div></div>`).join('')}`,
+  openModal('搜索：' + q, `<p class="muted">共 ${hits.length} 个事项</p>` +
+    (hits.map(it=>`<div class="list-item" data-idx="${ITEMS.indexOf(it)}"><div><b>${it.n}</b><i>${it.dept} · ${it.limit}</i></div><span class="t">查看 →</span></div>`).join('')
+     || '<p class="muted">未找到相关事项，可尝试更短的关键词。</p>'),
     `<button class="btn-primary" onclick="closeModal()">知道了</button>`);
   $$('#mBody .list-item[data-idx]').forEach(el=> el.addEventListener('click',()=> openItem(Number(el.dataset.idx))));
 }
 $('#qbtn').addEventListener('click', doSearch);
 $('#q').addEventListener('keydown', e=>{ if(e.key==='Enter'){ e.preventDefault(); doSearch(); } });
 
+/* 登录 / 注册 */
 $('#loginBtn').addEventListener('click',()=>{
-  openModal('账号登录', `<p>统一身份认证账号用于办理需要实名核验的事项。</p>
+  openModal('统一身份认证登录', `<p>使用浙江省统一身份认证账号登录，可办理需实名核验的事项。</p>
     <div class="field"><label>账号</label><input placeholder="请输入账号"></div>
     <div class="field"><label>密码</label><input type="password" placeholder="请输入密码"></div>
-    <p class="muted">账号系统尚未接入，填写内容不会发送到任何服务器。</p>`,
+    <p class="muted">认证通道未接入，填写内容不会发送到任何服务器。</p>`,
     `<button class="btn-ghost" onclick="closeModal()">取消</button>
-     <button class="btn-primary" onclick="toast('账号系统尚未接入，可先用受理编号查询进度')">登录</button>`);
+     <button class="btn-primary" onclick="toast('认证通道未接入，可先用办件编号查询')">登录</button>`);
 });
 $('#regBtn').addEventListener('click',()=>{
-  openModal('注册账号', `<p>注册后可保存常用事项、订阅办理提醒。</p>
-    <div class="field"><label>手机号</label><input placeholder="11 位手机号"></div>
+  openModal('注册账号', `<div class="field"><label>手机号</label><input placeholder="11 位手机号"></div>
     <div class="field"><label>验证码</label><input placeholder="6 位验证码"></div>
-    <p class="muted">短信通道尚未接入，本页面不会真实发送验证码。</p>`,
+    <p class="muted">短信通道未接入，本页面不会发送验证码。</p>`,
     `<button class="btn-ghost" onclick="closeModal()">取消</button>
-     <button class="btn-primary" onclick="toast('注册通道尚未接入')">注册</button>`);
+     <button class="btn-primary" onclick="toast('注册通道未接入')">注册</button>`);
 });
 
+/* 导航 */
 function switchSec(name){
   $$('.nav button').forEach(b=> b.classList.toggle('on', b.dataset.sec === name));
   $$('.sec').forEach(s=> s.classList.toggle('on', s.id === 'sec-' + name));
@@ -511,7 +608,7 @@ $('#nav').addEventListener('click', e=>{
   const b = e.target.closest('button[data-sec]'); if(!b) return;
   switchSec(b.dataset.sec);
 });
-$$('.quick button').forEach(b=> b.addEventListener('click',()=> switchSec(b.dataset.sec)));
+$$('[data-sec].qcard, .banner .go').forEach(b=> b.addEventListener('click',()=> switchSec(b.dataset.sec)));
 
 $('#today').textContent = new Date().toLocaleDateString('zh-CN',{year:'numeric',month:'long',day:'numeric',weekday:'long'});
 </script>
