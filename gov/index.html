@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>淳安县人民政府政务服务大厅</title>
-<meta name="description" content="淳安县政务服务大厅：办事指南、办件查询、咨询投诉、好差评。">
+<title>玄河县人民政府政务服务大厅</title>
+<meta name="description" content="玄河县政务服务大厅：办事指南、办件查询、咨询投诉、好差评。">
 <style>
 :root{--blue:#0b5cad;--blue-d:#08457f;--blue-l:#e8f1fb;--ink:#1f2329;--sub:#5b6472;--line:#e2e7ee;--bg:#f2f5f9;--red:#bb1f2a}
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
@@ -178,14 +178,14 @@ button{font-family:inherit}
 <body>
 
 <div class="topline"><div class="wrap">
-  <span>浙江省 · 杭州市 · 淳安县</span>
+  <span>玄河县 · 政务服务大厅</span>
   <div class="spacer"></div>
   <span id="today"></span>
 </div></div>
 
 <header class="head"><div class="wrap">
   <div class="emblem">淳</div>
-  <div class="brand"><h1>淳安县人民政府</h1><p>政务服务大厅 · 政务服务网</p></div>
+  <div class="brand"><h1>玄河县人民政府</h1><p>政务服务大厅 · 政务服务网</p></div>
   <div class="spacer"></div>
   <div class="search">
     <input id="q" placeholder="搜索事项、部门或关键词">
@@ -306,9 +306,8 @@ button{font-family:inherit}
 </main>
 
 <div class="foot"><div class="wrap">
-  <div>淳安县政务服务大厅 · 浙江省杭州市淳安县<br>办公时间：工作日 8:30—12:00　13:30—17:00</div>
-  <div>窗口地址：淳安县千岛湖镇政务服务大厅<br>咨询电话：0571-6488xxxx
-    <span class="tiny">本站为个人项目页面，与淳安县人民政府及其部门无隶属关系。</span>
+  <div>玄河县政务服务大厅 · 玄河县<br>办公时间：工作日 8:30—12:00　13:30—17:00</div>
+  <div>窗口地址：玄河县云岭镇政务服务大厅<br>咨询电话：0655-8820xxx
   </div>
 </div></div>
 
@@ -324,7 +323,7 @@ button{font-family:inherit}
 const ITEMS = [
   {k:'person', n:'身份证件办理', dept:'县公安局', limit:'1 个工作日', mats:['居民户口簿','近期免冠照片'], steps:['提交申请','窗口核验','制证','领取']},
   {k:'person', n:'社保参保登记', dept:'县人力社保局', limit:'即时办结', mats:['身份证','劳动合同'], steps:['填写登记表','单位确认','系统登记']},
-  {k:'person', n:'公积金提取', dept:'公积金淳安分中心', limit:'3 个工作日', mats:['身份证','购房或租赁合同','银行卡'], steps:['提交申请','材料审核','资金到账']},
+  {k:'person', n:'公积金提取', dept:'公积金玄河分中心', limit:'3 个工作日', mats:['身份证','购房或租赁合同','银行卡'], steps:['提交申请','材料审核','资金到账']},
   {k:'person', n:'出入境证件预约', dept:'县公安局出入境管理大队', limit:'5 个工作日', mats:['身份证','证件照片'], steps:['线上预约','现场办理','证件寄送']},
   {k:'person', n:'驾驶证换领', dept:'县公安局交警大队', limit:'1 个工作日', mats:['身份证','体检证明','原驾驶证'], steps:['体检','提交申请','换发新证']},
   {k:'person', n:'婚姻登记预约', dept:'县民政局', limit:'即时预约', mats:['双方身份证','双方户口簿'], steps:['选择登记处','选择时段','现场办理']},
@@ -333,10 +332,10 @@ const ITEMS = [
   {k:'corp', n:'社保开户', dept:'县人力社保局', limit:'2 个工作日', mats:['营业执照','银行账户信息'], steps:['提交开户申请','人员信息备案','账户绑定']},
   {k:'corp', n:'工程规划许可', dept:'县自然资源和规划局', limit:'10 个工作日', mats:['用地证明','设计方案'], steps:['方案报送','技术审查','许可核发']},
   {k:'corp', n:'食品经营许可', dept:'县市场监管局', limit:'7 个工作日', mats:['场所使用证明','从业人员健康证明'], steps:['提交申请','现场核查','许可决定']},
-  {k:'corp', n:'排污许可登记', dept:'市生态环境局淳安分局', limit:'5 个工作日', mats:['环评文件','工艺说明'], steps:['填报登记表','形式审查','登记编号']}
+  {k:'corp', n:'排污许可登记', dept:'县生态环境局', limit:'5 个工作日', mats:['环评文件','工艺说明'], steps:['填报登记表','形式审查','登记编号']}
 ];
 
-const DEPTS = ['县公安局','县市场监管局','县人力社保局','县税务局','县民政局','县自然资源和规划局','县住建局','县卫健委','县教育局','县交通运输局','县农业农村局','市生态环境局淳安分局'];
+const DEPTS = ['县公安局','县市场监管局','县人力社保局','县税务局','县民政局','县自然资源和规划局','县住建局','县卫健委','县教育局','县交通运输局','县农业农村局','县生态环境局'];
 
 const NEWS = [
   {t:'关于政务服务大厅窗口布局调整的公告', d:'11-22', c:'为提升办事体验，一楼东侧窗口自下周起调整为一窗通办综合受理区，原分设窗口合并运行。'},
@@ -347,7 +346,7 @@ const NEWS = [
 ];
 
 const POLICIES = [
-  {t:'淳安县政务服务事项办理规范', d:'2026-09-01', c:['本规范适用于大厅受理的全部政务服务事项。','受理环节应在 1 个工作日内完成形式审查，材料不全的一次性告知补正内容。','承诺时限自分件之日起计算。']},
+  {t:'玄河县政务服务事项办理规范', d:'2026-09-01', c:['本规范适用于大厅受理的全部政务服务事项。','受理环节应在 1 个工作日内完成形式审查，材料不全的一次性告知补正内容。','承诺时限自分件之日起计算。']},
   {t:'电子证照应用实施细则', d:'2026-08-12', c:['已归集的电子证照与纸质证照具有同等效力。','窗口不得重复要求申请人提交已归集的证照材料。']},
   {t:'办事材料精简实施方案', d:'2026-07-20', c:['对没有法律法规依据的证明材料一律取消。','同一材料在多个事项中复用的，实行一次提交、多次复用。']},
   {t:'窗口服务规范（试行）', d:'2026-06-15', c:['窗口实行首问负责制。','对老年人、残障人士提供帮办代办服务。']},
@@ -425,7 +424,7 @@ $$('#sec-dept .depts button').forEach(b=> b.addEventListener('click',()=>{
   const items = ITEMS.filter(i=>i.dept === d);
   openModal(d, items.length
     ? items.map(it=>`<div class="list-item" data-idx="${ITEMS.indexOf(it)}"><div><b>${it.n}</b><i>${it.limit} · 材料 ${it.mats.length} 项</i></div><span class="t">查看 →</span></div>`).join('')
-    : '<p class="muted">该部门事项清单暂未接入，可致电 0571-6488xxxx 咨询。</p>',
+    : '<p class="muted">该部门事项清单暂未接入，可致电 0655-8820xxx 咨询。</p>',
     `<button class="btn-primary" onclick="closeModal()">知道了</button>`);
   $$('#mBody .list-item[data-idx]').forEach(el=> el.addEventListener('click',()=> openItem(Number(el.dataset.idx))));
 }));
@@ -583,7 +582,7 @@ $('#q').addEventListener('keydown', e=>{ if(e.key==='Enter'){ e.preventDefault()
 
 /* 登录 / 注册 */
 $('#loginBtn').addEventListener('click',()=>{
-  openModal('统一身份认证登录', `<p>使用浙江省统一身份认证账号登录，可办理需实名核验的事项。</p>
+  openModal('统一身份认证登录', `<p>使用玄河县统一身份认证账号登录，可办理需实名核验的事项。</p>
     <div class="field"><label>账号</label><input placeholder="请输入账号"></div>
     <div class="field"><label>密码</label><input type="password" placeholder="请输入密码"></div>
     <p class="muted">认证通道未接入，填写内容不会发送到任何服务器。</p>`,
