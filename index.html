@@ -1518,8 +1518,8 @@ function renderWX(){
 
   body.style.background = (!S.chat && S.art === null && S.tab === 'chats') ? '#fff' : '#ededed';
   const bar = document.getElementById('wx2Bar');
-  bar.classList.toggle('hide', !S.chat);
-  bar.innerHTML = S.chat ? `<button class="wxb" data-voice="1"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><rect x="9.2" y="3.2" width="5.6" height="10.4" rx="2.8"/><path d="M5.8 11.4v1.4a6.2 6.2 0 0 0 12.4 0v-1.4"/><path d="M12 18.8v2.2M9.4 21h5.2"/></svg></button>
+  bar.classList.toggle('hide', !S.chat || S.art !== null);
+  bar.innerHTML = (S.chat && S.art === null) ? `<button class="wxb" data-voice="1"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><rect x="9.2" y="3.2" width="5.6" height="10.4" rx="2.8"/><path d="M5.8 11.4v1.4a6.2 6.2 0 0 0 12.4 0v-1.4"/><path d="M12 18.8v2.2M9.4 21h5.2"/></svg></button>
     <input class="wxfield" id="wxField" placeholder="发消息">
     <button class="wxb" data-emoji="1"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><circle cx="12" cy="12" r="8.4"/><circle cx="9" cy="10" r="1"/><circle cx="15" cy="10" r="1"/><path d="M8.6 14.4c1.4 1.5 5.4 1.5 6.8 0"/></svg></button>
     <button class="wxsend" id="wxSend">发送</button>
