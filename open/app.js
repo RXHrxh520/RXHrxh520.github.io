@@ -210,7 +210,7 @@ async function loadKeys() {
   list.innerHTML = keys.map(k => `<div class="keyrow" data-id="${k.id}">
     <b>${esc(k.prefix)}…</b>
     <span class="meta">${esc(k.name || '未命名')} · ${fmt(k.created_at)}${k.last_used ? ' · 最近使用 ' + fmt(k.last_used) : ''}</span>
-    <button title="吊销" data-revoke="${k.id}"><svg viewBox="0 0 24 24"><use href="https://www.rxh.asia/assets/icons.svg#i-trash"/></svg></button>
+    <button title="吊销" data-revoke="${k.id}"><svg viewBox="0 0 24 24"><use href="#i-trash"/></svg></button>
   </div>`).join('');
   list.querySelectorAll('[data-revoke]').forEach(btn => btn.addEventListener('click', async () => {
     if (!confirm('吊销后该密钥立即失效，确定？')) return;
