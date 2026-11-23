@@ -76,13 +76,29 @@ async function mountTurnstile() {
       theme: 'auto',
       size: 'normal',
       callback: token => { tsToken = token; vgo.disabled = false; },
-      'error-callback': () => { tsToken = ''; vgo.disabled = true; toast('人机验证加载失败，请刷新重试'); },
+      'error-callback': () => {
+        tsToken = '';
+        vgo.disabled = true;
+        document.getElementById('tsretry').hidden = false;
+        toast('验证未通过，可点「重新验证」再来一次');
+      },
       'expired-callback': () => { tsToken = ''; vgo.disabled = true; toast('验证已过期，请重新验证'); },
     });
   } catch {
     toast('人机验证组件未加载，请检查网络后重试');
   }
 }
+
+document.getElementById('tsretry').addEventListener('click', () => {
+  document.getElementById('tsretry').hidden = true;
+  if (window.turnstile && tsWidget !== null) {
+    window.turnstile.reset(tsWidget);
+    tsToken = '';
+    vgo.disabled = true;
+  } else {
+    mountTurnstile();
+  }
+});
 
 /* 点匿名体验 → 进验证页 → 渲染控件 */
 document.getElementById('optGuest').addEventListener('click', () => {
