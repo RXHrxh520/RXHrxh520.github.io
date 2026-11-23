@@ -47,6 +47,19 @@
   .hide{display:none}
   .login{max-width:380px;margin:8vh auto 0}
   .tsbox{margin-top:12px;min-height:66px;display:flex;justify-content:center}
+
+  .nt-types{display:flex;flex-wrap:wrap;gap:6px}
+  .ntype{padding:7px 10px;border-radius:9px;border:1px solid var(--line);background:var(--page);color:var(--sub);font-size:12px;cursor:pointer}
+  .ntype.on{border-color:#c2ceff;background:var(--soft);color:var(--brand);font-weight:600}
+  .btn.sm.danger{color:#cf222e;border-color:#f3b8bc}
+  .nt-ic{width:26px;height:26px;border-radius:8px;display:inline-grid;place-items:center;background:var(--soft);color:var(--brand);vertical-align:middle;margin-right:8px}
+  .nt-ic svg{width:14px;height:14px}
+
+  .ap{border:1px solid var(--line);border-radius:12px;padding:13px 14px;margin-top:10px}
+  .ap-h{display:flex;align-items:center;gap:8px;font-size:13px}
+  .ap-h b{font-weight:600}
+  .ap-b{margin-top:7px;font-size:12.5px;line-height:1.7;color:var(--sub);white-space:pre-wrap}
+  .ap-f{display:flex;align-items:center;justify-content:space-between;margin-top:9px}
 </style>
 </head>
 <body>
@@ -64,10 +77,9 @@
     <h2>管理员登录</h2>
     <div class="field"><label>账号</label><input id="a" placeholder="请输入管理员账号"></div>
     <div class="field"><label>密码</label><input id="b" type="password" placeholder="请输入您的密码"></div>
-    <div class="tsbox" id="tsBox"></div>
-    <button class="btn" id="aLogin" disabled style="width:100%">登录</button>
+    <button class="btn" id="aLogin" style="width:100%">登录</button>
     <div class="msg" id="lmsg"></div>
-    <p class="sub" style="margin-top:12px">仅管理员可进入，且仅限中国大陆网络访问。普通账号请前往 <a href="https://auth.rxh.asia/">账号中心</a>。</p>
+    <p class="sub" style="margin-top:12px">仅管理员可进入。普通账号请前往 <a href="https://auth.rxh.asia/">账号中心</a>。</p>
   </div>
 
   <!-- 控制台 -->
@@ -93,6 +105,7 @@
       <button class="tab" data-p="invites">邀请码</button>
       <button class="tab" data-p="notice">公告条</button>
       <button class="tab" data-p="notify">站内通知</button>
+      <button class="tab" data-p="appeals">封禁申诉</button>
       <button class="tab" data-p="self">管理员设置</button>
     </div>
 
@@ -156,10 +169,14 @@
       <h2>发布通知</h2>
       <p class="sub" style="margin-top:-4px">系统仅自动发布「系统通知」与「安全通知」；管理员可发布全部 5 类。</p>
       <div class="grid4">
-        <div class="field"><label>类型</label><select id="ntType">
-          <option value="1">系统公告</option><option value="2">管理员公告</option>
-          <option value="3">系统通知</option><option value="4">安全通知</option><option value="5">测试通知</option>
-        </select></div>
+        <div class="field"><label>类型</label>
+        <div class="nt-types" id="ntTypes">
+          <button type="button" class="ntype on" data-t="1">系统公告</button>
+          <button type="button" class="ntype" data-t="2">管理员公告</button>
+          <button type="button" class="ntype" data-t="3">系统通知</button>
+          <button type="button" class="ntype" data-t="4">安全通知</button>
+          <button type="button" class="ntype" data-t="5">测试通知</button>
+        </div></div>
         <div class="field"><label>标题</label><input id="ntTitle" placeholder="请输入通知标题"></div>
       </div>
       <div class="field"><label>内容（可空）</label><textarea id="ntBody" placeholder="请输入通知正文"></textarea></div>
@@ -168,6 +185,13 @@
       <h2 style="margin-top:18px">通知记录</h2>
       <div style="overflow:auto"><table><thead><tr><th>类型</th><th>标题 / 内容</th><th>状态</th><th>时间</th><th>操作</th></tr></thead><tbody id="ntBodyList"></tbody></table></div>
     </div>
+
+    <!-- 申诉 -->
+    <section class="pane hide" id="p-appeals">
+      <h2>封禁申诉</h2>
+      <p class="sub">来自封禁页的申诉，保留 7 天后自动删除；处理完可手动清除。</p>
+      <div id="appealList"></div>
+    </section>
 
     <!-- 管理员 -->
     <div class="card hide" id="p-self">
@@ -181,11 +205,7 @@
   </div>
 </div>
 
-<script>
-window.TURNSTILE_SITEKEY = "0x4AAAAAAGPRu0xFiTmg5BYn";
-</script>
-<script src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit" defer></script>
-<script src="app.js?v=20261124b" defer></script>
-<script src="https://www.rxh.asia/assets/notice-bar.js?v=20261124"></script>
+<script src="app.js?v=20261124c" defer></script>
+<script src="https://www.rxh.asia/assets/notice-bar.js?v=20261124b"></script>
 </body>
 </html>
