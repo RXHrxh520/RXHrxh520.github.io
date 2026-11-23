@@ -43,6 +43,7 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 .noticebar.on{display:block}
 .nb-wrap{max-width:1180px;margin:0 auto;padding:7px 22px;display:flex;align-items:center;gap:10px;overflow-x:auto;white-space:nowrap;scrollbar-width:none}
 .nb-wrap::-webkit-scrollbar{display:none}
+@media(min-width:861px){.nb-wrap{overflow:hidden}}
 .nb-tag{flex:0 0 auto;font-size:11px;letter-spacing:.08em;padding:2px 8px;border-radius:999px;background:rgba(0,0,0,.35);opacity:.9}
 
 header.top{position:sticky;top:0;z-index:60;backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);background:rgba(10,13,22,.62);border-bottom:1px solid var(--line)}
