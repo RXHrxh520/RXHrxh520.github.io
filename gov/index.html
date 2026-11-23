@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>政务服务系统 · 演示</title>
+<meta name="description" content="政务服务系统界面演示页面，非官方站点，仅用于前端样式展示。">
+<style>
+:root{
+  --red:#c0202a;
+  --red-d:#9d1822;
+  --blue:#1a5fb4;
+  --ink:#1f2329;
+  --sub:#5c6572;
+  --line:#e3e6eb;
+  --bg:#f4f6f9;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);
+  font-family:-apple-system,"PingFang SC","Microsoft YaHei",system-ui,sans-serif;
+  -webkit-tap-highlight-color:transparent}
+a{color:inherit;text-decoration:none}
+.wrap{max-width:1180px;margin:0 auto;padding:0 20px}
+
+/* 演示提示条 */
+.demo-bar{background:#fff8e1;border-bottom:1px solid #f1dfae;color:#7a5b00;
+  font-size:12.5px;letter-spacing:.2px}
+.demo-bar .wrap{display:flex;gap:10px;align-items:center;justify-content:center;
+  height:34px;flex-wrap:wrap;text-align:center}
+
+/* 顶部 */
+.head{background:linear-gradient(135deg,var(--red),var(--red-d));color:#fff}
+.head .wrap{display:flex;align-items:center;gap:18px;height:96px}
+.emblem{width:52px;height:52px;border-radius:12px;background:rgba(255,255,255,.14);
+  border:1px solid rgba(255,255,255,.28);display:grid;place-items:center;
+  font-size:24px;font-weight:800;letter-spacing:1px;flex:0 0 auto}
+.brand h1{margin:0;font-size:23px;letter-spacing:2px;font-weight:700}
+.brand p{margin:5px 0 0;font-size:12px;letter-spacing:1.4px;opacity:.82}
+.head .spacer{flex:1}
+.search{display:flex;background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.3);
+  border-radius:8px;overflow:hidden;height:38px;width:300px}
+.search input{flex:1;border:0;background:transparent;color:#fff;padding:0 12px;font-size:13.5px;outline:0}
+.search input::placeholder{color:rgba(255,255,255,.75)}
+.search button{border:0;background:rgba(0,0,0,.18);color:#fff;padding:0 16px;font-size:13px;cursor:pointer}
+.head-links{display:flex;gap:14px;font-size:13px;opacity:.95}
+.head-links a{white-space:nowrap}
+.head-links a:hover{text-decoration:underline}
+
+/* 主导航 */
+.nav{background:#fff;border-bottom:1px solid var(--line);position:sticky;top:0;z-index:30;
+  box-shadow:0 2px 10px rgba(20,30,50,.05)}
+.nav .wrap{display:flex;gap:4px;height:52px;align-items:stretch;overflow-x:auto}
+.nav a{display:flex;align-items:center;padding:0 15px;font-size:14px;color:var(--sub);
+  border-bottom:3px solid transparent;white-space:nowrap}
+.nav a.on{color:var(--red);font-weight:700;border-bottom-color:var(--red)}
+.nav a:hover{color:var(--red)}
+
+/* 服务区 */
+.grid{display:grid;grid-template-columns:1.35fr .95fr;gap:18px;margin:22px 0}
+.card{background:#fff;border:1px solid var(--line);border-radius:8px}
+.card-h{display:flex;align-items:center;justify-content:space-between;
+  padding:14px 18px;border-bottom:1px solid var(--line)}
+.card-h h2{margin:0;font-size:16px;letter-spacing:.5px}
+.card-h h2::before{content:"";display:inline-block;width:4px;height:15px;background:var(--red);
+  border-radius:2px;margin-right:9px;vertical-align:-2px}
+.card-h .more{font-size:12.5px;color:var(--sub)}
+
+.tabs{display:flex;gap:8px;padding:14px 18px 0}
+.tab{border:1px solid var(--line);background:#f7f8fa;color:var(--sub);border-radius:6px;
+  padding:7px 16px;font-size:13.5px;cursor:pointer}
+.tab.on{background:var(--red);border-color:var(--red);color:#fff;font-weight:600}
+
+.svc{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;padding:16px 18px 20px}
+.svc a{display:flex;gap:12px;align-items:center;border:1px solid var(--line);border-radius:8px;
+  padding:13px 14px;background:#fdfefe;transition:.18s}
+.svc a:hover{border-color:#f0c1c5;background:#fffafa;transform:translateY(-1px);
+  box-shadow:0 6px 18px rgba(192,32,42,.08)}
+.svc .ico{width:34px;height:34px;border-radius:8px;background:#fdeef0;color:var(--red);
+  display:grid;place-items:center;font-size:15px;font-weight:700;flex:0 0 auto}
+.svc b{display:block;font-size:14px;font-weight:600}
+.svc i{display:block;margin-top:4px;font-size:12px;color:var(--sub);font-style:normal}
+
+/* 公告 */
+.news{padding:6px 18px 16px}
+.news li{list-style:none;display:flex;gap:10px;padding:11px 0;border-bottom:1px dashed #eceef2;
+  font-size:13.5px;color:#31363d}
+.news li:last-child{border-bottom:0}
+.news li span{margin-left:auto;color:#98a0ad;font-size:12px;flex:0 0 auto}
+.news li::before{content:"";width:5px;height:5px;border-radius:50%;background:var(--red);
+  margin-top:7px;flex:0 0 auto;opacity:.7}
+
+/* 办事列表 */
+.table-h{padding:16px 18px;font-size:14px;color:var(--sub);display:flex;gap:14px;flex-wrap:wrap;align-items:center}
+.table-h strong{color:var(--ink);font-size:15px}
+.tbl{width:100%;border-collapse:collapse;font-size:13.5px}
+.tbl th{background:#f7f8fa;text-align:left;padding:11px 18px;color:#48505c;font-weight:600;
+  border-top:1px solid var(--line);border-bottom:1px solid var(--line);white-space:nowrap}
+.tbl td{padding:13px 18px;border-bottom:1px solid #f0f2f5;color:#2b3038;vertical-align:middle}
+.tbl tr:hover td{background:#fcfcfd}
+.tbl .op{color:var(--blue);font-weight:600;white-space:nowrap}
+.tbl .dept{color:var(--sub)}
+.pill{display:inline-block;font-size:11.5px;padding:2px 8px;border-radius:20px;
+  border:1px solid #d9dee6;color:#5c6572;background:#fafbfc;margin-left:6px}
+
+/* 快捷 */
+.quick{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:0 0 22px}
+.quick a{background:#fff;border:1px solid var(--line);border-radius:8px;padding:16px;
+  text-align:center;transition:.18s}
+.quick a:hover{border-color:#c9d6ea;box-shadow:0 6px 16px rgba(26,95,180,.09)}
+.quick b{display:block;font-size:14.5px}
+.quick i{display:block;margin-top:5px;font-size:12px;color:var(--sub);font-style:normal}
+
+/* 页脚 */
+.foot{background:#3a4048;color:#c6ccd4;margin-top:28px;padding:26px 0 30px;font-size:12.5px;line-height:2}
+.foot .wrap{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap}
+.foot a{text-decoration:underline;text-underline-offset:3px}
+.toast{position:fixed;left:50%;bottom:34px;transform:translate(-50%,14px);opacity:0;
+  background:#20242a;color:#fff;font-size:13px;padding:10px 18px;border-radius:8px;
+  transition:.25s;pointer-events:none;z-index:60}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+
+@media (max-width:900px){
+  .head .wrap{height:auto;padding:16px 20px;flex-wrap:wrap;gap:12px}
+  .search{width:100%}
+  .head-links{font-size:12px}
+  .grid{grid-template-columns:1fr}
+  .quick{grid-template-columns:repeat(2,1fr)}
+  .svc{grid-template-columns:1fr}
+  .tbl th:nth-child(3),.tbl td:nth-child(3),.tbl th:nth-child(4),.tbl td:nth-child(4){display:none}
+}
+</style>
+</head>
+<body>
+
+<div class="demo-bar"><div class="wrap">
+  <span>界面演示页 · 非官方站点</span>
+  <span>·</span>
+  <span>所有栏目、事项与数据均为虚构示例，不办理任何业务，也不收集任何信息</span>
+  <a href="../" style="text-decoration:underline">返回总站</a>
+</div></div>
+
+<header class="head">
+  <div class="wrap">
+    <div class="emblem">政</div>
+    <div class="brand">
+      <h1>政务服务系统</h1>
+      <p>GOVERNMENT SERVICE PORTAL · DEMO</p>
+    </div>
+    <div class="spacer"></div>
+    <div class="search">
+      <input id="q" placeholder="搜索事项、部门或关键词（演示）">
+      <button onclick="searchGo()">搜索</button>
+    </div>
+    <div class="head-links">
+      <a href="#" onclick="demo('登录为演示占位')">登录</a>
+      <a href="#" onclick="demo('注册为演示占位')">注册</a>
+      <a href="../status/">站点状态</a>
+    </div>
+  </div>
+</header>
+
+<nav class="nav"><div class="wrap">
+  <a href="./" class="on">首页</a>
+  <a href="#svc" onclick="demo('个人办事：演示入口')">个人办事</a>
+  <a href="#svc" onclick="demo('法人办事：演示入口')">法人办事</a>
+  <a href="#guide" onclick="demo('办事指南：演示入口')">办事指南</a>
+  <a href="#list" onclick="demo('进度查询：演示入口')">进度查询</a>
+  <a href="#list" onclick="demo('咨询投诉：演示入口')">咨询投诉</a>
+  <a href="#news" onclick="demo('政策文件：演示入口')">政策文件</a>
+</div></nav>
+
+<main class="wrap">
+
+  <div class="grid">
+    <section class="card">
+      <div class="card-h"><h2>服务大厅</h2><span class="more">共 12 类事项 · 示例数据</span></div>
+      <div class="tabs">
+        <button class="tab on" data-tab="person">个人办事</button>
+        <button class="tab" data-tab="corp">法人办事</button>
+      </div>
+      <div class="svc" id="svc"></div>
+    </section>
+
+    <section class="card">
+      <div class="card-h"><h2>通知公告</h2><span class="more">示例</span></div>
+      <ul class="news" id="news">
+        <li>关于系统维护升级的公告（演示内容）<span>11-22</span></li>
+        <li>政务服务事项清单更新说明（演示内容）<span>11-18</span></li>
+        <li>办事材料精简事项一览（演示内容）<span>11-11</span></li>
+        <li>窗口服务时间调整通知（演示内容）<span>11-05</span></li>
+        <li>在线申报功能上线说明（演示内容）<span>10-29</span></li>
+      </ul>
+    </section>
+  </div>
+
+  <div class="quick">
+    <a href="#guide" onclick="demo('办事指南：演示入口')"><b>办事指南</b><i>材料、流程、时限</i></a>
+    <a href="#list" onclick="demo('在线申报：演示入口')"><b>在线申报</b><i>表单为样式占位</i></a>
+    <a href="#list" onclick="demo('进度查询：演示入口')"><b>进度查询</b><i>按受理号查询</i></a>
+    <a href="#list" onclick="demo('好差评：演示入口')"><b>好差评</b><i>办完给个评价</i></a>
+  </div>
+
+  <section class="card" id="list">
+    <div class="table-h">
+      <strong>高频事项</strong>
+      <span>以下内容为界面演示，办理部门和时限均为虚构</span>
+    </div>
+    <table class="tbl">
+      <thead><tr><th>事项名称</th><th>承办部门</th><th>办理时限</th><th>操作</th></tr></thead>
+      <tbody id="tbody"></tbody>
+    </table>
+  </section>
+
+</main>
+
+<footer class="foot"><div class="wrap">
+  <div>
+    主办单位：RXH 演示平台（虚构，非任何政府机构）<br>
+    本页面仅用于前端界面样式演示，不具备任何办事、查询、收集信息的功能。
+  </div>
+  <div>
+    <a href="../">返回总站</a> · <a href="../status/">站点状态</a><br>
+    托管于 GitHub Pages · 2026
+  </div>
+</div></footer>
+
+<div class="toast" id="toast">演示</div>
+
+<script>
+const person = [
+  ['身份证件办理','户籍 · 证件','身份证、户口簿','1 个工作日'],
+  ['社保参保登记','社会保险','身份证、劳动合同','即时办结'],
+  ['公积金提取','住房公积金','身份证、购房合同','3 个工作日'],
+  ['出入境证件预约','公安出入境','身份证、照片回执','5 个工作日'],
+  ['驾驶证换领','交通管理','身份证、体检表','1 个工作日'],
+  ['婚姻登记预约','民政','身份证、户口簿','即时预约']
+];
+const corp = [
+  ['企业设立登记','市场监管','名称核准、章程','1 个工作日'],
+  ['税务信息确认','税务','营业执照、法人证件','即时办结'],
+  ['社保开户','社会保险','营业执照、银行账户','2 个工作日'],
+  ['工程规划许可','自然资源','用地证明、设计方案','10 个工作日'],
+  ['食品经营许可','市场监管','场所证明、健康证','7 个工作日'],
+  ['排污许可登记','生态环境','环评文件、工艺说明','5 个工作日']
+];
+
+function render(list){
+  const box = document.getElementById('svc');
+  box.innerHTML = list.map((v,i)=>`
+    <a href="#list" onclick="demo('${v[0]}：演示入口')">
+      <span class="ico">${v[1].slice(0,2)}</span>
+      <span><b>${v[0]}</b><i>${v[1]} · ${v[3]}</i></span>
+    </a>`).join('');
+  document.getElementById('tbody').innerHTML = list.map(v=>`
+    <tr>
+      <td>${v[0]}<span class="pill">可预约</span></td>
+      <td class="dept">${v[1]}</td>
+      <td>${v[3]}</td>
+      <td class="op" onclick="demo('${v[0]}：演示入口')">在线办理 →</td>
+    </tr>`).join('');
+}
+render(person);
+
+document.querySelectorAll('.tab').forEach(t=>{
+  t.addEventListener('click',()=>{
+    document.querySelectorAll('.tab').forEach(x=>x.classList.remove('on'));
+    t.classList.add('on');
+    render(t.dataset.tab === 'corp' ? corp : person);
+  });
+});
+
+let tt;
+function demo(msg){
+  const el = document.getElementById('toast');
+  el.textContent = '演示页面 · ' + msg;
+  el.classList.add('show');
+  clearTimeout(tt);
+  tt = setTimeout(()=>el.classList.remove('show'), 1500);
+  return false;
+}
+
+function searchGo(){
+  const q = document.getElementById('q').value.trim();
+  demo(q ? '搜索「' + q + '」：演示环境无数据' : '请输入关键词试试');
+}
+document.getElementById('q').addEventListener('keydown', e=>{
+  if(e.key === 'Enter'){ e.preventDefault(); searchGo(); }
+});
+document.querySelectorAll('.news li').forEach(li=>{
+  li.style.cursor = 'pointer';
+  li.addEventListener('click',()=>demo('公告详情：演示入口'));
+});
+</script>
+</body>
+</html>
