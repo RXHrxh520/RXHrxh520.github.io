@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>开发人员 · rxh.asia</title>
+<meta name="robots" content="index,follow">
+<style>
+:root{--pink:#ff7ab8;--pink2:#ff9ed2;--ink:#3a2333;--dim:#8a6f80;--card:rgba(255,255,255,.72);--line:rgba(180,90,140,.18)}
+*{box-sizing:border-box}
+body{margin:0;min-height:100vh;color:var(--ink);font:15px/1.7 "PingFang SC","Microsoft YaHei",system-ui,sans-serif;
+  background:radial-gradient(800px 500px at 8% -6%,#ffd9ec,transparent 70%),radial-gradient(700px 480px at 96% 4%,#ffe7f3,transparent 68%),linear-gradient(170deg,#fff6fa,#fdeef6 52%,#fff7fb)}
+a{color:inherit;text-decoration:none}
+.wrap{max-width:1040px;margin:0 auto;padding:26px 20px 70px}
+.top{display:flex;align-items:center;gap:12px;margin-bottom:34px}
+.back{display:inline-flex;align-items:center;gap:6px;font-size:13px;color:var(--dim);padding:7px 12px;border-radius:999px;border:1px solid var(--line);background:rgba(255,255,255,.6)}
+.back:hover{color:var(--ink)}
+.brand{margin-left:auto;font-size:12.5px;color:var(--dim)}
+h1{margin:0;font-size:clamp(26px,4vw,40px);line-height:1.25;letter-spacing:-.02em}
+h1 em{font-style:normal;background:linear-gradient(120deg,#ff5aa5,#c04bff);-webkit-background-clip:text;background-clip:text;color:transparent}
+.lead{color:var(--dim);max-width:600px;margin:10px 0 0;font-size:14px}
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin-top:18px}
+.chip{font-size:12px;padding:4px 11px;border-radius:999px;background:rgba(255,255,255,.75);border:1px solid var(--line);color:#7a5568}
+.sec{display:flex;align-items:baseline;justify-content:space-between;margin:40px 0 14px}
+.sec h2{margin:0;font-size:17px}
+.sec span{font-size:12.5px;color:var(--dim)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:14px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:18px;backdrop-filter:blur(10px);transition:.2s;display:flex;flex-direction:column;gap:8px}
+.card:hover{transform:translateY(-3px);box-shadow:0 24px 46px -32px rgba(200,80,150,.6)}
+.card .t{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.card .t b{font-size:15px}
+.tag{font-size:11px;padding:2px 8px;border-radius:999px;background:#ffe3f0;color:#b0447f;white-space:nowrap}
+.card p{margin:0;color:var(--dim);font-size:13px;line-height:1.65}
+.meta{display:flex;gap:6px;flex-wrap:wrap;margin-top:2px}
+.meta i{font-style:normal;font-size:11px;color:#9a7b8a;background:rgba(255,255,255,.7);border:1px solid var(--line);border-radius:6px;padding:1px 7px}
+.go{margin-top:auto;padding-top:6px;font-size:12.5px;color:#c14f96;display:flex;align-items:center;gap:4px}
+.foot{margin-top:44px;font-size:12px;color:var(--dim);display:flex;gap:8px;flex-wrap:wrap}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="top">
+    <a class="back" href="https://www.rxh.asia/">← 返回主站</a>
+    <span class="brand">dev.rxh.asia · 开发人员</span>
+  </div>
+
+  <h1>写过的、正在写的，<em>都在这里</em></h1>
+  <p class="lead">软小寒 · 独立开发者。Android 与 AI 工具方向，喜欢把零散的需求做成能每天用的小东西。</p>
+  <div class="chips">
+    <span class="chip">Android</span><span class="chip">Kotlin</span><span class="chip">AI 工具</span>
+    <span class="chip">Cloudflare Workers</span><span class="chip">正在做 APIBalance</span>
+  </div>
+
+  <div class="sec"><h2>项目与仓库</h2><span>04 个仓库 · 02 个线上站</span></div>
+  <div class="grid">
+    <a class="card" href="https://github.com/RXHrxh520/APIBalance" target="_blank" rel="noopener">
+      <div class="t"><b>APIBalance</b><span class="tag">正在维护</span></div>
+      <p>安卓端 AI API 余额查询工具，把 DeepSeek、Kimi、智谱 GLM、Anthropic、火山方舟、Codex 的余额收进同一个界面。</p>
+      <div class="meta"><i>Android</i><i>Kotlin</i><i>开源</i></div>
+      <div class="go">打开仓库 ↗</div>
+    </a>
+    <a class="card" href="https://github.com/RXHrxh520/APIBalance-docs" target="_blank" rel="noopener">
+      <div class="t"><b>APIBalance Docs</b><span class="tag">文档站</span></div>
+      <p>安装、配置、常见问题与错误码说明，遇到问题先来这里翻一翻。</p>
+      <div class="meta"><i>Jekyll</i><i>GitHub Pages</i></div>
+      <div class="go">打开文档 ↗</div>
+    </a>
+    <a class="card" href="https://github.com/RXHrxh520" target="_blank" rel="noopener">
+      <div class="t"><b>RXHrxh520</b><span class="tag">个人主页</span></div>
+      <p>GitHub 个人主页仓库，放着介绍、统计卡片和一点小玩具。</p>
+      <div class="meta"><i>Markdown</i><i>Workflow</i></div>
+      <div class="go">打开仓库 ↗</div>
+    </a>
+    <a class="card" href="https://github.com/RXHrxh520/RXHrxh520.github.io" target="_blank" rel="noopener">
+      <div class="t"><b>RXHrxh520.github.io</b><span class="tag">就是这里</span></div>
+      <p>整个站点群的源码仓库：主站、状态页、开放平台、账号服务与管理后台。</p>
+      <div class="meta"><i>HTML</i><i>CSS</i><i>Workers</i></div>
+      <div class="go">打开仓库 ↗</div>
+    </a>
+  </div>
+
+  <div class="sec"><h2>站点群</h2><span>一个域名，多个子站</span></div>
+  <div class="grid">
+    <a class="card" href="https://www.rxh.asia/"><div class="t"><b>主站</b><span class="tag">www</span></div><p>入口、状态概览与通知。</p><div class="go">www.rxh.asia ↗</div></a>
+    <a class="card" href="https://status.rxh.asia/"><div class="t"><b>站点状态</b><span class="tag">边缘探测</span></div><p>Ping、90 天可用率与故障原因。</p><div class="go">status.rxh.asia ↗</div></a>
+    <a class="card" href="https://open.rxh.asia/"><div class="t"><b>开放平台</b><span class="tag">接口门户</span></div><p>统一账号登录后可查看控制台。</p><div class="go">open.rxh.asia ↗</div></a>
+    <a class="card" href="https://auth.rxh.asia/"><div class="t"><b>账号中心</b><span class="tag">统一账号</span></div><p>昵称、头像、密码与用户 ID。</p><div class="go">auth.rxh.asia ↗</div></a>
+  </div>
+
+  <div class="foot"><span>© 2026 软小寒 · rxh.asia</span><span>·</span><span>手写 HTML · GitHub Pages + Cloudflare</span></div>
+</div>
+</body>
+</html>
