@@ -157,6 +157,7 @@
       <form id="pwdForm" hidden>
         <div class="field"><label for="u">账号</label><input id="u" autocomplete="username" placeholder="请输入账号"></div>
         <div class="field"><label for="p">密码</label><input id="p" type="password" autocomplete="current-password" placeholder="请输入密码"></div>
+        <div class="tsbox" id="tsLogin"></div>
         <button class="submit" type="submit">登录</button>
         <p class="hint">平台不开放注册，账号由管理员按项目开通；忘记密码请联系管理员。</p>
         <button class="ghost" type="button" id="back">← 换个方式</button>
@@ -184,9 +185,9 @@
 
   <section class="screen s-preview">
     <div class="card">
-      <div class="pv-top"><span class="mark">R</span><span class="tag">匿名预览</span></div>
+      <div class="pv-top"><span class="mark">R</span><span class="tag" id="pvTag">匿名预览</span></div>
       <div class="pv-title">控制台 · 只读</div>
-      <p class="pv-desc">临时凭证 60 分钟后失效，此模式不写入任何数据。</p>
+      <p class="pv-desc" id="pvDesc">临时凭证 60 分钟后失效，此模式不写入任何数据。</p>
       <div class="rows">
         <div class="row"><div><b>模型广场</b><span>文本 / 图像 / 语音 / Agent</span></div><div class="st">只读</div></div>
         <div class="row"><div><b>推理调用</b><span>QPS、首 token 延迟、错误率</span></div><div class="st">已锁定</div></div>
@@ -204,6 +205,6 @@
 window.TURNSTILE_SITEKEY = "0x4AAAAAAGPRu0xFiTmg5BYn";
 </script>
 <script src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit" defer></script>
-<script src="app.js?v=9a082410" defer></script>
+<script src="app.js?v=c9ffa7be" defer></script>
 </body>
 </html>
