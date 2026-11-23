@@ -34,10 +34,7 @@ document.getElementById('back').addEventListener('click', () => {
   document.getElementById('opts').hidden = false;
 });
 
-document.getElementById('optPwd').addEventListener('click', () => {
-  if (!window.RXHAuth) return toast('账号组件未加载，请刷新重试');
-  window.RXHAuth.open({ onSuccess: user => { enterConsole(user); toast('已登录 · ' + user.name); } });
-});
+document.getElementById('optPwd').addEventListener('click', doLogin);
 
 /* ---------- 统一账号登录（auth.rxh.asia） ---------- */
 let loginWidget = null, loginToken = '';
@@ -50,16 +47,30 @@ function mountLoginTs() {
   });
 }
 
+let currentUser = null;
 function enterConsole(user) {
-  sessionStorage.setItem('rxh_open_user', JSON.stringify(user));
+  currentUser = user || null;
+  sessionStorage.setItem('rxh_open_user', JSON.stringify(user || {}));
   const tag = document.getElementById('pvTag');
   const desc = document.getElementById('pvDesc');
   const side = document.getElementById('sideUser');
-  if (tag) tag.textContent = '已登录';
-  if (desc) desc.textContent = '账号 ' + user.uid + ' · 统一账号服务已接入，可在主站与账号中心通用。';
-  if (side) side.textContent = user.name + ' · 正式账号';
-  document.querySelectorAll('.nav-item.lock').forEach(el => el.classList.remove('lock'));
-  document.querySelectorAll('[data-lock]').forEach(el => { el.disabled = false; el.classList.remove('mini'); });
+  const li = document.getElementById('loginInline');
+  if (tag) { tag.textContent = user.is_admin ? '管理员' : '已登录'; tag.dataset.on = '1'; }
+  if (desc) desc.textContent = '账号 ' + user.uid + (user.is_admin ? ' · 管理员' : '') + ' · 可与主站、账号中心通用。';
+  if (side) side.textContent = (user.name || '未命名') + ' · 正式账号';
+  if (li) li.hidden = true;
+  setMode('preview');
+  loadKeys();
+}
+function guestConsole() {
+  currentUser = null;
+  sessionStorage.setItem('rxh_open_preview', '1');
+  document.getElementById('pvTag').textContent = '匿名预览';
+  document.getElementById('sideUser').textContent = '访客 · 只读';
+  document.getElementById('pvDesc').textContent = '当前为只读预览：可浏览模型与文档，创建密钥需要登录。';
+  document.getElementById('loginInline').hidden = false;
+  document.getElementById('keyList').innerHTML = '<div class="empty">登录后可创建与查看密钥</div>';
+  document.getElementById('statKeys').textContent = '0';
   setMode('preview');
 }
 function guestConsole() {
@@ -73,7 +84,7 @@ function guestConsole() {
 (async () => {
   const saved = sessionStorage.getItem('rxh_open_user');
   if (saved) { try { enterConsole(JSON.parse(saved)); return; } catch (e) {} }
-  if (sessionStorage.getItem('rxh_open_preview') === '1') { setMode('preview'); return; }
+  if (sessionStorage.getItem('rxh_open_preview') === '1') { guestConsole(); return; }
   if (!window.RXHAuth) return;
   const u = await window.RXHAuth.check();
   if (u && !u.banned) enterConsole(u);
@@ -163,9 +174,72 @@ vgo.addEventListener('click', async () => {
   }
 });
 
+/* ---------- 控制台导航 ---------- */
+const CRUMB = { overview: '概览', models: '模型广场', keys: 'API 密钥', usage: '用量', docs: '接入文档' };
+document.querySelectorAll('.nav-item').forEach(b => b.addEventListener('click', () => {
+  const k = b.dataset.panel;
+  document.querySelectorAll('.nav-item').forEach(x => x.classList.toggle('on', x === b));
+  Object.keys(CRUMB).forEach(p => { const el = document.getElementById('pn-' + p); if (el) el.hidden = p !== k; });
+  document.getElementById('crumb').textContent = '控制台 / ' + CRUMB[k];
+}));
+
+document.getElementById('loginInline').addEventListener('click', doLogin);
+function doLogin() {
+  if (!window.RXHAuth) return toast('账号组件未加载，请刷新重试');
+  window.RXHAuth.open({ onSuccess: u => { enterConsole(u); toast('已登录 · ' + (u.name || u.uid)); } });
+}
+
+/* ---------- 密钥 ---------- */
+async function loadKeys() {
+  const list = document.getElementById('keyList');
+  const msgEl = document.getElementById('keyMsg');
+  if (!currentUser) { list.innerHTML = '<div class="empty">登录后可创建与查看密钥</div>'; return; }
+  let keys = [];
+  try {
+    const r = await fetch('/api/keys', { credentials: 'same-origin', cache: 'no-store' });
+    const d = await r.json();
+    keys = d.keys || [];
+  } catch (e) { list.innerHTML = '<div class="empty">读取密钥失败</div>'; return; }
+  document.getElementById('statKeys').textContent = String(keys.length);
+  if (!keys.length) { list.innerHTML = '<div class="empty">暂无密钥，填写备注后创建</div>'; return; }
+  list.innerHTML = keys.map(k => `<div class="keyrow" data-id="${k.id}">
+    <b>${esc(k.prefix)}…</b>
+    <span class="meta">${esc(k.name || '未命名')} · ${fmt(k.created_at)}${k.last_used ? ' · 最近使用 ' + fmt(k.last_used) : ''}</span>
+    <button title="吊销" data-revoke="${k.id}"><svg viewBox="0 0 24 24"><use href="https://www.rxh.asia/assets/icons.svg#i-trash"/></svg></button>
+  </div>`).join('');
+  list.querySelectorAll('[data-revoke]').forEach(btn => btn.addEventListener('click', async () => {
+    if (!confirm('吊销后该密钥立即失效，确定？')) return;
+    const r = await fetch('/api/keys/delete', { method: 'POST', credentials: 'same-origin', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ id: Number(btn.dataset.revoke) }) });
+    const d = await r.json();
+    msgEl.textContent = d.ok ? '密钥已吊销' : (d.error || '操作失败');
+    loadKeys();
+  }));
+}
+
+document.getElementById('createKey').addEventListener('click', async () => {
+  const msgEl = document.getElementById('keyMsg');
+  if (!currentUser) { msgEl.textContent = '请先登录账号'; return; }
+  const name = document.getElementById('keyName').value.trim() || 'default';
+  const btn = document.getElementById('createKey');
+  btn.disabled = true;
+  try {
+    const r = await fetch('/api/keys', { method: 'POST', credentials: 'same-origin', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ name }) });
+    const d = await r.json();
+    if (!d.ok) { msgEl.textContent = d.error || '创建失败'; return; }
+    document.getElementById('keyName').value = '';
+    msgEl.innerHTML = '新密钥（仅显示一次）：<b class="mono">' + esc(d.key) + '</b>，请立即复制保存。';
+    loadKeys();
+  } catch (e) { msgEl.textContent = '创建失败，请重试'; }
+  finally { btn.disabled = false; }
+});
+
+const esc = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+function fmt(t) { if (!t) return '—'; try { return new Date(t).toLocaleDateString('zh-CN'); } catch { return t; } }
+
 /* ---------- 预览 ---------- */
 document.getElementById('exit').addEventListener('click', () => {
   sessionStorage.removeItem('rxh_open_preview');
+  sessionStorage.removeItem('rxh_open_user');
   setMode('intro');
 });
 
