@@ -229,6 +229,9 @@ const NTI = {
   5:'<path d="M9 3h6M10 3v6L5 19h14L14 9V3"/><path d="M7.5 14h9"/>',
 };
 let ntType = 3;
+document.querySelectorAll(".ntype").forEach(b => {
+  if (!b.querySelector("svg")) b.insertAdjacentHTML("afterbegin", `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7">${NTI[Number(b.dataset.t)] || NTI[3]}</svg>`);
+});
 document.querySelectorAll(".ntype").forEach(b => b.addEventListener("click", () => {
   ntType = Number(b.dataset.t);
   document.querySelectorAll(".ntype").forEach(x => x.classList.toggle("on", x === b));
