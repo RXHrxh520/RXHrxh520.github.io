@@ -10,6 +10,12 @@
   const views = ['home', 'status', 'sites', 'me'];
   function go(v) {
     if (!views.includes(v)) v = 'home';
+    const apply = () => doGo(v);
+    if (document.startViewTransition && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      document.startViewTransition(apply);
+    } else { apply(); }
+  }
+  function doGo(v) {
     $$('.view').forEach(el => el.classList.toggle('on', el.id === 'v-' + v));
     $$('nav.tabs .tab').forEach(b => b.classList.toggle('on', b.dataset.view === v));
     if (v === 'status') loadStatus(true);
