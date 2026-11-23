@@ -939,6 +939,13 @@
           <code>/police/</code>
           <span class="go">进入分站 →</span>
         </a>
+        <a class="soon" href="./open/" target="_self">
+          <span class="badge live">已上线</span>
+          <h4>玄河开放平台</h4>
+          <p>面向开发者的接口门户：能力预览、充值、账单与接入文档，账号体系暂未接入。</p>
+          <code>/open/</code>
+          <span class="go">进入分站 →</span>
+        </a>
         <a class="soon" href="./status/" target="_self">
           <span class="badge live">已上线</span>
           <h4>站点状态</h4>
@@ -958,7 +965,7 @@
       <div class="explain">
         <h3>路径式分站怎么运作</h3>
         <ul class="bullets">
-          <li><span>·</span> 一个目录就是一个分站：仓库里建 <b>/gov/</b>、<b>/police/</b>、<b>/status/</b>，各放一个 index.html 即可访问</li>
+          <li><span>·</span> 一个目录就是一个分站：仓库里建 <b>/gov/</b>、<b>/police/</b>、<b>/open/</b>、<b>/status/</b>，各放一个 index.html 即可访问</li>
           <li><span>·</span> 不占域名、不占仓库：不用买子域名、不用新建仓库，证书和 CDN 全部跟总站共用</li>
           <li><span>·</span> 加法很简单：建目录 → 放页面 → 在总站这张卡上加一条链接，就多了一个分站</li>
           <li><span>·</span> 代价是共用一套：同一域名下所有页面一起构建、一起发版，某个目录写坏可能连一起 404</li>
@@ -1214,7 +1221,6 @@ form.addEventListener('submit', e=>{
 document.querySelectorAll('#sug .sug').forEach(b=>{
   b.addEventListener('click', ()=>{
     input.value = b.textContent.trim();
-    input.focus();
     form.requestSubmit();
   });
 });
@@ -1278,7 +1284,7 @@ const BENCH = [
   ['证书','Let’s Encrypt'],
   ['构建','main 分支根目录'],
   ['源码','单文件 index.html'],
-  ['页面','/ · /gov/ · /police/ · /status/'],
+  ['页面','/ · /gov/ · /police/ · /open/ · /status/'],
   ['更新','2026-11-23']
 ];
 document.getElementById('benchGrid').innerHTML = BENCH.map(([k,v])=>
@@ -1292,6 +1298,7 @@ document.getElementById('benchGrid').innerHTML = BENCH.map(([k,v])=>
 
 /* ================= 更新日志 ================= */
 const LOGS = [
+  {d:'11-24', t:'开放平台上线', n:'玄河开放平台上线，四个栏目：预览、充值、账单、文档。'},
   {d:'11-24', t:'公安网上线', n:'玄河县公安局网上门户，四个栏目可点，警情通报与办事指南均为静态数据。'},
   {d:'11-23', t:'404 入口上线', n:'主站右上角改名为 404，进去是一套微信界面：会话、通讯录、发现、我。'},
   {d:'11-23', t:'政务服务大厅重做', n:'按政务门户常见版式重排，办件查询拆成普通办件与内部流转单两套。'},
@@ -1605,13 +1612,6 @@ function bumpAI(){
   aiCount++;
   if(aiBadge) aiBadge.textContent = aiCount;
 }
-
-document.querySelectorAll('#sug .sug').forEach(b=>{
-  b.addEventListener('click', ()=>{
-    input.value = b.textContent.trim();
-    form.requestSubmit();
-  });
-});
 document.getElementById('aiForm').addEventListener('submit', bumpAI);
 </script>
 
