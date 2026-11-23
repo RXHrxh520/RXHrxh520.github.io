@@ -32,7 +32,7 @@
   @keyframes f2{50%{transform:translate3d(-26px,-20px,0)}}
 
   .app{width:min(440px,100%);position:relative}
-  .screen{display:none}
+  .s-intro,.s-auth,.s-verify,.s-preview{display:none}
   .app[data-mode="intro"] .s-intro,
   .app[data-mode="auth"] .s-auth,
   .app[data-mode="verify"] .s-verify,
@@ -118,7 +118,7 @@
 <div class="aurora" aria-hidden="true"><i></i><i></i></div>
 
 <main class="app" id="app" data-mode="intro">
-  <section class="s-intro">
+  <section class="screen s-intro">
     <div class="brand"><span class="mark">R</span> RXH OPEN PLATFORM</div>
     <h1>RXH <em>开放平台</em></h1>
     <p class="lede">文本、图像、语音与 Agent 能力统一在一个密钥后面，按量计费，随用随扩。</p>
@@ -129,7 +129,7 @@
     </div>
   </section>
 
-  <section class="s-auth">
+  <section class="screen s-auth">
     <div class="card">
       <div class="head">
         <div>
@@ -164,7 +164,7 @@
     </div>
   </section>
 
-  <section class="s-verify">
+  <section class="screen s-verify">
     <div class="card">
       <div class="head">
         <div>
@@ -181,7 +181,7 @@
     </div>
   </section>
 
-  <section class="s-preview">
+  <section class="screen s-preview">
     <div class="card">
       <div class="pv-top"><span class="mark">R</span><span class="tag">匿名预览</span></div>
       <div class="pv-title">控制台 · 只读</div>
