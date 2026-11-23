@@ -167,8 +167,9 @@
 
   @media (prefers-reduced-motion:reduce){*{animation:none !important;transition:none !important}}
 
-  .console .nav-item{cursor:pointer}
+  .console .nav-item{cursor:pointer;border-color:transparent;background:transparent;box-shadow:none;margin-bottom:2px}
   .console .nav-item:hover{background:var(--soft);color:var(--ink)}
+  .console .nav-item.on{border-color:transparent}
   .nav-item svg{width:15px;height:15px;opacity:.7;flex:0 0 auto}
   .nav-item.on svg{opacity:1}
 </style>
@@ -348,6 +349,6 @@ window.TURNSTILE_SITEKEY = "0x4AAAAAAGPRu0xFiTmg5BYn";
 <script src="https://www.rxh.asia/assets/auth-modal.js?v=20261124d"></script>
 <script src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit" defer></script>
 <script src="https://www.rxh.asia/assets/notice-bar.js?v=20261124c" defer></script>
-<script src="app.js?v=20261124h" defer></script>
+<script src="app.js?v=20261124i" defer></script>
 </body>
 </html>
