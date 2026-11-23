@@ -27,7 +27,9 @@
   function showBan(ban) {
     $("#loading").innerHTML = `<div style="text-align:center">
       <div style="font-size:15px;color:#ff6470;font-weight:600">账号已被封禁</div>
-      <p style="font-size:12.5px;color:#98a2bd;line-height:1.8;margin-top:10px">原因：${esc(ban.reason || "未填写")}<br>时间：${fmt(ban.start_at)} → ${fmt(ban.end_at)}</p></div>`;
+      <p style="font-size:12.5px;color:#98a2bd;line-height:1.8;margin-top:10px">原因：${esc(ban.reason || "未填写")}<br>时间：${fmt(ban.start_at)} → ${fmt(ban.end_at)}</p>
+      <a href="https://auth.rxh.asia/appeal/" style="display:inline-flex;margin-top:14px;padding:9px 16px;border-radius:10px;background:linear-gradient(120deg,#ff7ab8,#b45cff);color:#170f22;font-size:13px;font-weight:600;text-decoration:none">提交申诉</a>
+      <p style="font-size:11.5px;color:#98a2bd;margin-top:10px">申诉需填写联系邮箱与理由（最多 300 字），7 天后自动清除。</p></div>`;
   }
 
   function render() {
