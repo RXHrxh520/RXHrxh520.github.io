@@ -922,10 +922,17 @@
 
       <div class="soon-grid">
         <a class="soon" href="./gov/" target="_self">
-          <span class="badge live">已上线 · 演示</span>
+          <span class="badge live">已上线</span>
           <h4>政务服务系统</h4>
           <p>按政务门户常见版式排的服务大厅、通知公告、办事列表与快捷入口，纯静态页面，不接后台。</p>
           <code>/gov/</code>
+          <span class="go">进入分站 →</span>
+        </a>
+        <a class="soon" href="./police/" target="_self">
+          <span class="badge live">已上线</span>
+          <h4>公安网</h4>
+          <p>玄河县公安局的网上门户：警务公开、办事指南、警情通报与线索提交，纯静态页面。</p>
+          <code>/police/</code>
           <span class="go">进入分站 →</span>
         </a>
         <a class="soon" href="./status/" target="_self">
@@ -947,7 +954,7 @@
       <div class="explain">
         <h3>路径式分站怎么运作</h3>
         <ul class="bullets">
-          <li><span>·</span> 一个目录就是一个分站：仓库里建 <b>/gov/</b>、<b>/status/</b>，各放一个 index.html 即可访问</li>
+          <li><span>·</span> 一个目录就是一个分站：仓库里建 <b>/gov/</b>、<b>/police/</b>、<b>/status/</b>，各放一个 index.html 即可访问</li>
           <li><span>·</span> 不占域名、不占仓库：不用买子域名、不用新建仓库，证书和 CDN 全部跟总站共用</li>
           <li><span>·</span> 加法很简单：建目录 → 放页面 → 在总站这张卡上加一条链接，就多了一个分站</li>
           <li><span>·</span> 代价是共用一套：同一域名下所有页面一起构建、一起发版，某个目录写坏可能连一起 404</li>
@@ -1249,7 +1256,7 @@ const BENCH = [
   ['证书','Let’s Encrypt'],
   ['构建','main 分支根目录'],
   ['源码','单文件 index.html'],
-  ['页面','/ · /gov/ · /status/'],
+  ['页面','/ · /gov/ · /police/ · /status/'],
   ['更新','2026-11-23']
 ];
 document.getElementById('benchGrid').innerHTML = BENCH.map(([k,v])=>
@@ -1263,6 +1270,7 @@ document.getElementById('benchGrid').innerHTML = BENCH.map(([k,v])=>
 
 /* ================= 更新日志 ================= */
 const LOGS = [
+  {d:'11-24', t:'公安网上线', n:'玄河县公安局网上门户，四个栏目可点，警情通报与办事指南均为静态数据。'},
   {d:'11-23', t:'404 入口上线', n:'主站右上角改名为 404，进去是一套微信界面：会话、通讯录、发现、我。'},
   {d:'11-23', t:'政务服务大厅重做', n:'按政务门户常见版式重排，办件查询拆成普通办件与内部流转单两套。'},
   {d:'11-22', t:'系统状态页', n:'按 GitHub Status 的结构做：分组、90 格色条、可用率与故障记录。'},
@@ -1576,21 +1584,21 @@ function bumpAI(){
   if(aiBadge) aiBadge.textContent = aiCount;
 }
 
-let streak = 0, lastSug = '';
+const SUG_HITS = new Map();
 document.querySelectorAll('#sug .sug').forEach(b=>{
   b.addEventListener('click', ()=>{
     const txt = b.textContent.trim();
-    if(lastSug === txt) streak++; else { lastSug = txt; streak = 1; }
-    if(streak >= 25){
+    const n = (SUG_HITS.get(txt) || 0) + 1;
+    SUG_HITS.set(txt, n);
+    if(n >= 25){
       addMsg('me', txt);
-      bumpAI();
-      setTimeout(()=>{ addMsg('ai', 'RXH-2026-11 这个可以到政务中心去查询'); bumpAI(); }, 520);
-      streak = 0; lastSug = '';
-      document.getElementById('chat').scrollTop = document.getElementById('chat').scrollHeight;
+      addMsg('ai', 'RXH-2026-11 这个可以到政务中心去查询');
+      bumpAI(); bumpAI();
+      SUG_HITS.clear();
+      chat.scrollTop = chat.scrollHeight;
       return;
     }
     input.value = txt;
-    input.focus();
     form.requestSubmit();
   });
 });
