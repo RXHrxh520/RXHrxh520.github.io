@@ -166,6 +166,11 @@
   .mono{font-family:ui-monospace,Menlo,monospace}
 
   @media (prefers-reduced-motion:reduce){*{animation:none !important;transition:none !important}}
+
+  .console .nav-item{cursor:pointer}
+  .console .nav-item:hover{background:var(--soft);color:var(--ink)}
+  .nav-item svg{width:15px;height:15px;opacity:.7;flex:0 0 auto}
+  .nav-item.on svg{opacity:1}
 </style>
 </head>
 <body>
@@ -241,11 +246,11 @@
     <div class="console">
       <aside class="side">
         <div class="side-brand"><span class="mark">R</span> RXH.ASIA OPEN</div>
-        <button class="nav-item on" data-panel="overview">概览</button>
-        <button class="nav-item" data-panel="models">模型广场</button>
-        <button class="nav-item" data-panel="keys">API 密钥</button>
-        <button class="nav-item" data-panel="usage">用量</button>
-        <button class="nav-item" data-panel="docs">接入文档</button>
+        <button class="nav-item on" data-panel="overview"><svg viewBox="0 0 24 24"><use href="#i-grid"/></svg>概览</button>
+        <button class="nav-item" data-panel="models"><svg viewBox="0 0 24 24"><use href="#i-spark"/></svg>模型广场</button>
+        <button class="nav-item" data-panel="keys"><svg viewBox="0 0 24 24"><use href="#i-key"/></svg>API 密钥</button>
+        <button class="nav-item" data-panel="usage"><svg viewBox="0 0 24 24"><use href="#i-activity"/></svg>用量</button>
+        <button class="nav-item" data-panel="docs"><svg viewBox="0 0 24 24"><use href="#i-doc"/></svg>接入文档</button>
         <div class="side-foot" id="sideUser">访客 · 只读</div>
       </aside>
       <div class="cmain">
@@ -343,6 +348,6 @@ window.TURNSTILE_SITEKEY = "0x4AAAAAAGPRu0xFiTmg5BYn";
 <script src="https://www.rxh.asia/assets/auth-modal.js?v=20261124d"></script>
 <script src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit" defer></script>
 <script src="https://www.rxh.asia/assets/notice-bar.js?v=20261124c" defer></script>
-<script src="app.js?v=20261124e" defer></script>
+<script src="app.js?v=20261124f" defer></script>
 </body>
 </html>
