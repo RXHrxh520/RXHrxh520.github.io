@@ -259,7 +259,7 @@ document.getElementById('aiForm').addEventListener('submit', bumpAI);
       bar.innerHTML=items.map(t=>'<span>'+String(t).replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]))+'</span>').join('');
       document.body.appendChild(bar);
       const st=document.createElement('style');
-      st.textContent='body.has-notice .view{padding-top:156px}body.has-notice .navbar{top:56px}'+
+      st.textContent='body.has-notice .view{padding-top:156px}body.has-notice .navbar{top:56px}body.has-notice .ctrl{top:62px}'+
         '@media(max-width:760px){body.has-notice .view{padding-top:138px}body.has-notice .navbar{top:52px}body.has-notice .ctrl{top:54px}}';
       document.head.appendChild(st);
       document.body.classList.add('has-notice');
