@@ -1,291 +1,309 @@
-/* ---------- 视图切换 ---------- */
-const views = ['home','projects','ai','sites'];
-function paint(name){
-  if(!views.includes(name)) name = 'home';
-  views.forEach(v=>{
-    document.getElementById('view-'+v).classList.toggle('on', v===name);
-  });
-  document.querySelectorAll('.nav-item').forEach(a=>{
-    a.classList.toggle('active', a.dataset.view===name);
-  });
-  window.scrollTo(0,0);
-}
-/* 有 View Transitions 就用原生过渡，没有就退回 CSS 动画 */
-function show(name){
-  const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
-  if(document.startViewTransition && !reduced){
-    document.startViewTransition(()=>paint(name));
-  }else{
-    paint(name);
+/* rxh.asia 主站脚本 v2 */
+(() => {
+  const $ = (s, r = document) => r.querySelector(s);
+  const $$ = (s, r = document) => [...r.querySelectorAll(s)];
+  const AUTH = 'https://auth.rxh.asia';
+  const STATUS = 'https://status.rxh.asia';
+  const SID_KEY = 'rxh_sid';
+
+  /* ---------- 视图路由 ---------- */
+  const views = ['home', 'status', 'sites', 'me'];
+  function go(v) {
+    if (!views.includes(v)) v = 'home';
+    $$('.view').forEach(el => el.classList.toggle('on', el.id === 'v-' + v));
+    $$('nav.tabs .tab').forEach(b => b.classList.toggle('on', b.dataset.view === v));
+    if (v === 'status') loadStatus(true);
+    if (v === 'me') renderMe();
+    history.replaceState(null, '', v === 'home' ? '/' : '/#' + v);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   }
-}
-const VIEWS = ['home','projects','ai','sites'];
-function fromUrl(){
-  const v = new URLSearchParams(location.search).get('v') || 'home';
-  show(VIEWS.includes(v) ? v : 'home');
-}
-function pushView(v){
-  const u = v === 'home' ? location.pathname : location.pathname + '?v=' + v;
-  history.pushState({v}, '', u);
-}
-window.addEventListener('popstate', fromUrl);
-fromUrl();
+  $$('[data-view]').forEach(b => b.addEventListener('click', () => go(b.dataset.view)));
 
-document.querySelectorAll('[data-view]').forEach(el=>{
-  el.addEventListener('click', e=>{
-    const href = el.getAttribute('href') || '';
-    if(el.tagName === 'A' && el.dataset.view){
-      e.preventDefault();
-      const v = el.dataset.view;
-      pushView(v);
-      show(v);
-    }
-  });
-});
+  /* ---------- 主题 & 配色 ---------- */
+  const PALETTES = [
+    { k: 'rose', n: '玫瑰', c1: '#ff7ab8', c2: '#b45cff' },
+    { k: 'ocean', n: '海蓝', c1: '#5cb8ff', c2: '#4a6bff' },
+    { k: 'mint', n: '薄荷', c1: '#4fe0b6', c2: '#2bb0a0' },
+    { k: 'amber', n: '琥珀', c1: '#ffc35c', c2: '#ff8a4c' },
+    { k: 'violet', n: '紫罗兰', c1: '#b98bff', c2: '#7a5cff' },
+    { k: 'coral', n: '珊瑚', c1: '#ff8f7a', c2: '#ff5c8a' },
+    { k: 'sky', n: '青空', c1: '#7ee7ff', c2: '#4aa8ff' },
+    { k: 'gray', n: '石墨', c1: '#b9c4dc', c2: '#7d8aa6' },
+  ];
+  const allowPalette = k => PALETTES.some(p => p.k === k);
 
-/* ---------- 复制 ---------- */
-const toast = document.getElementById('toast');
-let tt;
-function flash(msg){
-  toast.textContent = msg || '已复制';
-  toast.classList.add('show');
-  clearTimeout(tt);
-  tt = setTimeout(()=>toast.classList.remove('show'), 1600);
-}
-document.querySelectorAll('[data-copy]').forEach(btn=>{
-  btn.addEventListener('click', async ()=>{
-    const text = btn.dataset.copy;
-    try{
-      await navigator.clipboard.writeText(text);
-      flash('已复制：' + text);
-    }catch(e){
-      const ta = document.createElement('textarea');
-      ta.value = text; document.body.appendChild(ta); ta.select();
-      document.execCommand('copy'); ta.remove();
-      flash('已复制：' + text);
-    }
-  });
-});
-
-/* ---------- AI 对话 ---------- */
-document.querySelectorAll('.toggle').forEach(t=>{
-  t.addEventListener('click', ()=> t.classList.toggle('on'));
-});
-
-const form = document.getElementById('aiForm');
-const input = document.getElementById('aiInput');
-const chat = document.getElementById('chat');
-
-function addMsg(who, text){
-  const el = document.createElement('div');
-  el.className = 'msg ' + who;
-  el.innerHTML = '<div class="av">' + (who==='ai' ? 'U' : '我') + '</div><div class="bubble"></div>';
-  el.querySelector('.bubble').textContent = text;
-  chat.appendChild(el);
-  chat.scrollTop = chat.scrollHeight;
-}
-
-/* 本地词库：关键词命中 + 兜底句池 */
-const KB = [
-  {k:/你好|hi|在吗|hello|嗨/, a:['在。今天想先弄哪块？','在的，说吧。','在，我在听。']},
-  {k:/今天|先做|计划|安排/, a:['先把 APIBalance 的检查更新收尾，再留半小时写文档，大的改动放周末。','今天建议只推一件事，别开三个坑。','先把手上那版发出去，再谈下一步。']},
-  {k:/apibalance|余额|api 额/, a:['APIBalance 现在能查六家平台余额，下一步加余额提醒比加平台更有用。','先把自动更新补上，再考虑历史曲线。','余额接口经常改字段，建议加个容错映射表。']},
-  {k:/博客|写作|文章/, a:['叫「小寒的草稿箱」？先写起来，名字以后再换。','先攒三篇再上线，别让首页空着。','写成卡片比写成日记更容易坚持。']},
-  {k:/你是谁|模型|uranium|名字/, a:['我是 RXH-Uranium，帮你理流程、读代码、写文档。','名字就是个代号，能干活就行。']},
-  {k:/代码|报错|bug|崩/, a:['先把报错原文贴出来，别凭印象改。','能复现的 bug 才算 bug，先写最小复现。','十有八九是空指针或者异步没等到。']},
-  {k:/帮我|写个|做个|实现/, a:['给我一句话说清输入和输出，我来拆步骤。','先做能跑的最小版本，美化放后面。','这个可以拆成三步：数据结构、交互、样式。']},
-  {k:/谢谢|感谢|thanks/, a:['不客气，随时找我。','客气了，有事继续说。']},
-  {k:/累|困|睡|休息/, a:['先睡，代码明天还在。','关机一小时，比硬撑三小时强。']},
-  {k:/域名|dns|证书|https/, a:['证书先签下来再开强制 HTTPS，顺序错了会 404。','CNAME 指到 pages 域名，A 记录只留够用的一条就行。']},
-  {k:/github|仓库|pages/, a:['Pages 构建慢的时候先看 builds 状态，别急着改代码。','仓库名和站点名最好别混用，后期会乱。']},
-  {k:/界面|设计|排版|颜色/, a:['先把信息层级排清楚，颜色最后调。','留白不够的时候，先删内容再加装饰。']},
-  {k:/状态页|监控|可用/, a:['检测项别太多，五六个关键的够了。','只测通断不够，延迟趋势更有信息量。']},
-  {k:/吃|饭|饿/, a:['先吃饭，别空腹改代码。','吃点东西再回来，脑子会清楚很多。']},
-  {k:/哈哈|笑|有趣/, a:['行，你开心就好。','这个我记下了，下次接着聊。']}
-];
-const FALLBACK = [
-  '收到，我记下了。',
-  '这个可以拆成两步走，先做最小可用的版本。',
-  '先别急着改，把现在的现象描述清楚。',
-  '我理解你的意思，先把边界条件列出来。',
-  '听起来可行，先验证一小块。',
-  '这条我留着，等你决定方向再动。',
-  '要不要先做一个能跑的草稿？',
-  '先按最简单的方案来，跑通了再优化。',
-  '时间够的话可以，不够就砍掉一半。',
-  '先记录下来，别在脑子里存着。',
-  '这个问题的关键在数据，不在样式。',
-  '把失败的情况也想一遍，能省很多返工。',
-  '先做，再想怎么讲。',
-  '可以，但别一次改太多。',
-  '我建议先看现有的，再决定要不要重写。',
-  '这一步不用完美，能用就行。'
-];
-function reply(text){
-  const t = text.toLowerCase();
-  for(const item of KB){ if(item.k.test(t)) return item.a[Math.floor(Math.random()*item.a.length)]; }
-  return FALLBACK[Math.floor(Math.random()*FALLBACK.length)];
-}
-
-input.addEventListener('input', ()=>{
-  input.style.height='auto';
-  input.style.height = Math.min(input.scrollHeight,120)+'px';
-});
-input.addEventListener('keydown', e=>{
-  if(e.key==='Enter' && !e.shiftKey){ e.preventDefault(); form.requestSubmit(); }
-});
-const HITS = new Map();
-form.addEventListener('submit', e=>{
-  e.preventDefault();
-  const text = input.value.trim();
-  if(!text) return;
-  addMsg('me', text);
-  input.value=''; input.style.height='auto';
-  const n = (HITS.get(text) || 0) + 1;
-  HITS.set(text, n);
-  if(n >= 25){
-    addMsg('ai', 'RXH-2026-11 这个编号，记着就行。');
-    if(!document.getElementById('eggNote')){
-      const tip = document.createElement('div');
-      tip.className = 'egg';
-      tip.id = 'eggNote';
-      tip.innerHTML = '内部流转编号<b>RXH-2026-11</b>';
-      chat.parentNode.insertBefore(tip, chat);
-    }
-    bumpAI();
-    HITS.clear();
-    const toEnd = () => { chat.scrollTop = chat.scrollHeight; };
-    setTimeout(toEnd, 600); setTimeout(toEnd, 1100);
-    return;
+  function applyPalette(k) {
+    const p = PALETTES.find(x => x.k === k) || PALETTES[0];
+    document.documentElement.style.setProperty('--pink', p.c1);
+    document.documentElement.style.setProperty('--pink2', p.c2);
+    localStorage.setItem('rxh_palette', p.k);
+    $$('.sw').forEach(el => el.classList.toggle('on', el.dataset.k === p.k));
   }
-  setTimeout(()=>addMsg('ai', reply(text)), 520);
-});
+  function buildPalette() {
+    $('#paletteGrid').innerHTML = PALETTES.map(p =>
+      `<button class="sw" data-k="${p.k}" style="background:linear-gradient(140deg,${p.c1},${p.c2})"><span>${p.n}</span></button>`).join('');
+    $$('.sw').forEach(b => b.addEventListener('click', () => applyPalette(b.dataset.k)));
+    applyPalette(localStorage.getItem('rxh_palette') || 'rose');
+  }
 
-document.querySelectorAll('#sug .sug').forEach(b=>{
-  b.addEventListener('click', ()=>{
-    input.value = b.textContent.trim();
-    form.requestSubmit();
+  function applyTheme(t) {
+    document.body.classList.toggle('light', t === 'light');
+    localStorage.setItem('rxh_theme', t);
+  }
+  function initTheme() {
+    const saved = localStorage.getItem('rxh_theme');
+    applyTheme(saved === 'light' ? 'light' : 'dark');
+    $('#themeBtn').addEventListener('click', () =>
+      applyTheme(document.body.classList.contains('light') ? 'dark' : 'light'));
+  }
+
+  /* ---------- 弹层 ---------- */
+  function openModal(el) {
+    $('#mask').classList.add('on'); el.classList.add('on');
+  }
+  function closeModals() {
+    $('#mask').classList.remove('on');
+    $$('.modal').forEach(m => m.classList.remove('on'));
+  }
+  $('#mask').addEventListener('click', closeModals);
+  $$('[data-close]').forEach(b => b.addEventListener('click', closeModals));
+  addEventListener('keydown', e => { if (e.key === 'Escape') closeModals(); });
+
+  $('#paletteBtn').addEventListener('click', () => openModal($('#paletteModal')));
+
+  /* ---------- 公告条 ---------- */
+  async function loadNotice() {
+    try {
+      const r = await fetch(AUTH + '/api/notice', { cache: 'no-store' });
+      const d = await r.json();
+      const items = d.items || [];
+      if (!items.length) return;
+      $('#nbText').textContent = items.map(x => x.text).join('　·　');
+      $('#noticebar').classList.add('on');
+      document.documentElement.style.setProperty('--nbh', '0px');
+    } catch (e) { }
+  }
+
+  /* ---------- 通知 ---------- */
+  const N_META = {
+    1: { label: '系统公告', icon: '<path d="M4 10v4h3l6 4V6l-6 4H4Z"/><path d="M17 9a4 4 0 0 1 0 6"/>' },
+    2: { label: '管理员公告', icon: '<path d="M12 3l9 5-9 5-9-5 9-5Z"/><path d="M5 11v5l7 4 7-4v-5"/>' },
+    3: { label: '系统通知', icon: '<circle cx="12" cy="12" r="9"/><path d="M12 8v4.5M12 16h.01"/>' },
+    4: { label: '安全通知', icon: '<path d="M12 3l7 3v6c0 4-3 7-7 9-7-2-7-5-7-9V6l7-3Z"/><path d="m9 12 2 2 4-4"/>' },
+    5: { label: '测试通知', icon: '<path d="M9 3h6M10 3v6L5 19h14L14 9V3"/><path d="M7.5 14h9"/>' },
+  };
+  const esc = s => String(s || '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+
+  async function loadNotices() {
+    try {
+      const r = await fetch(AUTH + '/api/notifications', { cache: 'no-store' });
+      const d = await r.json();
+      const items = (d.items || []).slice(0, 20);
+      const list = $('#noticeList');
+      if (!items.length) { list.innerHTML = '<div class="n-empty">暂无通知</div>'; $('#bellDot').classList.remove('on'); return; }
+      list.innerHTML = items.map(n => {
+        const m = N_META[n.type] || N_META[3];
+        return `<div class="n-item t${n.type}">
+          <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7">${m.icon}</svg></div>
+          <div><div class="tt">${esc(n.title)}</div>
+          ${n.body ? `<div class="bd">${esc(n.body)}</div>` : ''}
+          <div class="tm">${m.label} · ${new Date(n.created_at).toLocaleString('zh-CN')}</div></div>
+        </div>`;
+      }).join('');
+      const seen = Number(localStorage.getItem('rxh_nseen') || 0);
+      const newest = Math.max(...items.map(i => i.id));
+      const unread = seen ? items.filter(i => i.id > seen).length : items.length;
+      const dot = $('#bellDot');
+      if (unread) { dot.textContent = unread > 9 ? '9+' : unread; dot.classList.add('on'); }
+      else dot.classList.remove('on');
+      $('#bell').dataset.newest = newest;
+    } catch (e) { }
+  }
+  $('#bell').addEventListener('click', () => {
+    openModal($('#noticeModal'));
+    const newest = Number($('#bell').dataset.newest || 0);
+    if (newest) localStorage.setItem('rxh_nseen', newest);
+    $('#bellDot').classList.remove('on');
   });
-});
 
-/* ---------- 项目页：拉取 GitHub 状态 ---------- */
-(async function(){
-  const grid = document.getElementById('repoGrid');
-  if(!grid) return;
-  try{
-    const res = await fetch('https://api.github.com/users/RXHrxh520/repos?sort=updated&per_page=20', {headers:{Accept:'application/vnd.github+json'}});
-    if(!res.ok) return;
-    const data = await res.json();
-    data.forEach(r=>{
-      const card = [...grid.querySelectorAll('.repo')].find(c=>c.querySelector('h4')?.textContent.trim()===r.name);
-      if(!card) return;
-      const meta = card.querySelector('.meta');
-      if(!meta) return;
-      const upd = (r.pushed_at||r.updated_at||'').slice(0,10);
-      meta.innerHTML = '<span>★ ' + r.stargazers_count + '</span><span>⑂ ' + r.forks_count + '</span>' +
-        (r.language ? '<span>' + r.language + '</span>' : '') +
-        (upd ? '<span>更新 ' + upd + '</span>' : '');
+  /* ---------- 站外链接（100ms 预检） ---------- */
+  const HOSTS_SELF = ['rxh.asia', 'www.rxh.asia', 'status.rxh.asia', 'open.rxh.asia', 'auth.rxh.asia', 'admin.rxh.asia', 'dev.rxh.asia'];
+  function isExternal(a) {
+    try {
+      const u = new URL(a.href, location.href);
+      if (u.origin === location.origin) return false;
+      return !HOSTS_SELF.includes(u.hostname);
+    } catch (e) { return false; }
+  }
+  function precheck(url) {
+    return new Promise(resolve => {
+      const t0 = performance.now();
+      const ctrl = new AbortController();
+      const timer = setTimeout(() => { ctrl.abort(); resolve({ ok: false, ms: 100, reason: 'timeout' }); }, 100);
+      fetch(url, { method: 'HEAD', mode: 'no-cors', cache: 'no-store', signal: ctrl.signal })
+        .then(() => { clearTimeout(timer); resolve({ ok: true, ms: Math.round(performance.now() - t0) }); })
+        .catch(() => { clearTimeout(timer); resolve({ ok: false, ms: Math.round(performance.now() - t0), reason: 'blocked' }); });
     });
-  }catch(e){ /* 静默失败，保留静态信息 */ }
-})();
-
-document.getElementById('y').textContent = new Date().getFullYear();
-
-/* ================= 主题 ================= */
-const SUN = '<circle cx="12" cy="12" r="4.2"/><path d="M12 2v2.4M12 19.6v2.4M2 12h2.4M19.6 12h2.4M4.8 4.8l1.7 1.7M17.5 17.5l1.7 1.7M19.2 4.8l-1.7 1.7M6.5 17.5l-1.7 1.7"/>';
-const MOON = '<path d="M15.5 3.2a9 9 0 1 0 6.3 12.2 7 7 0 0 1-6.3-12.2z"/>';
-function applyTheme(dark){
-  document.body.classList.toggle('dark', dark);
-  localStorage.setItem('rxh_theme', dark ? 'dark' : 'light');
-  document.getElementById('themeIcon').innerHTML = dark ? MOON : SUN;
-  document.getElementById('themeLabel').textContent = dark ? '白亮' : '暗夜';
-}
-applyTheme(localStorage.getItem('rxh_theme') === 'dark');
-document.getElementById('themeBtn').addEventListener('click', ()=>{
-  applyTheme(!document.body.classList.contains('dark'));
-});
-
-/* ================= 工作台 ================= */
-const BENCH = [
-  ['托管','GitHub Pages'],
-  ['仓库','RXHrxh520.github.io'],
-  ['主域','www.rxh.asia'],
-  ['证书','Let’s Encrypt'],
-  ['构建','main 分支根目录'],
-  ['源码','单文件 index.html'],
-  ['页面','/ · /gov/ · /police/ · /open/ · /status/'],
-  ['更新','2026-11-23']
-];
-document.getElementById('benchGrid').innerHTML = BENCH.map(([k,v])=>
-  `<div class="brow"><span>${k}</span><b>${v}</b></div>`).join('');
-
-(function(){
-  const start = new Date('2026-11-18T00:00:00+08:00');
-  const days = Math.floor((Date.now() - start) / 86400000) + 1;
-  document.getElementById('benchDays').textContent = '站点运行 ' + days + ' 天';
-})();
-
-/* ================= 更新日志 ================= */
-const LOGS = [
-  {d:'11-24', t:'开放平台改版', n:'RXH 开放平台改为登录页：账密登录 + 匿名只读预览，匿名入口需过人机验证。'},
-  {d:'11-22', t:'系统状态页', n:'按 GitHub Status 的结构做：分组、90 格色条、可用率与故障记录。'},
-  {d:'11-20', t:'路径式分站', n:'不再一个站一个域名，仓库里一个目录就是一个分站。'},
-  {d:'11-18', t:'总站上线', n:'玻璃拟态悬浮导航、四视图、绑定 www.rxh.asia 并开启强制 HTTPS。'}
-];
-document.getElementById('logList').innerHTML = LOGS.map(l=>
-  `<li><span class="ldate">${l.d}</span><div><b>${l.t}</b><i>${l.n}</i></div></li>`).join('');
-
-/* ================= AI 会话计数 ================= */
-let aiCount = 0;
-const aiBadge = document.getElementById('msgCount');
-function bumpAI(){
-  aiCount++;
-  if(aiBadge) aiBadge.textContent = aiCount;
-}
-document.getElementById('aiForm').addEventListener('submit', bumpAI);
-
-/* ---------- 公告条（仅管理员配置后显示） ---------- */
-(function(){
-  fetch('https://auth.rxh.asia/api/notice',{cache:'no-store'})
-    .then(r=>r.json()).then(d=>{
-      const items=(d.items||[]).map(i=>i.text).filter(Boolean);
-      if(!items.length) return;
-      const bar=document.createElement('div');
-      bar.id='noticeBar';
-      bar.setAttribute('role','status');
-      bar.style.cssText='position:fixed;top:0;left:0;right:0;z-index:80;display:flex;align-items:center;gap:28px;'+
-        'padding:9px 18px;font-size:12.5px;line-height:1.4;color:#7a4b00;background:linear-gradient(90deg,#fff4dd,#ffe9c4);'+
-        'border-bottom:1px solid #ffe0ad;overflow-x:auto;white-space:nowrap;-webkit-overflow-scrolling:touch';
-      bar.innerHTML=items.map(t=>'<span>'+String(t).replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]))+'</span>').join('');
-      document.body.appendChild(bar);
-      const st=document.createElement('style');
-      st.textContent='body.has-notice .view{padding-top:156px}body.has-notice .navbar{top:56px}body.has-notice .ctrl{top:62px}'+
-        '@media(max-width:760px){body.has-notice .view{padding-top:138px}body.has-notice .navbar{top:52px}body.has-notice .ctrl{top:54px}}';
-      document.head.appendChild(st);
-      document.body.classList.add('has-notice');
-    }).catch(()=>{});
-})();
-
-/* ---------- 站外链接：居中提示 ---------- */
-(function(){
-  const m=document.getElementById('outm'), urlEl=document.getElementById('outUrl'), go=document.getElementById('outGo');
-  if(!m) return;
-  const close=()=>m.classList.remove('on');
-  document.getElementById('outX').addEventListener('click',close);
-  document.getElementById('outCancel').addEventListener('click',close);
-  m.addEventListener('click',e=>{ if(e.target===m) close(); });
-  document.addEventListener('keydown',e=>{ if(e.key==='Escape') close(); });
-  document.addEventListener('click',e=>{
-    const a=e.target.closest('a[href]');
-    if(!a || a.hasAttribute('data-noout')) return;
-    const href=a.getAttribute('href')||'';
-    if(!/^https?:/i.test(href)) return;
-    let u;
-    try{ u=new URL(href,location.href); }catch{ return; }
-    if(/(^|\.)rxh\.asia$/.test(u.hostname)) return;
+  }
+  document.addEventListener('click', async e => {
+    const a = e.target.closest('a[href]');
+    if (!a || a.hasAttribute('data-close') || a.id === 'extGo') return;
+    const href = a.getAttribute('href') || '';
+    if (href.startsWith('#') || href.startsWith('mailto:') || href.startsWith('tel:')) return;
+    if (!isExternal(a)) return;
     e.preventDefault();
-    urlEl.textContent=u.href;
-    go.href=u.href;
-    m.classList.add('on');
+    const url = a.href;
+    const info = $('#extInfo');
+    info.textContent = '正在检查目标站点可用性…';
+    $('#extGo').href = url;
+    $('#extGo').removeAttribute('target');
+    openModal($('#extModal'));
+    const chk = await precheck(url);
+    info.textContent = (chk.ok ? `目标站点可访问（${chk.ms}ms）` : '未在 100ms 内确认可达，仍可继续访问') + ' · ' + url;
   });
+
+  /* ---------- 状态 ---------- */
+  let stCache = null;
+  function fmtPing(ms) { return ms ? ms + ' ms' : '—'; }
+  function renderMini(d) {
+    const svcs = (d.services || []).slice(0, 5);
+    const bad = svcs.filter(s => s.status === 'outage').length;
+    const warn = svcs.filter(s => s.status === 'degraded').length;
+    const pill = $('#smPill');
+    pill.className = 'pill ' + (bad ? 'bad' : warn ? 'warn' : 'ok');
+    pill.textContent = bad ? `${bad} 项中断` : warn ? `${warn} 项降级` : '全部正常';
+    $('#smList').innerHTML = svcs.map(s => {
+      const cls = s.status === 'outage' ? 'bad' : s.status === 'degraded' ? 'warn' : '';
+      return `<div class="sm-row"><i class="led ${cls}"></i><span class="nm">${esc(s.name)}</span><span class="ms">${fmtPing(s.latency_ms)}</span></div>`;
+    }).join('');
+    $('#smUpdated').textContent = '更新 ' + new Date(d.generated_at).toLocaleTimeString('zh-CN', { hour12: false });
+  }
+  function renderStatus(d) {
+    const svcs = d.services || [];
+    $('#stSub').textContent = `${svcs.length} 个服务 · 更新于 ${new Date(d.generated_at).toLocaleString('zh-CN')}`;
+    $('#stGrid').innerHTML = svcs.map(s => {
+      const bad = s.status === 'outage';
+      const up = s.uptime_90d == null ? null : Math.round(s.uptime_90d * 1000) / 10;
+      return `<div class="sp-item">
+        <div class="row1"><i class="led ${bad ? 'bad' : s.status === 'degraded' ? 'warn' : ''}" style="width:8px;height:8px;border-radius:50%;background:${bad ? 'var(--bad)' : s.status === 'degraded' ? 'var(--warn)' : 'var(--ok)'}"></i>
+          <span class="name">${esc(s.name)}</span></div>
+        <div class="url">${esc(String(s.url).replace(/^https?:\/\//, ''))}</div>
+        <div class="metrics"><div>Ping<b>${fmtPing(s.latency_ms)}</b></div><div>可用率<b>${up == null ? '—' : up + '%'}</b></div></div>
+        <div class="uptime"><i class="${bad ? 'bad' : ''}" style="width:${up == null ? 0 : up}%"></i></div>
+        ${s.error ? `<div class="url" style="color:var(--bad);margin-top:8px">${esc(s.error)}</div>` : ''}
+      </div>`;
+    }).join('');
+  }
+  async function loadStatus(probe) {
+    try {
+      const r = await fetch(STATUS + '/api/status' + (probe ? '?probe=1' : ''), { cache: 'no-store' });
+      const d = await r.json();
+      stCache = d;
+      renderMini(d); renderStatus(d);
+    } catch (e) {
+      $('#smPill').className = 'pill bad'; $('#smPill').textContent = '获取失败';
+      $('#stSub').textContent = '状态数据获取失败，稍后重试';
+    }
+  }
+  $('#stRefresh').addEventListener('click', async e => {
+    const b = e.currentTarget; b.disabled = true; b.textContent = '探测中…';
+    await loadStatus(true); b.disabled = false; b.textContent = '立即刷新';
+  });
+
+  /* ---------- 子站 ---------- */
+  const SITES = [
+    { n: '开发人员', d: '项目、仓库与更新日志，粉色主题的子站。', u: 'dev.rxh.asia', h: 'https://dev.rxh.asia/', i: 'code' },
+    { n: '开放平台', d: '面向开发者的接口门户，账号与主站统一。', u: 'open.rxh.asia', h: 'https://open.rxh.asia/', i: 'api' },
+    { n: '站点状态', d: '边缘定时探测，Ping 与 90 天可用率。', u: 'status.rxh.asia', h: 'https://status.rxh.asia/', i: 'wave' },
+    { n: '账号中心', d: '统一账号：昵称、头像、密码与 ID。', u: 'auth.rxh.asia', h: 'https://auth.rxh.asia/', i: 'user' },
+  ];
+  const ICONS = {
+    code: '<path d="m8 8-4 4 4 4M16 8l4 4-4 4"/>',
+    api: '<path d="M4 7h16v10H4z"/><path d="M8 11h.01M12 11h.01M8 14h6"/>',
+    wave: '<path d="M3 12h4l2.5 6 4-12 2.5 6H21"/>',
+    user: '<circle cx="12" cy="8" r="4"/><path d="M4 20c1.5-3.5 4.5-5 8-5s6.5 1.5 8 5"/>',
+  };
+  function siteCard(s) {
+    return `<a class="site" href="${s.h}"><div class="t"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7">${ICONS[s.i]}</svg>${s.n}</div>
+      <div class="d">${s.d}</div><div class="u">${s.u} ↗</div></a>`;
+  }
+  $('#homeSites').innerHTML = SITES.slice(0, 3).map(siteCard).join('');
+  $('#siteList').innerHTML = SITES.map(siteCard).join('');
+
+  /* ---------- 账号 ---------- */
+  let me = null;
+  async function fetchMe() {
+    const sid = localStorage.getItem(SID_KEY) || '';
+    try {
+      const r = await fetch(AUTH + '/api/me', { headers: sid ? { Authorization: 'Bearer ' + sid } : {}, cache: 'no-store', credentials: 'include' });
+      const d = await r.json();
+      if (d.banned) { localStorage.removeItem(SID_KEY); showBan(d.ban); return null; }
+      if (d.user) { me = d.user; localStorage.setItem('rxh_uid', me.uid); }
+      return d.user || null;
+    } catch (e) { return null; }
+  }
+  function showBan(ban) {
+    const m = $('#extModal');
+    $('#extInfo').textContent = '';
+    $('#extInfo').innerHTML = `<b style="color:var(--bad)">账号已被封禁</b><br>原因：${esc(ban.reason || '未填写')}<br>时间：${esc(ban.start_at)} → ${esc(ban.end_at)}`;
+    $('#extGo').textContent = '知道了'; $('#extGo').href = 'javascript:void(0)';
+    openModal(m);
+  }
+  function setAuthBtn() {
+    const b = $('#authBtn');
+    if (me) { b.textContent = me.name || '我的账号'; b.onclick = () => go('me'); }
+    else { b.textContent = '登录 / 注册'; b.onclick = () => window.RXHAuth.open({ onSuccess: afterAuth }); }
+  }
+  async function afterAuth(user) {
+    me = user; setAuthBtn(); renderMe(); loadNotices();
+    go('me');
+  }
+  function renderMe() {
+    const card = $('#meCard');
+    if (!me) {
+      $('#meAva').textContent = '未'; $('#meAva').style.background = '';
+      $('#meName').textContent = '未登录';
+      $('#meUid').textContent = '登录后可查看账号信息';
+      $('#meActions').innerHTML = `<button class="big-btn primary" id="meLogin">登录 / 注册</button>`;
+      $('#meLogin').addEventListener('click', () => window.RXHAuth.open({ onSuccess: afterAuth }));
+      return;
+    }
+    if (me.avatar) {
+      $('#meAva').outerHTML = `<img class="me-ava" id="meAva" src="${esc(me.avatar)}" alt="">`;
+    } else { $('#meAva').textContent = (me.name || 'U').slice(0, 1); }
+    $('#meName').textContent = me.name;
+    $('#meUid').textContent = me.uid + (me.is_admin ? ' · 管理员' : '');
+    $('#meActions').innerHTML = `
+      <a class="big-btn primary" href="https://auth.rxh.asia/account/" style="padding:9px 16px;font-size:13px">账号中心</a>
+      ${me.is_admin ? '<a class="big-btn" href="https://admin.rxh.asia/" style="padding:9px 16px;font-size:13px">管理后台</a>' : ''}
+      <button class="big-btn" id="logoutBtn" style="padding:9px 16px;font-size:13px">退出登录</button>`;
+    $('#logoutBtn').addEventListener('click', async () => {
+      const sid = localStorage.getItem(SID_KEY) || '';
+      await fetch(AUTH + '/api/logout', { method: 'POST', headers: sid ? { Authorization: 'Bearer ' + sid } : {}, credentials: 'include' }).catch(() => { });
+      localStorage.removeItem(SID_KEY); localStorage.removeItem('rxh_uid');
+      me = null; setAuthBtn(); renderMe();
+    });
+  }
+
+  /* ---------- 音乐播放器 ---------- */
+  $('#mToggle').addEventListener('click', e => {
+    e.stopPropagation();
+    $('#music').classList.toggle('open');
+  });
+  document.addEventListener('click', e => {
+    if (!e.target.closest('#music')) $('#music').classList.remove('open');
+  });
+
+  /* ---------- 启动 ---------- */
+  initTheme();
+  buildPalette();
+  loadNotice();
+  loadStatus(false);
+  loadNotices();
+  fetchMe().then(() => { setAuthBtn(); renderMe(); });
+
+  const hash = location.hash.replace('#', '');
+  if (hash && views.includes(hash)) go(hash);
+  setInterval(loadNotices, 60000);
+  setInterval(() => loadStatus(false), 300000);
 })();
