@@ -3,6 +3,8 @@ const SAME = location.hostname === 'status.rxh.asia';
 const API = SAME ? '' : 'https://status.rxh.asia';
 
 const $ = s => document.querySelector(s);
+const SVC_NAME = { 'GitHub Pages 源站': '站点源站', 'GitHub Pages': '站点源站' };
+const svcName = n => SVC_NAME[n] || String(n || '').replace(/GitHub Pages?/gi, '源站').trim();
 let timer = null, tick = 300;
 
 const ST = { operational:['正常','ok'], degraded:['降级','warn'], outage:['中断','bad'], unknown:['无数据','empty'] };
