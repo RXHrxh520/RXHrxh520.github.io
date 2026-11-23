@@ -2,251 +2,181 @@
 <html lang="zh-CN">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>RXH 开放平台 · 登录</title>
 <meta name="description" content="RXH 开放平台：面向开发者的接口与算力门户。">
+<meta name="theme-color" content="#f7f8fa" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#101218" media="(prefers-color-scheme: dark)">
+<meta name="color-scheme" content="light dark">
 <style>
   :root{
-    --ink:#16181d;--sub:#606a78;--line:#e6e9ef;--bg:#f7f8fa;
-    --brand:#3d63ff;--brand2:#7b5cff;
-    --card:#fff;
+    --ink:#16181d;--sub:#606a78;--line:#e6e9ef;--card:#fff;--page:#f7f8fa;
+    --brand:#3d63ff;--brand2:#7b5cff;--soft:#f0f3ff;
+  }
+  @media (prefers-color-scheme:dark){
+    :root{--ink:#e8ecf4;--sub:#98a3b5;--line:#242a36;--card:#161a23;--page:#0f1117;--soft:#1a2030}
   }
   *{box-sizing:border-box}
-  html,body{height:100%}
+  html,body{min-height:100%}
   body{
-    margin:0;background:radial-gradient(1200px 600px at 50% -10%,#eef1ff 0%,#f7f8fa 55%,#f4f5f7 100%);
+    margin:0;padding:28px 18px 40px;display:grid;place-items:center;min-height:100dvh;
+    background:radial-gradient(1100px 520px at 50% -12%,var(--soft) 0%,var(--page) 58%,var(--page) 100%);
     color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;
-    -webkit-font-smoothing:antialiased;display:grid;place-items:center;min-height:100%;
+    -webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;
   }
-  .glow{position:fixed;pointer-events:none;filter:blur(60px);opacity:.5}
-  .g1{width:420px;height:420px;background:#cfd9ff;top:-120px;left:-80px}
-  .g2{width:380px;height:380px;background:#e4d8ff;bottom:-140px;right:-90px}
+  .aurora{position:fixed;inset:0;pointer-events:none;z-index:-1;overflow:hidden}
+  .aurora i{position:absolute;display:block;border-radius:50%;filter:blur(70px);opacity:.42;will-change:transform}
+  .aurora i:nth-child(1){width:380px;height:380px;background:#c8d5ff;top:-120px;left:-90px;animation:float1 18s ease-in-out infinite}
+  .aurora i:nth-child(2){width:320px;height:320px;background:#e2d6ff;bottom:-110px;right:-80px;animation:float2 22s ease-in-out infinite}
+  @keyframes float1{50%{transform:translate3d(30px,26px,0)}}
+  @keyframes float2{50%{transform:translate3d(-26px,-20px,0)}}
 
-  /* 舞台 */
-  .stage{position:relative;width:min(440px,calc(100% - 40px));padding:40px 0 56px;text-align:center}
+  .app{width:min(440px,100%);position:relative}
+  .screen{display:none}
+  .app[data-mode="intro"]  .s-intro,
+  .app[data-mode="auth"]   .s-auth,
+  .app[data-mode="preview"] .s-preview{display:block}
+  .app[data-mode="intro"] .s-intro{animation:rise .42s cubic-bezier(.22,.8,.28,1) both}
+  .app[data-mode="preview"] .s-preview{animation:rise .42s cubic-bezier(.22,.8,.28,1) both}
+  @keyframes rise{from{opacity:0;transform:translate3d(0,14px,0)}to{opacity:1;transform:none}}
 
-  .brand{display:inline-flex;align-items:center;gap:10px;font-size:13px;letter-spacing:.16em;color:var(--sub);text-transform:uppercase}
-  .mark{width:26px;height:26px;border-radius:8px;background:linear-gradient(135deg,var(--brand),var(--brand2));
-    box-shadow:0 6px 16px rgba(61,99,255,.28);display:grid;place-items:center;color:#fff;font-weight:800;font-size:13px;letter-spacing:0}
+  .brand{display:inline-flex;align-items:center;gap:9px;font-size:12px;letter-spacing:.16em;color:var(--sub);text-transform:uppercase}
+  .mark{width:26px;height:26px;border-radius:8px;display:grid;place-items:center;color:#fff;font-size:13px;font-weight:800;
+    background:linear-gradient(135deg,var(--brand),var(--brand2));box-shadow:0 6px 16px rgba(61,99,255,.28)}
 
-  h1{margin:22px 0 0;font-size:clamp(30px,5vw,38px);line-height:1.16;letter-spacing:-.02em;font-weight:800}
+  .s-intro{text-align:center}
+  h1{margin:20px 0 0;font-size:clamp(30px,5.6vw,38px);line-height:1.14;letter-spacing:-.02em;font-weight:800}
   h1 em{font-style:normal;background:linear-gradient(120deg,var(--brand),var(--brand2));-webkit-background-clip:text;background-clip:text;color:transparent}
-  p.lede{margin:14px auto 0;max-width:32ch;color:var(--sub);font-size:14.5px;line-height:1.65}
-
-  .cta{margin-top:34px;display:flex;flex-direction:column;align-items:center;gap:12px}
-  .primary{
-    position:relative;overflow:hidden;border:0;cursor:pointer;
-    padding:15px 40px;border-radius:999px;color:#fff;font-size:15.5px;font-weight:650;
-    background:linear-gradient(120deg,var(--brand),var(--brand2));
-    box-shadow:0 10px 26px rgba(61,99,255,.28);
-    transition:transform .22s cubic-bezier(.2,.7,.3,1),box-shadow .22s;
-  }
-  .primary:hover{transform:translateY(-2px);box-shadow:0 16px 34px rgba(61,99,255,.34)}
-  .primary:active{transform:translateY(0) scale(.985)}
+  .lede{margin:13px auto 0;max-width:31ch;color:var(--sub);font-size:14.5px;line-height:1.62}
+  .cta{margin-top:30px;display:flex;flex-direction:column;align-items:center;gap:11px}
+  .primary{position:relative;overflow:hidden;border:0;cursor:pointer;padding:15px 42px;border-radius:999px;color:#fff;
+    font-size:15.5px;font-weight:650;background:linear-gradient(120deg,var(--brand),var(--brand2));
+    box-shadow:0 10px 26px rgba(61,99,255,.26);transition:transform .22s cubic-bezier(.2,.7,.3,1),box-shadow .22s}
+  .primary:hover{transform:translate3d(0,-2px,0);box-shadow:0 16px 34px rgba(61,99,255,.32)}
+  .primary:active{transform:scale(.985)}
   .primary .sheen{position:absolute;inset:0;background:linear-gradient(100deg,transparent 20%,rgba(255,255,255,.45) 50%,transparent 80%);
     transform:translateX(-120%);transition:transform .7s ease}
   .primary:hover .sheen{transform:translateX(120%)}
   .tip{font-size:12px;color:#9aa3b2}
 
-  /* 登录面板：默认收起，点击后展开 */
-  .panel{
-    position:absolute;left:50%;top:50%;width:100%;
-    transform:translate(-50%,-46%) scale(.94);opacity:0;pointer-events:none;
-    background:var(--card);border:1px solid var(--line);border-radius:22px;
-    box-shadow:0 30px 70px -30px rgba(22,24,29,.28),0 2px 6px rgba(22,24,29,.04);
-    padding:26px 24px 24px;text-align:left;
-    transition:opacity .32s ease,transform .42s cubic-bezier(.2,.8,.2,1);
-  }
-  body.open .panel{transform:translate(-50%,-50%) scale(1);opacity:1;pointer-events:auto}
-  body.open .intro{opacity:0;transform:translateY(-14px) scale(.98);pointer-events:none}
-  .intro{transition:opacity .26s ease,transform .34s ease}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:22px 20px;
+    box-shadow:0 24px 60px -34px rgba(22,24,29,.28),0 1px 3px rgba(22,24,29,.04)}
+  .auth-head{display:flex;align-items:flex-start;justify-content:space-between;gap:12px}
+  .auth-head h2{margin:0;font-size:18.5px;letter-spacing:-.01em}
+  .auth-head p{margin:5px 0 0;font-size:12.5px;color:var(--sub)}
+  .close{width:32px;height:32px;border:0;border-radius:9px;background:transparent;cursor:pointer;color:#98a1b0;display:grid;place-items:center;flex:0 0 auto}
+  .close:hover{background:var(--soft);color:var(--ink)}
 
-  .panel h2{margin:0;font-size:19px;letter-spacing:-.01em}
-  .panel .sub{margin:6px 0 0;font-size:13px;color:var(--sub)}
-  .close{position:absolute;right:14px;top:14px;width:32px;height:32px;border:0;background:transparent;
-    border-radius:9px;cursor:pointer;color:#98a1b0;display:grid;place-items:center}
-  .close:hover{background:#f1f3f7;color:var(--ink)}
-
-  .opt{
-    display:flex;align-items:center;gap:12px;width:100%;margin-top:12px;padding:14px 16px;
-    border:1px solid var(--line);border-radius:14px;background:#fff;cursor:pointer;text-align:left;
-    transition:border-color .18s,box-shadow .18s,transform .18s;
-  }
-  .opt:hover{border-color:#c9d3ff;box-shadow:0 8px 20px -12px rgba(61,99,255,.4);transform:translateY(-1px)}
-  .opt .ic{width:38px;height:38px;border-radius:11px;display:grid;place-items:center;flex:0 0 auto}
-  .ic.a{background:#eef1ff;color:var(--brand)}
-  .ic.b{background:#f2f0ff;color:var(--brand2)}
-  .opt .tx b{display:block;font-size:14.5px}
-  .opt .tx span{display:block;font-size:12.5px;color:var(--sub);margin-top:3px}
-  .opt .ar{margin-left:auto;color:#b8c0cc}
+  .opt{display:flex;align-items:center;gap:12px;width:100%;margin-top:12px;padding:14px 15px;text-align:left;cursor:pointer;
+    border:1px solid var(--line);border-radius:14px;background:var(--card);transition:border-color .18s,box-shadow .18s,transform .18s}
+  .opt:hover{border-color:#c2ceff;box-shadow:0 8px 20px -14px rgba(61,99,255,.45);transform:translate3d(0,-1px,0)}
+  .opt .ic{width:38px;height:38px;border-radius:11px;display:grid;place-items:center;flex:0 0 auto;background:var(--soft);color:var(--brand)}
+  .opt .ic.v2{color:var(--brand2)}
   .opt svg{width:18px;height:18px}
+  .opt b{display:block;font-size:14.5px}
+  .opt span.sub{display:block;font-size:12.5px;color:var(--sub);margin-top:3px}
+  .opt .ar{margin-left:auto;color:#b8c0cc}
 
-  /* 账密表单 */
-  .form{display:none;margin-top:16px}
-  body.mode-pwd .form{display:block}
-  body.mode-pwd .optwrap{display:none}
-  .field{margin-top:12px}
+  .field{margin-top:13px}
   .field label{display:block;font-size:12.5px;color:var(--sub);margin-bottom:6px}
-  .field input{width:100%;height:44px;border:1px solid var(--line);border-radius:12px;padding:0 13px;
-    font-size:14px;background:#fbfcfe;outline:none;transition:border-color .18s,box-shadow .18s}
-  .field input:focus{border-color:#b9c6ff;box-shadow:0 0 0 4px rgba(61,99,255,.1);background:#fff}
+  .field input{width:100%;height:44px;border:1px solid var(--line);border-radius:12px;padding:0 13px;font-size:14px;
+    background:var(--page);color:var(--ink);outline:none;transition:border-color .18s,box-shadow .18s}
+  .field input:focus{border-color:#b9c6ff;box-shadow:0 0 0 4px rgba(61,99,255,.1)}
   .submit{margin-top:16px;width:100%;height:46px;border:0;border-radius:12px;cursor:pointer;color:#fff;font-size:15px;font-weight:650;
-    background:linear-gradient(120deg,var(--brand),var(--brand2));box-shadow:0 10px 24px -12px rgba(61,99,255,.7)}
-  .submit:active{transform:scale(.99)}
-  .back{margin-top:10px;width:100%;border:0;background:none;color:var(--sub);font-size:13px;cursor:pointer;padding:8px}
-  .hint{margin-top:12px;font-size:12px;color:#9aa3b2;line-height:1.6}
+    background:linear-gradient(120deg,var(--brand),var(--brand2));box-shadow:0 12px 26px -14px rgba(61,99,255,.8)}
+  .ghost{margin-top:10px;width:100%;height:42px;border:1px solid var(--line);border-radius:12px;background:transparent;color:var(--sub);font-size:13px;cursor:pointer}
+  .ghost:hover{background:var(--soft)}
+  .hint{margin:12px 0 0;font-size:12px;color:#98a3b5;line-height:1.6}
 
-  /* 匿名预览 */
-  .preview{display:none;width:100%;text-align:left}
-  body.preview .intro,body.preview .panel{display:none}
-  body.preview .preview{display:block;background:#fff;border:1px solid var(--line);border-radius:22px;
-    padding:22px;box-shadow:0 30px 70px -40px rgba(22,24,29,.25)}
-  .pv-head{display:flex;align-items:center;gap:10px}
+  .pv-top{display:flex;align-items:center;gap:9px}
   .tag{font-size:11.5px;padding:4px 9px;border-radius:999px;background:#fff5e6;color:#9a6700;border:1px solid #ffe2b0}
   .pv-title{margin:14px 0 0;font-size:17px;font-weight:700}
   .pv-desc{margin:6px 0 0;font-size:13px;color:var(--sub)}
-  .cards{display:grid;gap:10px;margin-top:16px}
-  .c{border:1px solid var(--line);border-radius:14px;padding:13px 14px;background:#fbfcfe}
-  .c b{font-size:13.5px}
-  .c span{display:block;font-size:12px;color:var(--sub);margin-top:3px}
-  .lock{margin-top:16px;display:flex;align-items:center;justify-content:space-between;gap:12px;
-    background:#f7f8fa;border:1px dashed #d9dfe9;border-radius:14px;padding:14px}
-  .lock span{font-size:12.5px;color:var(--sub)}
-  .exit{margin-top:14px;width:100%;height:42px;border:1px solid var(--line);border-radius:12px;background:#fff;
-    font-size:13.5px;color:var(--ink);cursor:pointer}
-  .exit:hover{background:#f7f8fa}
+  .rows{display:grid;gap:10px;margin-top:15px}
+  .row{border:1px solid var(--line);border-radius:14px;padding:13px 14px;background:var(--page);display:flex;align-items:center;justify-content:space-between;gap:12px}
+  .row b{font-size:13.5px;font-weight:650}
+  .row span{display:block;font-size:12px;color:var(--sub);margin-top:3px}
+  .row .st{font-size:12px;color:#9a6700;white-space:nowrap}
+  .lock{margin-top:14px;font-size:12.5px;color:var(--sub);background:var(--soft);border-radius:12px;padding:12px 14px;line-height:1.6}
+  .exit{margin-top:14px;width:100%;height:44px;border:0;border-radius:12px;cursor:pointer;font-size:13.5px;font-weight:600;
+    background:linear-gradient(120deg,var(--brand),var(--brand2));color:#fff}
 
-  .toast{position:fixed;left:50%;bottom:34px;transform:translate(-50%,12px);opacity:0;
-    background:#16181d;color:#fff;font-size:13px;padding:11px 18px;border-radius:12px;pointer-events:none;
-    transition:opacity .2s,transform .2s;max-width:88vw}
+  .toast{position:fixed;left:50%;bottom:30px;transform:translate(-50%,12px);opacity:0;z-index:9;
+    background:#16181d;color:#fff;font-size:13px;padding:11px 18px;border-radius:12px;pointer-events:none;max-width:88vw;
+    transition:opacity .2s,transform .2s}
   .toast.on{opacity:1;transform:translate(-50%,0)}
-  @media (max-width:420px){.stage{padding:26px 0 40px}.panel{padding:22px 18px}}
+
+  @media (prefers-reduced-motion:reduce){
+    *{animation:none !important;transition:none !important}
+  }
 </style>
 </head>
 <body>
-<div class="glow g1"></div><div class="glow g2"></div>
+<div class="aurora" aria-hidden="true"><i></i><i></i></div>
 
-<div class="stage">
-  <div class="intro">
+<main class="app" id="app" data-mode="intro">
+  <section class="s-intro">
     <div class="brand"><span class="mark">R</span> RXH OPEN PLATFORM</div>
     <h1>RXH <em>开放平台</em></h1>
-    <p class="lede">接口、算力与数据能力，统一从这里接入。一个账号，打通全部产品线。</p>
+    <p class="lede">接口、算力与数据能力统一从这里接入。一个账号，打通全部产品线。</p>
     <div class="cta">
       <button class="primary" id="start">登录<span class="sheen"></span></button>
       <span class="tip">仅支持已有账号登录</span>
     </div>
-  </div>
+  </section>
 
-  <section class="panel" id="panel" aria-label="登录方式">
-    <button class="close" id="close" aria-label="返回">
-      <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6l12 12M18 6L6 18"/></svg>
-    </button>
-    <h2>登录 RXH 开放平台</h2>
-    <p class="sub">选择一种方式继续</p>
+  <section class="s-auth">
+    <div class="card">
+      <div class="auth-head">
+        <div>
+          <h2>登录 RXH 开放平台</h2>
+          <p>选择一种方式继续</p>
+        </div>
+        <button class="close" id="close" aria-label="返回">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6l12 12M18 6L6 18"/></svg>
+        </button>
+      </div>
 
-    <div class="optwrap">
-      <button class="opt" id="optPwd">
-        <span class="ic a"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><rect x="5" y="10" width="14" height="10" rx="3"/><path d="M8.5 10V7.6a3.5 3.5 0 0 1 7 0V10"/></svg></span>
-        <span class="tx"><b>账号密码登录</b><span>使用已注册的 RXH 账号</span></span>
-        <span class="ar">›</span>
-      </button>
+      <div id="opts">
+        <button class="opt" id="optPwd">
+          <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><rect x="5" y="10" width="14" height="10" rx="3"/><path d="M8.5 10V7.6a3.5 3.5 0 0 1 7 0V10"/></svg></span>
+          <span><b>账号密码登录</b><span class="sub">使用已注册的 RXH 账号</span></span>
+          <span class="ar">›</span>
+        </button>
+        <button class="opt" id="optGuest">
+          <span class="ic v2"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><circle cx="12" cy="8" r="3.4"/><path d="M5 20c0-3.6 3.1-5.6 7-5.6s7 2 7 5.6"/></svg></span>
+          <span><b>匿名登录</b><span class="sub">临时凭证进入，仅可预览</span></span>
+          <span class="ar">›</span>
+        </button>
+      </div>
 
-      <button class="opt" id="optGuest">
-        <span class="ic b"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><circle cx="12" cy="8" r="3.4"/><path d="M5 20c0-3.6 3.1-5.6 7-5.6s7 2 7 5.6"/></svg></span>
-        <span class="tx"><b>匿名登录</b><span>临时凭证进入，仅可预览界面</span></span>
-        <span class="ar">›</span>
-      </button>
-    </div>
-
-    <div class="form">
-      <div class="field"><label for="u">账号</label><input id="u" autocomplete="username" placeholder="请输入账号"></div>
-      <div class="field"><label for="p">密码</label><input id="p" type="password" autocomplete="current-password" placeholder="请输入密码"></div>
-      <button class="submit" id="login">登录</button>
-      <p class="hint">平台暂不开放注册，账号由管理员统一开通。忘记密码请联系管理员。</p>
-      <button class="back" id="back">← 换个方式</button>
+      <form id="pwdForm" hidden>
+        <div class="field"><label for="u">账号</label><input id="u" autocomplete="username" placeholder="请输入账号"></div>
+        <div class="field"><label for="p">密码</label><input id="p" type="password" autocomplete="current-password" placeholder="请输入密码"></div>
+        <button class="submit" type="submit">登录</button>
+        <p class="hint">平台暂不开放注册，账号由管理员统一开通；忘记密码请联系管理员。</p>
+        <button class="ghost" type="button" id="back">← 换个方式</button>
+      </form>
     </div>
   </section>
 
-  <section class="preview" id="preview">
-    <div class="pv-head"><span class="mark">R</span><span class="tag">匿名预览</span></div>
-    <div class="pv-title">控制台 · 只读预览</div>
-    <p class="pv-desc">临时凭证 60 分钟后自动失效，此模式不写入任何数据。</p>
-    <div class="cards">
-      <div class="c"><b>API 调用</b><span>QPS、错误率、调用量趋势</span></div>
-      <div class="c"><b>密钥管理</b><span>创建、轮换与权限范围</span></div>
-      <div class="c"><b>账单中心</b><span>余额、充值记录、发票</span></div>
+  <section class="s-preview">
+    <div class="card">
+      <div class="pv-top"><span class="mark">R</span><span class="tag">匿名预览</span></div>
+      <div class="pv-title">控制台 · 只读</div>
+      <p class="pv-desc">临时凭证 60 分钟后自动失效，此模式不写入任何数据。</p>
+      <div class="rows">
+        <div class="row"><div><b>API 调用</b><span>QPS、错误率、调用量趋势</span></div><div class="st">只读</div></div>
+        <div class="row"><div><b>密钥管理</b><span>创建、轮换与权限范围</span></div><div class="st">已锁定</div></div>
+        <div class="row"><div><b>账单中心</b><span>余额、充值记录、发票</span></div><div class="st">已锁定</div></div>
+      </div>
+      <div class="lock">匿名模式不可调用接口、不可修改配置、不可导出数据。</div>
+      <button class="exit" id="exit">退出预览</button>
     </div>
-    <div class="lock"><span>匿名模式不可调用接口、不可修改配置</span><b style="font-size:12.5px;color:#9a6700">已锁定</b></div>
-    <button class="exit" id="exit">退出预览</button>
   </section>
-</div>
+</main>
 
-<div class="toast" id="toast"></div>
-
-<script>
-const $ = s => document.querySelector(s);
-const toastEl = $('#toast');
-let t;
-function toast(msg){
-  toastEl.textContent = msg;
-  toastEl.classList.add('on');
-  clearTimeout(t);
-  t = setTimeout(()=>toastEl.classList.remove('on'), 2200);
-}
-
-/* 临时访问凭证：只在匿名预览时写入，1 小时过期 */
-const GUEST = 'rxh_open_guest';
-function setGuest(){
-  document.cookie = GUEST + '=1; Max-Age=3600; Path=/; SameSite=Lax';
-}
-function hasGuest(){
-  return document.cookie.split('; ').some(c=>c.startsWith(GUEST + '='));
-}
-function clearGuest(){
-  document.cookie = GUEST + '=; Max-Age=0; Path=/; SameSite=Lax';
-}
-
-/* 进入登录面板 */
-$('#start').addEventListener('click', ()=>{
-  document.body.classList.add('open');
-  setTimeout(()=>toast('选择登录方式'), 380);
-});
-$('#close').addEventListener('click', goIntro);
-$('#back').addEventListener('click', ()=>document.body.classList.remove('mode-pwd'));
-
-/* 账密登录 */
-$('#optPwd').addEventListener('click', ()=>document.body.classList.add('mode-pwd'));
-$('#login').addEventListener('click', ()=>{
-  const u = $('#u').value.trim();
-  const p = $('#p').value.trim();
-  if(!u || !p) return toast('账号和密码不能为空');
-  toast('账号服务尚未接入，请使用匿名登录预览');
-});
-
-/* 匿名登录 */
-$('#optGuest').addEventListener('click', ()=>{
-  setGuest();
-  document.body.classList.remove('open','mode-pwd');
-  document.body.classList.add('preview');
-  toast('已进入匿名预览（60 分钟）');
-});
-
-$('#exit').addEventListener('click', ()=>{
-  clearGuest();
-  document.body.classList.remove('preview');
-  goIntro();
-});
-
-function goIntro(){
-  document.body.classList.remove('open','mode-pwd','preview');
-}
-
-/* 刷新后保留匿名预览状态 */
-if(hasGuest()) document.body.classList.add('preview');
-/* 键盘返回 */
-document.addEventListener('keydown', e=>{
-  if(e.key === 'Escape') goIntro();
-});
-</script>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<script src="/open/app.js" defer></script>
 </body>
 </html>
