@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>个人中心 · RXH</title>
+<meta name="robots" content="noindex">
+<meta name="color-scheme" content="light dark">
+<style>
+  :root{--ink:#16181d;--sub:#606a78;--line:#e6e9ef;--card:#fff;--page:#f7f8fa;--soft:#f0f3ff;--brand:#3d63ff;--brand2:#7b5cff;--danger:#cf222e}
+  @media (prefers-color-scheme:dark){:root{--ink:#e8ecf4;--sub:#98a3b5;--line:#242a36;--card:#161a23;--page:#0f1117;--soft:#1a2030}}
+  *{box-sizing:border-box}
+  body{margin:0;min-height:100dvh;padding:26px 16px 40px;display:grid;place-items:center;
+    background:radial-gradient(1000px 480px at 50% -10%,var(--soft),var(--page) 60%);color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;-webkit-font-smoothing:antialiased}
+  .wrap{width:min(520px,100%)}
+  .brand{display:flex;align-items:center;gap:9px;font-size:12px;letter-spacing:.16em;color:var(--sub);text-transform:uppercase}
+  .mark{width:26px;height:26px;border-radius:8px;background:linear-gradient(135deg,var(--brand),var(--brand2));color:#fff;display:grid;place-items:center;font-weight:800;font-size:13px}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:20px;margin-top:14px;box-shadow:0 24px 60px -36px rgba(22,24,29,.28)}
+  .top{display:flex;align-items:center;gap:14px}
+  .avatar{width:56px;height:56px;border-radius:16px;object-fit:cover;background:var(--soft);border:1px solid var(--line)}
+  .top h1{margin:0;font-size:18px}
+  .top p{margin:4px 0 0;font-size:12.5px;color:var(--sub)}
+  .badge{margin-left:auto;font-size:11.5px;padding:4px 9px;border-radius:999px;background:var(--soft);color:var(--brand);border:1px solid var(--line)}
+  .kv{margin-top:16px;display:grid;gap:10px}
+  .row{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:11px 13px;border:1px solid var(--line);border-radius:12px;background:var(--page)}
+  .row b{font-size:13px}
+  .row span{font-size:12px;color:var(--sub)}
+  .code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12.5px}
+  h2{margin:22px 0 0;font-size:15px}
+  .field{margin-top:11px}
+  .field label{display:block;font-size:12.5px;color:var(--sub);margin-bottom:6px}
+  .field input{width:100%;height:42px;border:1px solid var(--line);border-radius:11px;padding:0 12px;background:var(--page);color:var(--ink);font-size:13.5px;outline:none}
+  .field input:focus{border-color:#b9c6ff;box-shadow:0 0 0 4px rgba(61,99,255,.1)}
+  .btn{margin-top:14px;width:100%;height:44px;border:0;border-radius:12px;cursor:pointer;color:#fff;font-size:14.5px;font-weight:650;
+    background:linear-gradient(120deg,var(--brand),var(--brand2))}
+  .btn.ghost{background:transparent;color:var(--sub);border:1px solid var(--line)}
+  .msg{margin-top:10px;font-size:12.5px;min-height:18px}
+  .msg.err{color:var(--danger)}.msg.ok{color:#1a7f37}
+  .out{margin-top:18px;font-size:12px;color:var(--sub);text-align:center}
+  .out a{color:var(--sub)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="brand"><span class="mark">R</span> RXH ACCOUNT</div>
+
+  <div class="card" id="loading">
+    <p style="font-size:13px;color:var(--sub)">正在读取账号…</p>
+  </div>
+
+  <div class="card" id="main" hidden>
+    <div class="top">
+      <img class="avatar" id="avatar" alt="头像">
+      <div>
+        <h1 id="name">—</h1>
+        <p id="email">—</p>
+      </div>
+      <span class="badge" id="role">成员</span>
+    </div>
+
+    <div class="kv">
+      <div class="row"><div><b>账号 ID</b><br><span>唯一标识，不可修改</span></div><span class="code" id="uid">—</span></div>
+    </div>
+
+    <h2>资料设置</h2>
+    <div class="field"><label for="nname">昵称</label><input id="nname" maxlength="32" placeholder="显示名称"></div>
+    <div class="field"><label for="nava">头像 URL</label><input id="nava" placeholder="https://…"></div>
+    <button class="btn" id="saveProfile">保存资料</button>
+    <div class="msg" id="pmsg"></div>
+
+    <h2>修改密码</h2>
+    <div class="field"><label for="old">原密码</label><input id="old" type="password" autocomplete="current-password"></div>
+    <div class="field"><label for="next">新密码（至少 8 位）</label><input id="next" type="password" autocomplete="new-password"></div>
+    <button class="btn" id="savePwd">更新密码</button>
+    <div class="msg" id="wmsg"></div>
+
+    <button class="btn ghost" id="logout" style="margin-top:20px">退出登录</button>
+  </div>
+
+  <div class="out"><a href="https://www.rxh.asia/">← 返回总站</a></div>
+</div>
+
+<script src="app.js?v=9f5da83e" defer></script>
+</body>
+</html>
