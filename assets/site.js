@@ -260,10 +260,12 @@
     openModal(m);
   }
   function setAuthBtn() {
-    const b = $('#authBtn');
-    if (me) { b.textContent = me.name || '我的账号'; b.onclick = () => go('me'); }
-    else { b.textContent = '登录 / 注册'; b.onclick = () => window.RXHAuth.open({ onSuccess: afterAuth }); }
+    $('#authBtn').textContent = me ? (me.name || '我的账号') : '登录 / 注册';
   }
+  $('#authBtn').addEventListener('click', () => {
+    if (me) return go('me');
+    window.RXHAuth.open({ onSuccess: afterAuth });
+  });
   async function afterAuth(user) {
     me = user; setAuthBtn(); loadNotices();
     location.href = 'https://auth.rxh.asia/account/';
