@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>软小寒 · 总站</title>
+<meta name="description" content="软小寒的个人总站：作品、分站与折腾记录。">
+<meta property="og:title" content="软小寒 · 总站">
+<meta property="og:description" content="安卓小工具爱好者，今天比昨天多会一点点。">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://rxh.asia/">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌸</text></svg>">
+<style>
+  :root{
+    --pink:#ff7aa2;
+    --pink-soft:#ffc2d4;
+    --pink-line:#ffd9e3;
+    --ink:#2c2830;
+    --ink-soft:#5c5c6e;
+    --ink-mute:#9c9caf;
+    --bg:#fff9fb;
+    --card:#ffffff;
+    --radius:18px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+    color:var(--ink);
+    background:
+      radial-gradient(1200px 600px at 15% -10%, #ffe9f0 0%, transparent 55%),
+      radial-gradient(900px 500px at 90% 0%, #fff1f6 0%, transparent 50%),
+      var(--bg);
+    line-height:1.7;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:1040px;margin:0 auto;padding:0 24px}
+
+  /* ---------- 顶部 ---------- */
+  header{padding:28px 0 0}
+  .nav{display:flex;align-items:center;justify-content:space-between;gap:16px}
+  .brand{display:flex;align-items:center;gap:10px;font-weight:700;letter-spacing:.02em}
+  .brand-mark{
+    width:34px;height:34px;border-radius:50%;
+    display:grid;place-items:center;
+    background:linear-gradient(135deg,#ffb3c7,#ff7aa2);
+    color:#fff;font-size:16px;font-weight:800;
+    box-shadow:0 6px 16px rgba(255,122,162,.35);
+  }
+  .nav-links{display:flex;gap:22px;font-size:14px;color:var(--ink-soft)}
+  .nav-links a{color:inherit;text-decoration:none;position:relative;padding-bottom:2px}
+  .nav-links a::after{
+    content:"";position:absolute;left:0;right:100%;bottom:0;height:2px;
+    background:var(--pink);border-radius:2px;transition:right .25s ease;
+  }
+  .nav-links a:hover{color:var(--pink)}
+  .nav-links a:hover::after{right:0}
+
+  /* ---------- 首屏 ---------- */
+  .hero{padding:76px 0 64px;display:grid;grid-template-columns:1.25fr .75fr;gap:48px;align-items:center}
+  .kicker{
+    display:inline-flex;align-items:center;gap:8px;
+    font-size:12.5px;letter-spacing:.14em;color:var(--pink);
+    background:#fff;border:1px solid var(--pink-line);
+    padding:6px 12px;border-radius:999px;margin-bottom:22px;
+  }
+  .kicker i{width:6px;height:6px;border-radius:50%;background:var(--pink);font-style:normal}
+  h1{
+    font-size:clamp(38px,5.2vw,62px);
+    line-height:1.15;
+    letter-spacing:-.02em;
+    font-weight:800;
+  }
+  h1 em{
+    font-style:normal;
+    background:linear-gradient(120deg,#ff9ac1,#ff5f92);
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+  }
+  .lede{margin-top:20px;max-width:46ch;color:var(--ink-soft);font-size:16px}
+  .actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:32px}
+  .btn{
+    display:inline-flex;align-items:center;gap:8px;
+    padding:12px 22px;border-radius:999px;font-size:14.5px;font-weight:600;
+    text-decoration:none;transition:transform .2s ease,box-shadow .2s ease;
+  }
+  .btn-primary{
+    color:#fff;background:linear-gradient(135deg,#ff8fb1,#ff6b99);
+    box-shadow:0 10px 24px rgba(255,107,153,.32);
+  }
+  .btn-ghost{
+    color:var(--ink);background:#fff;border:1px solid var(--pink-line);
+  }
+  .btn:hover{transform:translateY(-2px)}
+  .btn-primary:hover{box-shadow:0 14px 30px rgba(255,107,153,.4)}
+
+  /* 右侧名片 */
+  .card-id{
+    background:rgba(255,255,255,.75);
+    border:1px solid #ffe4ec;
+    border-radius:24px;
+    padding:28px;
+    backdrop-filter:blur(8px);
+    box-shadow:0 18px 50px rgba(255,122,162,.12);
+  }
+  .avatar{
+    width:66px;height:66px;border-radius:22px;
+    display:grid;place-items:center;
+    background:linear-gradient(135deg,#fff0f5,#ffd9e3);
+    font-size:30px;margin-bottom:18px;
+    border:1px solid #ffe4ec;
+  }
+  .card-id h2{font-size:19px;font-weight:700;letter-spacing:.01em}
+  .card-id .role{font-size:13px;color:var(--ink-mute);margin-top:4px}
+  .tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}
+  .tag{
+    font-size:12px;padding:5px 10px;border-radius:999px;
+    background:#fff;border:1px solid var(--pink-line);color:var(--ink-soft);
+  }
+  .card-id .meta{
+    margin-top:20px;padding-top:18px;border-top:1px dashed #ffe0e9;
+    font-size:12.5px;color:var(--ink-mute);display:flex;gap:14px;flex-wrap:wrap;
+  }
+
+  /* ---------- 区块 ---------- */
+  section{padding:34px 0}
+  .sec-head{display:flex;align-items:flex-end;justify-content:space-between;gap:20px;margin-bottom:26px}
+  .sec-title{font-size:13px;letter-spacing:.18em;color:var(--pink);font-weight:700}
+  .sec-sub{font-size:clamp(22px,3vw,30px);font-weight:800;letter-spacing:-.01em;margin-top:6px}
+  .sec-note{font-size:13px;color:var(--ink-mute)}
+
+  .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+  .site{
+    position:relative;display:flex;flex-direction:column;
+    background:var(--card);border:1px solid #ffe7ef;border-radius:var(--radius);
+    padding:24px;text-decoration:none;color:inherit;
+    transition:transform .22s ease,box-shadow .22s ease,border-color .22s ease;
+    min-height:186px;
+  }
+  .site:hover{transform:translateY(-4px);box-shadow:0 18px 40px rgba(255,122,162,.16);border-color:#ffcede}
+  .site .badge{
+    align-self:flex-start;font-size:11.5px;letter-spacing:.06em;
+    padding:4px 10px;border-radius:999px;margin-bottom:16px;
+  }
+  .badge-live{background:#eefbf3;color:#2f9e63;border:1px solid #d6f2e2}
+  .badge-soon{background:#fff7f0;color:#c9832f;border:1px solid #ffe6cc}
+  .badge-self{background:#fff2f6;color:var(--pink);border:1px solid #ffdbe6}
+  .site h3{font-size:18px;font-weight:700;letter-spacing:.01em}
+  .site p{font-size:13.5px;color:var(--ink-soft);margin-top:10px;flex:1}
+  .site .go{margin-top:18px;font-size:13px;color:var(--pink);font-weight:600}
+  .site .go::after{content:" →"}
+
+  /* ---------- 关于 ---------- */
+  .about{
+    display:grid;grid-template-columns:1fr 1fr;gap:20px;
+    background:#fff;border:1px solid #ffe7ef;border-radius:22px;padding:34px;
+  }
+  .about h3{font-size:18px;font-weight:700;margin-bottom:12px}
+  .about p{font-size:14px;color:var(--ink-soft)}
+  .about ul{list-style:none;display:grid;gap:12px;font-size:14px;color:var(--ink-soft)}
+  .about li{display:flex;gap:10px}
+  .about li b{color:var(--pink);font-weight:700}
+
+  footer{
+    margin-top:40px;padding:34px 0 46px;
+    border-top:1px solid #ffe4ec;
+    display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;
+    font-size:13px;color:var(--ink-mute);
+  }
+  footer a{color:var(--ink-soft);text-decoration:none}
+  footer a:hover{color:var(--pink)}
+
+  @media (max-width:880px){
+    .hero{grid-template-columns:1fr;gap:32px;padding:52px 0 44px}
+    .grid{grid-template-columns:1fr 1fr}
+    .about{grid-template-columns:1fr;padding:26px}
+  }
+  @media (max-width:600px){
+    .wrap{padding:0 18px}
+    .nav-links{display:none}
+    .grid{grid-template-columns:1fr}
+    .hero{padding:40px 0 34px}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap nav">
+    <div class="brand"><span class="brand-mark">寒</span><span>软小寒 · 总站</span></div>
+    <nav class="nav-links">
+      <a href="#sites">分站</a>
+      <a href="#about">关于</a>
+      <a href="https://github.com/RXHrxh520" target="_blank" rel="noopener">GitHub</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <!-- ===== 首屏 ===== -->
+  <div class="hero">
+    <div>
+      <span class="kicker"><i></i>RXH.ASIA · 个人总站</span>
+      <h1>这里是<em>软小寒</em>的<br>小小窝</h1>
+      <p class="lede">安卓小工具爱好者，偶尔写点代码，偶尔卖个萌。相信「今天比昨天多会一点点」就够了。</p>
+      <div class="actions">
+        <a class="btn btn-primary" href="#sites">看看分站</a>
+        <a class="btn btn-ghost" href="https://github.com/RXHrxh520" target="_blank" rel="noopener">GitHub 主页</a>
+      </div>
+    </div>
+
+    <aside class="card-id">
+      <div class="avatar">🐣</div>
+      <h2>软小寒</h2>
+      <p class="role">RXHrxh520 · 独立开发者</p>
+      <div class="tags">
+        <span class="tag">Java</span>
+        <span class="tag">Android</span>
+        <span class="tag">AI API</span>
+        <span class="tag">学习中</span>
+      </div>
+      <div class="meta">
+        <span>🌸 安顺</span>
+        <span>📮 rxh.asia</span>
+      </div>
+    </aside>
+  </div>
+
+  <!-- ===== 分站 ===== -->
+  <section id="sites">
+    <div class="sec-head">
+      <div>
+        <div class="sec-title">SITES</div>
+        <div class="sec-sub">我的分站与作品</div>
+      </div>
+      <div class="sec-note">会慢慢变多</div>
+    </div>
+
+    <div class="grid">
+      <a class="site" href="https://github.com/RXHrxh520/APIBalance" target="_blank" rel="noopener">
+        <span class="badge badge-live">已上线</span>
+        <h3>APIBalance</h3>
+        <p>安卓端 AI API 余额查询工具，支持 DeepSeek / Kimi / 智谱 GLM / Anthropic / 火山方舟 / Codex。</p>
+        <span class="go">查看仓库</span>
+      </a>
+
+      <a class="site" href="https://rxhrxh520.github.io/APIBalance/" target="_blank" rel="noopener">
+        <span class="badge badge-live">文档站</span>
+        <h3>APIBalance 文档</h3>
+        <p>安装、配置、常见问题与错误码说明，遇到问题先来这里翻一翻。</p>
+        <span class="go">打开文档</span>
+      </a>
+
+      <a class="site" href="https://github.com/RXHrxh520" target="_blank" rel="noopener">
+        <span class="badge badge-live">GitHub</span>
+        <h3>个人主页</h3>
+        <p>代码、提交记录和正在折腾的东西都在这里，欢迎来逛逛。</p>
+        <span class="go">去 GitHub</span>
+      </a>
+
+      <div class="site">
+        <span class="badge badge-soon">筹备中</span>
+        <h3>博客</h3>
+        <p>打算把踩过的坑和学到的东西写下来，先在总站占个位置。</p>
+        <span class="go" style="color:#c9832f">敬请期待</span>
+      </div>
+
+      <div class="site">
+        <span class="badge badge-soon">筹备中</span>
+        <h3>图床 / 小工具</h3>
+        <p>自用的小工具集合，等有稳定的再放上来。</p>
+        <span class="go" style="color:#c9832f">敬请期待</span>
+      </div>
+
+      <div class="site" style="border-style:dashed;background:#fffdfe">
+        <span class="badge badge-self">这里</span>
+        <h3>总站</h3>
+        <p>rxh.asia —— 所有分站的入口，也是这个人的门牌号。</p>
+        <span class="go" style="color:var(--ink-mute)">你正在这里</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 关于 ===== -->
+  <section id="about">
+    <div class="sec-head">
+      <div>
+        <div class="sec-title">ABOUT</div>
+        <div class="sec-sub">关于我</div>
+      </div>
+    </div>
+
+    <div class="about">
+      <div>
+        <h3>在做什么</h3>
+        <p>白天写 Java，晚上折腾安卓小工具。最近在做 APIBalance，一个能一眼看清各家 AI API 余额的 App。喜欢把复杂的东西做成点两下就能用的样子。</p>
+      </div>
+      <div>
+        <h3>一些小事实</h3>
+        <ul>
+          <li><b>·</b> 相信积累，不太相信速成</li>
+          <li><b>·</b> 代码写得慢，但会一直写</li>
+          <li><b>·</b> 喜欢粉色，也喜欢干净的东西</li>
+          <li><b>·</b> 这个站会一直长下去</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <span>© <span id="y">2026</span> 软小寒 · rxh.asia</span>
+    <span><a href="https://github.com/RXHrxh520" target="_blank" rel="noopener">GitHub</a> · <a href="https://github.com/RXHrxh520/APIBalance" target="_blank" rel="noopener">APIBalance</a></span>
+  </footer>
+</main>
+
+<script>
+  document.getElementById('y').textContent = new Date().getFullYear();
+</script>
+</body>
+</html>
