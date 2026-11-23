@@ -35,18 +35,78 @@ document.getElementById('back').addEventListener('click', () => {
 });
 
 document.getElementById('optPwd').addEventListener('click', () => {
+  mountLoginTs();
   document.getElementById('opts').hidden = true;
   document.getElementById('pwdForm').hidden = false;
   document.getElementById('u').focus({ preventScroll: true });
 });
 
-document.getElementById('pwdForm').addEventListener('submit', e => {
+/* ---------- 统一账号登录（auth.rxh.asia） ---------- */
+let loginWidget = null, loginToken = '';
+function mountLoginTs() {
+  if (loginWidget !== null || !window.turnstile) return;
+  loginWidget = window.turnstile.render('#tsLogin', {
+    sitekey: SITEKEY,
+    callback: t => { loginToken = t; },
+    'expired-callback': () => { loginToken = ''; },
+  });
+}
+
+function markLoggedIn(user) {
+  const tag = document.getElementById('pvTag');
+  const desc = document.getElementById('pvDesc');
+  if (tag) tag.textContent = '已登录 · ' + user.name;
+  if (desc) desc.textContent = '账号 ' + user.uid + ' · 统一账号服务已接入。';
+  document.querySelectorAll('.row .st').forEach(el => {
+    if (el.textContent === '已锁定') el.textContent = '已开放';
+  });
+}
+
+document.getElementById('pwdForm').addEventListener('submit', async e => {
   e.preventDefault();
   const u = document.getElementById('u').value.trim();
   const p = document.getElementById('p').value.trim();
   if (!u || !p) return toast('账号和密码不能为空');
-  toast('账号服务尚未接入，可先使用匿名体验');
+  if (!loginToken) return toast('请先完成人机验证');
+  const btn = e.target.querySelector('button[type=submit]');
+  btn.disabled = true; btn.textContent = '登录中…';
+  try {
+    const res = await fetch('https://auth.rxh.asia/api/login', {
+      method: 'POST', credentials: 'include',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({ account: u, password: p, turnstile: loginToken }),
+    });
+    const d = await res.json();
+    if (!d.ok) throw new Error(d.error || '登录失败');
+    if (d.sid) localStorage.setItem('rxh_sid', d.sid);
+    sessionStorage.setItem('rxh_open_user', JSON.stringify(d.user));
+    markLoggedIn(d.user);
+    setMode('preview');
+    toast('已登录 · ' + d.user.name);
+  } catch (err) {
+    toast(err.message || '登录失败');
+    if (window.turnstile && loginWidget !== null) window.turnstile.reset(loginWidget);
+    loginToken = '';
+  } finally {
+    btn.disabled = false; btn.textContent = '登录';
+  }
 });
+
+/* 已登录则直接恢复 */
+(function restore() {
+  const saved = sessionStorage.getItem('rxh_open_user');
+  if (saved) {
+    try { markLoggedIn(JSON.parse(saved)); setMode('preview'); } catch (e) {}
+    return;
+  }
+  const sid = localStorage.getItem('rxh_sid');
+  if (!sid) return;
+  fetch('https://auth.rxh.asia/api/me', { headers: { authorization: 'Bearer ' + sid } })
+    .then(r => r.json()).then(d => {
+      if (d.user) { sessionStorage.setItem('rxh_open_user', JSON.stringify(d.user)); markLoggedIn(d.user); setMode('preview'); }
+      else localStorage.removeItem('rxh_sid');
+    }).catch(() => {});
+})();
 
 /* ---------- Turnstile ---------- */
 let tsWidget = null;
