@@ -8,7 +8,7 @@
 <meta property="og:title" content="软小寒 · 总站">
 <meta property="og:description" content="安卓小工具爱好者，今天比昨天多会一点点。">
 <meta property="og:type" content="website">
-<meta property="og:url" content="https://www.rxh.asia/">
+<meta property="og:url" content="https://rxh.asia/">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌸</text></svg>">
 <style>
   :root{
@@ -710,19 +710,19 @@
 
 <!-- ================= 悬浮玻璃导航 ================= -->
 <nav class="navbar">
-  <a class="nav-item active" href="#home" data-view="home">
+  <a class="nav-item active" href="/" data-view="home">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 10.5 12 3l9 7.5"/><path d="M5 9.5V21h14V9.5"/></svg>
     <span>首页</span>
   </a>
-  <a class="nav-item" href="#projects" data-view="projects">
+  <a class="nav-item" href="/projects" data-view="projects">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 7h18v12H3z"/><path d="M8 7V5h8v2"/></svg>
     <span>项目</span>
   </a>
-  <a class="nav-item" href="#ai" data-view="ai">
+  <a class="nav-item" href="/ai" data-view="ai">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="4" y="6" width="16" height="12" rx="4"/><circle cx="10" cy="12" r="1.3"/><circle cx="14" cy="12" r="1.3"/></svg>
     <span>AI</span>
   </a>
-  <a class="nav-item" href="#sites" data-view="sites">
+  <a class="nav-item" href="/sites" data-view="sites">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="8"/><path d="M4 12h16M12 4c4 4 4 12 0 16"/></svg>
     <span>分站</span>
   </a>
@@ -747,7 +747,7 @@
           </div>
 
           <div class="cta">
-            <a class="btn main" href="#projects" data-view="projects">
+            <a class="btn main" href="/projects" data-view="projects">
               看看我的项目
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
             </a>
@@ -925,32 +925,32 @@
       </div>
 
       <div class="soon-grid">
-        <a class="soon" href="./gov/" target="_self">
+        <a class="soon" href="https://gov.rxh.asia/" target="_self">
           <span class="badge live">已上线</span>
           <h4>政务服务系统</h4>
           <p>按政务门户常见版式排的服务大厅、通知公告、办事列表与快捷入口，纯静态页面，不接后台。</p>
-          <code>/gov/</code>
+          <code>gov.rxh.asia</code>
           <span class="go">进入分站 →</span>
         </a>
-        <a class="soon" href="./police/" target="_self">
+        <a class="soon" href="https://police.rxh.asia/" target="_self">
           <span class="badge live">已上线</span>
           <h4>公安网</h4>
           <p>玄河县公安局的网上门户：警务公开、办事指南、警情通报与线索提交，纯静态页面。</p>
-          <code>/police/</code>
+          <code>police.rxh.asia</code>
           <span class="go">进入分站 →</span>
         </a>
-        <a class="soon" href="./open/" target="_self">
+        <a class="soon" href="https://open.rxh.asia/" target="_self">
           <span class="badge live">已上线</span>
           <h4>玄河开放平台</h4>
           <p>面向开发者的接口门户：能力预览、充值、账单与接入文档，账号体系暂未接入。</p>
-          <code>/open/</code>
+          <code>open.rxh.asia</code>
           <span class="go">进入分站 →</span>
         </a>
-        <a class="soon" href="./status/" target="_self">
+        <a class="soon" href="https://status.rxh.asia/" target="_self">
           <span class="badge live">已上线</span>
           <h4>站点状态</h4>
-          <p>每 60 秒实测一次各页面的连通性与响应时间，用柱条记录最近 12 次结果，失败了会直接标红。</p>
-          <code>/status/</code>
+          <p>由 Cloudflare 边缘节点每 5 分钟主动探测，记录 Ping 延迟与 90 天可用率；失败会直接标红并给出故障原因。</p>
+          <code>status.rxh.asia</code>
           <span class="go">进入分站 →</span>
         </a>
         <div class="soon">
@@ -1081,19 +1081,22 @@ function show(name){
   });
   window.scrollTo(0,0);
 }
-function fromHash(){
-  const h = location.hash.replace('#','');
-  show(views.includes(h) ? h : 'home');
+const PATH2VIEW = {'/':'home','/home':'home','/projects':'projects','/ai':'ai','/sites':'sites'};
+function fromPath(){
+  const p = location.pathname.replace(/\/index\.html$/,'/').replace(/\/$/,'') || '/';
+  show(PATH2VIEW[p] || 'home');
 }
-window.addEventListener('hashchange', fromHash);
-fromHash();
+window.addEventListener('popstate', fromPath);
+fromPath();
 
 document.querySelectorAll('[data-view]').forEach(el=>{
   el.addEventListener('click', e=>{
-    if(el.tagName === 'A' && (el.getAttribute('href')||'').startsWith('#')){
+    const href = el.getAttribute('href') || '';
+    if(el.tagName === 'A' && href.startsWith('/')){
       e.preventDefault();
       const v = el.dataset.view;
-      if(location.hash !== '#'+v){ location.hash = v; }
+      const target = v === 'home' ? '/' : '/' + v;
+      if(location.pathname !== target){ history.pushState({v}, '', target); }
       show(v);
     }
   });
