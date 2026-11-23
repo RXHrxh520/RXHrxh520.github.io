@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>玄河开放平台 · 开发者中心</title>
+<meta name="description" content="玄河开放平台：面向开发者的能力接入、充值、账单与接口文档。">
+<style>
+  :root{
+    --teal:#0d6b5f;--teal-d:#0a5349;--teal-l:#e7f4f1;--mint:#12a594;
+    --ink:#15201f;--ink-2:#465654;--ink-3:#7c8c8a;--line:#dfe8e6;--bg:#f3f7f6;--card:#fff;
+  }
+  *{box-sizing:border-box}
+  html,body{height:100%}
+  body{margin:0;background:var(--bg);color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+    -webkit-font-smoothing:antialiased;-webkit-tap-highlight-color:transparent}
+  button,input,select{font-family:inherit}
+  .wrap{width:min(1160px,92vw);margin:0 auto}
+
+  /* ============ 顶栏 ============ */
+  .top{background:var(--card);border-bottom:1px solid var(--line);position:sticky;top:0;z-index:12}
+  .top .wrap{display:flex;align-items:center;gap:14px;height:62px}
+  .mark{width:36px;height:36px;border-radius:9px;background:linear-gradient(135deg,#0d6b5f,#12a594);color:#fff;
+    display:grid;place-items:center;font-size:17px;font-weight:800;letter-spacing:.04em;box-shadow:0 6px 16px rgba(13,107,95,.24)}
+  .brand b{font-size:18px;letter-spacing:.01em}
+  .brand span{display:block;font-size:11.5px;color:var(--ink-3);letter-spacing:.12em;margin-top:1px}
+  .top-right{margin-left:auto;display:flex;align-items:center;gap:8px}
+  .top-right a,.top-right button{font-size:13px;color:var(--ink-2);text-decoration:none;padding:8px 12px;border-radius:5px;border:0;background:none;cursor:pointer}
+  .top-right a:hover,.top-right button:hover{background:var(--teal-l);color:var(--teal)}
+  .top-right .pill{background:var(--teal);color:#fff;padding:8px 16px}
+  .top-right .pill:hover{background:var(--teal-d);color:#fff}
+
+  /* ============ 主区 ============ */
+  main{min-height:calc(100vh - 62px);padding:26px 0 56px}
+  .tabs{display:flex;gap:6px;background:#fff;border:1px solid var(--line);border-radius:10px;padding:6px;margin-bottom:18px;overflow:auto}
+  .tabs button{flex:0 0 auto;border:0;background:none;font-size:14.5px;color:var(--ink-2);padding:10px 22px;border-radius:7px;cursor:pointer}
+  .tabs button.on{background:var(--teal);color:#fff;font-weight:600}
+  .sec{display:none}
+  .sec.on{display:block}
+
+  .lead{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:14px}
+  .lead h1{margin:0;font-size:26px;letter-spacing:-.2px}
+  .lead p{margin:6px 0 0;font-size:13.5px;color:var(--ink-3);line-height:1.7;max-width:660px}
+  .lead .quick{display:flex;gap:8px}
+  .lead .quick button{border:1px solid var(--line);background:#fff;color:var(--ink-2);border-radius:6px;padding:9px 14px;font-size:13px;cursor:pointer}
+  .lead .quick button.primary{background:var(--teal);color:#fff;border-color:var(--teal)}
+
+  .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:16px}
+  .stat{background:#fff;border:1px solid var(--line);border-radius:10px;padding:16px 18px}
+  .stat span{font-size:12px;color:var(--ink-3);letter-spacing:.02em}
+  .stat b{display:block;margin-top:8px;font-size:24px;letter-spacing:.01em;color:var(--ink)}
+  .stat i{display:block;margin-top:6px;font-style:normal;font-size:12px;color:var(--ink-3)}
+  .stat b.empty{font-size:20px;color:#9aa8a6;letter-spacing:.06em}
+
+  .cards{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+  .cap{background:#fff;border:1px solid var(--line);border-radius:10px;padding:18px;display:flex;flex-direction:column;gap:8px}
+  .cap h3{margin:0;font-size:16px;display:flex;align-items:center;gap:8px}
+  .cap h3 em{font-style:normal;font-size:10.5px;color:#8a6a12;background:#fdf3dd;border:1px solid #f0e0bb;padding:2px 7px;border-radius:999px}
+  .cap p{margin:0;font-size:12.8px;color:var(--ink-3);line-height:1.75;flex:1}
+  .cap .meta{font-size:12px;color:var(--ink-2);border-top:1px dashed var(--line);padding-top:10px;display:flex;justify-content:space-between}
+  .cap .meta a{color:var(--teal);text-decoration:none}
+
+  .panel{background:#fff;border:1px solid var(--line);border-radius:10px;margin-top:16px}
+  .panel-h{display:flex;align-items:center;justify-content:space-between;padding:14px 18px;border-bottom:1px solid #eef4f2}
+  .panel-h h3{margin:0;font-size:15.5px;display:flex;align-items:center;gap:9px}
+  .panel-h h3::before{content:"";width:3px;height:14px;border-radius:2px;background:var(--mint)}
+  .panel-h span{font-size:12px;color:var(--ink-3)}
+  .steps{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;padding:18px}
+  .step b{display:block;font-size:13.5px}
+  .step p{margin:6px 0 0;font-size:12.5px;color:var(--ink-3);line-height:1.75}
+  .step i{display:inline-grid;place-items:center;width:22px;height:22px;border-radius:50%;background:var(--teal-l);
+    color:var(--teal);font-style:normal;font-size:11.5px;font-weight:700;margin-bottom:8px}
+
+  .empty{padding:34px 18px;text-align:center;color:var(--ink-3);font-size:13px;line-height:1.8}
+  .empty b{display:block;color:var(--ink);font-size:14.5px;margin-bottom:6px}
+
+  .note{margin:16px 0 0;background:#f7fbfa;border:1px solid #e3efec;border-radius:10px;padding:14px 18px;
+    font-size:13px;color:var(--ink-2);line-height:1.85}
+  .note b{color:var(--ink)}
+
+  .fieldrow{display:flex;gap:10px;align-items:center;flex-wrap:wrap;padding:16px 18px}
+  .fieldrow select,.fieldrow input{border:1px solid #d5e3e0;border-radius:6px;padding:9px 11px;font-size:13.5px;outline:0;background:#fff;color:var(--ink)}
+  .fieldrow button{border:0;background:var(--teal);color:#fff;border-radius:6px;padding:10px 18px;font-size:13.5px;cursor:pointer}
+
+  table{width:100%;border-collapse:collapse;font-size:13.5px}
+  thead th{background:#f6faf9;text-align:left;color:var(--ink-2);font-weight:600;padding:11px 18px;border-bottom:1px solid #eaf2f0;font-size:12.5px}
+  tbody td{padding:14px 18px;border-bottom:1px solid #f0f6f4;color:var(--ink-2)}
+
+  .doc{padding:18px}
+  .doc h3{margin:0 0 10px;font-size:16px}
+  .doc p{margin:0 0 10px;font-size:13.3px;line-height:1.85;color:var(--ink-2)}
+  .doc code{background:#f2f7f6;border:1px solid #e4eeec;border-radius:4px;padding:1px 6px;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:12.5px;color:#0d5a50}
+  .doc pre{background:#0f1b1a;color:#d6e6e2;border-radius:8px;padding:14px 16px;overflow:auto;font-size:12.5px;line-height:1.75;font-family:ui-monospace,Menlo,Consolas,monospace}
+  .doc pre .c{color:#7f9d97}
+  .api{border:1px solid var(--line);border-radius:8px;margin:10px 0}
+  .api-h{display:flex;gap:10px;align-items:center;padding:11px 14px;border-bottom:1px solid #eef4f2}
+  .api-h .m{font-size:10.5px;font-weight:700;letter-spacing:.06em;background:#e7f4f1;color:#0d6b5f;border-radius:4px;padding:3px 7px}
+  .api-h code{background:none;border:0;padding:0;font-size:13px}
+  .api-b{padding:11px 14px;font-size:12.8px;color:var(--ink-3);line-height:1.75}
+
+  footer{border-top:1px solid var(--line);background:#fff;color:var(--ink-3);font-size:12px;line-height:1.9;padding:18px 0}
+  footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
+
+  /* ============ 登录门 ============ */
+  .gate{position:fixed;inset:0;z-index:60;background:
+    radial-gradient(900px 500px at 50% -10%,#e3f2ef 0%,rgba(227,242,239,0) 62%), var(--bg);
+    display:flex;align-items:center;justify-content:center;padding:22px}
+  .gate-card{width:min(420px,100%);background:#fff;border:1px solid var(--line);border-radius:14px;
+    padding:30px 28px 24px;box-shadow:0 26px 70px rgba(13,60,54,.12)}
+  .gate-logo{width:46px;height:46px;border-radius:12px;background:linear-gradient(135deg,#0d6b5f,#12a594);color:#fff;
+    display:grid;place-items:center;font-size:20px;font-weight:800;margin-bottom:18px}
+  .gate-card h1{margin:0;font-size:22px;letter-spacing:-.2px}
+  .gate-card .sub{margin:8px 0 20px;font-size:13px;color:var(--ink-3);line-height:1.75}
+  .gate-card label{display:block;font-size:12.5px;color:var(--ink-2);margin:12px 0 6px}
+  .gate-card input{width:100%;border:1px solid #d5e3e0;border-radius:7px;padding:11px 12px;font-size:14px;outline:0}
+  .gate-card input:focus{border-color:var(--teal);box-shadow:0 0 0 3px rgba(13,107,95,.12)}
+  .gate-card .login{width:100%;margin-top:18px;border:0;border-radius:7px;background:var(--teal);color:#fff;
+    padding:12px;font-size:14.5px;font-weight:600;cursor:pointer}
+  .gate-card .login:hover{background:var(--teal-d)}
+  .gate-msg{margin-top:12px;font-size:12.5px;color:#9a6a12;line-height:1.7;min-height:18px}
+  .gate-foot{margin-top:16px;font-size:12.5px;color:var(--ink-3);display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap}
+  .gate-foot a{color:var(--teal);text-decoration:none}
+  .gate-meta{text-align:center;font-size:11.5px;color:#9aa8a6;margin-top:22px;letter-spacing:.04em}
+
+  .mask{position:fixed;inset:0;background:rgba(9,26,24,.5);display:none;align-items:center;justify-content:center;z-index:70;padding:20px}
+  .mask.on{display:flex}
+  .modal{width:min(520px,94vw);background:#fff;border-radius:12px;overflow:hidden}
+  .modal-h{display:flex;justify-content:space-between;align-items:center;padding:14px 18px;border-bottom:1px solid var(--line)}
+  .modal-h h3{margin:0;font-size:16px}
+  .modal-h button{border:0;background:none;font-size:22px;color:#8b9a98;cursor:pointer}
+  .modal-b{padding:18px;font-size:13.5px;line-height:1.9;color:var(--ink-2)}
+  .modal-b li{margin-bottom:6px}
+  .modal-f{padding:12px 18px 16px;text-align:right}
+  .modal-f button{border:0;background:var(--teal);color:#fff;border-radius:6px;padding:9px 18px;font-size:13.5px;cursor:pointer}
+
+  @media (max-width:900px){.stats,.cards{grid-template-columns:1fr 1fr}.steps{grid-template-columns:1fr 1fr}}
+  @media (max-width:620px){
+    .top .wrap{height:56px}.brand b{font-size:16px}.top-right a{display:none}.top-right .pill{display:inline-block}
+    main{padding:18px 0 40px}
+    .lead h1{font-size:21px}
+    .stats,.cards,.steps{grid-template-columns:1fr}
+    .tabs button{padding:9px 16px;font-size:14px}
+    thead th,tbody td{padding:10px 12px}
+    .gate-card{padding:24px 20px 20px}
+  }
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <div class="mark">玄</div>
+    <div class="brand"><b>玄河开放平台</b><span>XH OPEN · DEVELOPER CENTER</span></div>
+    <div class="top-right">
+      <a href="#" id="docLink">接口文档</a>
+      <a href="#" id="consoleLink">控制台</a>
+      <button class="pill" id="topLogin">登录</button>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+  <div class="tabs" id="tabs">
+    <button class="on" data-tab="preview">预览</button>
+    <button data-tab="recharge">充值</button>
+    <button data-tab="bills">账单</button>
+    <button data-tab="docs">文档</button>
+  </div>
+
+  <section class="sec on" id="sec-preview">
+    <div class="lead">
+      <div>
+        <h1>能力预览</h1>
+        <p>玄河县公共数据与政务能力，以接口方式向已认证开发者开放。开通前可先查看能力范围与接入方式。</p>
+      </div>
+      <div class="quick"><button data-goto="docs">查看文档</button><button class="primary" id="applyBtn2">申请接入</button></div>
+    </div>
+
+    <div class="stats">
+      <div class="stat"><span>接入状态</span><b class="empty">未开通</b><i>完成签约与实名认证后生效</i></div>
+      <div class="stat"><span>已开通能力</span><b class="empty">—</b><i>开通后按实际授权显示</i></div>
+      <div class="stat"><span>本月调用</span><b class="empty">—</b><i>数据由调用日志统计，当前未接入</i></div>
+    </div>
+
+    <div class="cards">
+      <div class="cap">
+        <h3>实名核验 <em>需授权</em></h3>
+        <p>输入姓名与证件号，返回是否一致及核验时间。仅限已签约主体在授权业务场景内调用。</p>
+        <div class="meta"><span>POST /v1/identity</span><a href="#" data-doc="identity">接口说明 →</a></div>
+      </div>
+      <div class="cap">
+        <h3>企业信息核验 <em>需授权</em></h3>
+        <p>按统一社会信用代码查询登记状态、法定代表人及经营范围，用于供应商准入与合同核验。</p>
+        <div class="meta"><span>POST /v1/enterprise</span><a href="#" data-doc="enterprise">接口说明 →</a></div>
+      </div>
+      <div class="cap">
+        <h3>地址标准化 <em>需授权</em></h3>
+        <p>把自由文本地址解析为行政区划、道路与门牌，返回置信度，适合工单与物流地址清洗。</p>
+        <div class="meta"><span>POST /v1/address</span><a href="#" data-doc="address">接口说明 →</a></div>
+      </div>
+      <div class="cap">
+        <h3>证照核验 <em>需授权</em></h3>
+        <p>核验营业执照、许可证编号与有效期，返回核验结论，不返回证照影像。</p>
+        <div class="meta"><span>POST /v1/license</span><a href="#" data-doc="license">接口说明 →</a></div>
+      </div>
+      <div class="cap">
+        <h3>事项进度查询 <em>需授权</em></h3>
+        <p>按办件编号查询政务大厅受理进度，用于把进度嵌进自有业务系统。</p>
+        <div class="meta"><span>GET /v1/case</span><a href="#" data-doc="case">接口说明 →</a></div>
+      </div>
+      <div class="cap">
+        <h3>消息通知 <em>规划中</em></h3>
+        <p>办件状态变更时向回调地址推送事件，支持签名校验与重试。当前未开放申请。</p>
+        <div class="meta"><span>POST 回调</span><a href="#" data-doc="notify">接口说明 →</a></div>
+      </div>
+    </div>
+
+    <div class="panel">
+      <div class="panel-h"><h3>接入流程</h3><span>4 步</span></div>
+      <div class="steps">
+        <div class="step"><i>1</i><b>注册开发者</b><p>用实名信息创建开发者账号，绑定主体。</p></div>
+        <div class="step"><i>2</i><b>提交申请</b><p>写明业务场景、调用量与数据用途。</p></div>
+        <div class="step"><i>3</i><b>签约授权</b><p>签署数据使用协议，按能力逐项授权。</p></div>
+        <div class="step"><i>4</i><b>获取凭据</b><p>下发 AppID 与密钥，配置回调地址后联调。</p></div>
+      </div>
+    </div>
+
+    <p class="note"><b>说明：</b>平台当前处于接入准备阶段，未展示任何余额、调用量或账单数字；所有数字均以账户后台与调用日志为准。</p>
+  </section>
+
+  <section class="sec" id="sec-recharge">
+    <div class="lead">
+      <div>
+        <h1>账户充值</h1>
+        <p>开放平台按预付费结算。充值到账后额度进入账户，用于抵扣接口调用费用。</p>
+      </div>
+    </div>
+
+    <div class="panel">
+      <div class="panel-h"><h3>充值方式</h3><span>对公结算</span></div>
+      <div class="empty">
+        <b>充值通道尚未开通</b>
+        平台未接入在线支付。开通后按签约主体对公转账，到账由财务确认后计入账户，可在“账单”中查看明细。
+      </div>
+    </div>
+
+    <div class="panel">
+      <div class="panel-h"><h3>常见问题</h3><span></span></div>
+      <div class="doc">
+        <h3>充值多久到账？</h3>
+        <p>对公转账通常在财务确认后的 1 个工作日内计入账户；跨行转账可能延后半天。</p>
+        <h3>能否开具发票？</h3>
+        <p>可以。开票主体需与签约主体一致，票面项目为“信息技术服务费”，申请后 5 个工作日内寄出。</p>
+        <h3>余额会过期吗？</h3>
+        <p>按合同周期结算，合同期内未使用完的额度可结转至下一周期，具体以协议为准。</p>
+      </div>
+    </div>
+
+    <p class="note"><b>说明：</b>本页不显示任何预置余额或赠送额度，账户余额只在后台返回真实数据后展示。</p>
+  </section>
+
+  <section class="sec" id="sec-bills">
+    <div class="lead">
+      <div>
+        <h1>账单</h1>
+        <p>按自然月出账，记录每笔调用产生的费用与结算状态。</p>
+      </div>
+    </div>
+
+    <div class="panel">
+      <div class="panel-h"><h3>账单明细</h3><span>按月结算</span></div>
+      <div class="fieldrow">
+        <select id="billMonth"><option>2026 年 11 月</option><option>2026 年 10 月</option></select>
+        <button id="billQuery">查询</button>
+        <span style="font-size:12.5px;color:var(--ink-3)" id="billTip"></span>
+      </div>
+      <table>
+        <thead><tr><th>出账时间</th><th>账单号</th><th>计费项目</th><th>金额</th><th>状态</th></tr></thead>
+        <tbody id="billBody">
+          <tr><td colspan="5" style="text-align:center;color:#9aa8a6;padding:34px 18px">暂无账单记录</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p class="note"><b>说明：</b>账单数据由计费系统生成，接入前不展示示例金额，以免与实际账目混淆。</p>
+  </section>
+
+  <section class="sec" id="sec-docs">
+    <div class="lead">
+      <div>
+        <h1>接入文档</h1>
+        <p>接口统一使用 HTTPS，请求与响应均为 JSON。所有接口需携带 AppID 与签名，签名算法见下文。</p>
+      </div>
+    </div>
+
+    <div class="panel">
+      <div class="panel-h"><h3>快速开始</h3><span>v1</span></div>
+      <div class="doc">
+        <p>1. 在控制台创建应用，拿到 <code>AppID</code> 与 <code>Secret</code>（Secret 只展示一次）。</p>
+        <p>2. 用 <code>AppID + 时间戳 + 请求体</code> 计算 HMAC-SHA256 签名，放入 <code>X-XH-Sign</code> 头。</p>
+        <p>3. 先调用 <code>/v1/ping</code> 验证网络与签名，再接入业务接口。</p>
+        <p>4. 生产环境务必校验响应中的 <code>request_id</code>，便于对账与排障。</p>
+      </div>
+    </div>
+
+    <div class="panel">
+      <div class="panel-h"><h3>鉴权</h3><span>HMAC-SHA256</span></div>
+      <div class="doc">
+        <pre><span class="c"># 请求头</span>
+X-XH-AppID: xh_your_app_id
+X-XH-Timestamp: 1763900000
+X-XH-Sign: HMAC_SHA256(secret, appid + timestamp + body)</pre>
+        <p>时间戳与服务器时间相差超过 300 秒将被拒绝，防止重放。签名串中的 body 为原始 JSON 字符串，不做二次序列化。</p>
+      </div>
+    </div>
+
+    <div class="panel">
+      <div class="panel-h"><h3>接口列表</h3><span>5 个</span></div>
+      <div class="doc">
+        <div class="api"><div class="api-h"><span class="m">GET</span><code>/v1/ping</code></div><div class="api-b">连通性与签名自检，返回服务时间与版本。</div></div>
+        <div class="api"><div class="api-h"><span class="m">POST</span><code>/v1/identity</code></div><div class="api-b">实名核验。入参 name、id_no；返回 match、checked_at。</div></div>
+        <div class="api"><div class="api-h"><span class="m">POST</span><code>/v1/enterprise</code></div><div class="api-b">企业信息核验。入参 credit_code；返回 status、legal_person、scope。</div></div>
+        <div class="api"><div class="api-h"><span class="m">POST</span><code>/v1/address</code></div><div class="api-b">地址标准化。入参 text；返回 province、city、district、street、confidence。</div></div>
+        <div class="api"><div class="api-h"><span class="m">GET</span><code>/v1/case</code></div><div class="api-b">办件进度。入参 no；返回 stage、accepted_at、window。</div></div>
+
+        <h3 style="margin-top:18px">请求示例</h3>
+        <pre>curl -X POST 'https://www.rxh.asia/open/api/v1/identity' \
+  -H 'X-XH-AppID: xh_your_app_id' \
+  -H 'X-XH-Timestamp: 1763900000' \
+  -H 'X-XH-Sign: &lt;signature&gt;' \
+  -H 'Content-Type: application/json' \
+  -d '{"name":"张三","id_no":"110101199001011234"}'</pre>
+
+        <h3 style="margin-top:18px">错误码</h3>
+        <table>
+          <thead><tr><th>code</th><th>含义</th><th>处理建议</th></tr></thead>
+          <tbody>
+            <tr><td>40101</td><td>签名校验失败</td><td>检查 Secret、时间戳与签名串顺序</td></tr>
+            <tr><td>40301</td><td>能力未授权</td><td>在控制台确认该能力已开通</td></tr>
+            <tr><td>42901</td><td>超出频率限制</td><td>按响应头 Retry-After 退避重试</td></tr>
+            <tr><td>42201</td><td>参数格式错误</td><td>核对字段类型与长度</td></tr>
+            <tr><td>50001</td><td>上游服务不可用</td><td>记录 request_id，稍后重试</td></tr>
+          </tbody>
+        </table>
+
+        <h3 style="margin-top:18px">频率限制</h3>
+        <p>默认单应用 60 次/分钟、2000 次/日；实名核验类接口另有单独配额。需要提升时在控制台提交工单，说明业务峰值与并发。</p>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div>玄河开放平台 · 玄河县大数据发展中心</div>
+    <div>服务时间：工作日 8:30—17:30　邮箱：open@xh-data.gov.example</div>
+  </div>
+</footer>
+
+<!-- 登录门 -->
+<div class="gate" id="gate">
+  <div class="gate-card">
+    <div class="gate-logo">玄</div>
+    <h1>请先登录</h1>
+    <p class="sub">玄河开放平台仅向已完成实名认证的开发者开放。登录后可查看能力、充值、账单与文档。</p>
+    <label for="acct">账号</label>
+    <input id="acct" placeholder="手机号或邮箱" autocomplete="username">
+    <label for="pwd">密码</label>
+    <input id="pwd" type="password" placeholder="密码" autocomplete="current-password">
+    <button class="login" id="loginBtn">登 录</button>
+    <div class="gate-msg" id="gateMsg"></div>
+    <div class="gate-foot"><span>还没有开发者账号？<a href="#" id="applyBtn">申请接入</a></span><span>忘记密码</span></div>
+    <div class="gate-meta">玄河开放平台 · XH OPEN</div>
+  </div>
+</div>
+
+<div class="mask" id="mask">
+  <div class="modal">
+    <div class="modal-h"><h3 id="mTitle">标题</h3><button id="mClose">×</button></div>
+    <div class="modal-b" id="mBody"></div>
+    <div class="modal-f"><button id="mOk">知道了</button></div>
+  </div>
+</div>
+
+<script>
+const $ = s => document.querySelector(s);
+const $$ = s => [...document.querySelectorAll(s)];
+
+function openModal(t, html){
+  $('#mTitle').textContent = t;
+  $('#mBody').innerHTML = html;
+  $('#mask').classList.add('on');
+}
+$('#mClose').onclick = $('#mOk').onclick = () => $('#mask').classList.remove('on');
+$('#mask').addEventListener('click', e => { if(e.target.id === 'mask') $('#mask').classList.remove('on'); });
+
+/* 登录：界面与校验流程已就位，账号校验接口后续接入 */
+function enterPlatform(){
+  $('#gate').remove();
+}
+$('#loginBtn').addEventListener('click', () => {
+  const a = $('#acct').value.trim();
+  const p = $('#pwd').value;
+  if(!a || !p){ $('#gateMsg').textContent = '请填写账号与密码。'; return; }
+  $('#gateMsg').textContent = '账号校验接口尚未接入，接入后在此校验开发者权限。';
+});
+$('#pwd').addEventListener('keydown', e => { if(e.key === 'Enter') $('#loginBtn').click(); });
+
+/* 标签切换 */
+$('#tabs').addEventListener('click', e => {
+  const b = e.target.closest('[data-tab]');
+  if(!b) return;
+  $$('#tabs button').forEach(x => x.classList.toggle('on', x === b));
+  $$('.sec').forEach(s => s.classList.toggle('on', s.id === 'sec-' + b.dataset.tab));
+});
+$$('[data-goto]').forEach(b => b.addEventListener('click', () => {
+  goTab(b.dataset.goto);
+  window.scrollTo({top:0, behavior:'smooth'});
+}));
+function goTab(k){
+  $$('#tabs button').forEach(x => x.classList.toggle('on', x.dataset.tab === k));
+  $$('.sec').forEach(s => s.classList.toggle('on', s.id === 'sec-' + k));
+}
+$('#docLink').addEventListener('click', e => { e.preventDefault(); goTab('docs'); window.scrollTo({top:0,behavior:'smooth'}); });
+$('#consoleLink').addEventListener('click', e => {
+  e.preventDefault();
+  openModal('控制台', '<p style="margin:0">控制台与账号体系一起接入：应用管理、密钥轮换、能力授权、回调配置都在这里。</p>');
+});
+
+/* 申请接入 */
+function applyModal(){
+  openModal('申请接入', `
+    <p style="margin:0 0 10px">开放平台按主体授权，提交前请准备：</p>
+    <ul style="margin:0 0 10px;padding-left:18px">
+      <li>营业执照或机关事业单位法人证书</li>
+      <li>经办人身份信息与授权书</li>
+      <li>业务场景说明：数据用途、调用量级、保存期限</li>
+      <li>回调地址（HTTPS）与联系人</li>
+    </ul>
+    <p style="margin:0;color:#7c8c8a;font-size:12.5px">材料齐全后 3 个工作日内完成初审，签约与授权另行通知。</p>`);
+}
+$('#applyBtn').addEventListener('click', e => { e.preventDefault(); applyModal(); });
+$('#applyBtn2').addEventListener('click', applyModal);
+
+/* 文档跳转 */
+document.addEventListener('click', e => {
+  const a = e.target.closest('[data-doc]');
+  if(!a) return;
+  e.preventDefault();
+  goTab('docs');
+  const map = {
+    identity:'实名核验', enterprise:'企业信息核验', address:'地址标准化',
+    license:'证照核验', case:'事项进度查询', notify:'消息通知'
+  };
+  openModal(map[a.dataset.doc] + ' · 接口说明', `<p style="margin:0">请求方法、参数与返回字段见“文档”页的接口列表。当前能力未开通，联调前需先完成授权。</p>`);
+});
+
+/* 账单查询：无数据时明确返回空 */
+$('#billQuery').addEventListener('click', () => {
+  $('#billTip').textContent = '该月无账单记录';
+  $('#billBody').innerHTML = '<tr><td colspan="5" style="text-align:center;color:#9aa8a6;padding:34px 18px">该月暂无账单记录</td></tr>';
+});
+
+/* 顶栏登录按钮 */
+$('#topLogin').addEventListener('click', () => {
+  if($('#gate')) window.scrollTo({top:0,behavior:'smooth'});
+  else openModal('账户', '<p style="margin:0">当前已登录。账户设置与密钥管理随控制台一起接入。</p>');
+});
+</script>
+</body>
+</html>
