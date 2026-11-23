@@ -3,293 +3,517 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>政务服务系统 · 演示</title>
-<meta name="description" content="政务服务系统界面演示页面，非官方站点，仅用于前端样式展示。">
+<title>政务服务系统</title>
+<meta name="description" content="政务服务门户界面：服务大厅、办事指南、进度查询、咨询投诉。">
 <style>
-:root{
-  --red:#c0202a;
-  --red-d:#9d1822;
-  --blue:#1a5fb4;
-  --ink:#1f2329;
-  --sub:#5c6572;
-  --line:#e3e6eb;
-  --bg:#f4f6f9;
-}
-*{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--ink);
-  font-family:-apple-system,"PingFang SC","Microsoft YaHei",system-ui,sans-serif;
-  -webkit-tap-highlight-color:transparent}
+:root{--red:#bb1f2a;--red-d:#94141e;--blue:#175ea8;--ink:#1f2329;--sub:#5b6472;--line:#e4e7ec;--bg:#f3f5f8}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,"PingFang SC","Microsoft YaHei",system-ui,sans-serif}
 a{color:inherit;text-decoration:none}
+button{font-family:inherit}
 .wrap{max-width:1180px;margin:0 auto;padding:0 20px}
 
-/* 演示提示条 */
-.demo-bar{background:#fff8e1;border-bottom:1px solid #f1dfae;color:#7a5b00;
-  font-size:12.5px;letter-spacing:.2px}
-.demo-bar .wrap{display:flex;gap:10px;align-items:center;justify-content:center;
-  height:34px;flex-wrap:wrap;text-align:center}
+.topline{background:#fbfcfe;border-bottom:1px solid var(--line);font-size:12.5px;color:var(--sub)}
+.topline .wrap{display:flex;align-items:center;gap:14px;height:36px;justify-content:flex-end}
+.topline a:hover{color:var(--red)}
 
-/* 顶部 */
 .head{background:linear-gradient(135deg,var(--red),var(--red-d));color:#fff}
-.head .wrap{display:flex;align-items:center;gap:18px;height:96px}
-.emblem{width:52px;height:52px;border-radius:12px;background:rgba(255,255,255,.14);
-  border:1px solid rgba(255,255,255,.28);display:grid;place-items:center;
-  font-size:24px;font-weight:800;letter-spacing:1px;flex:0 0 auto}
-.brand h1{margin:0;font-size:23px;letter-spacing:2px;font-weight:700}
-.brand p{margin:5px 0 0;font-size:12px;letter-spacing:1.4px;opacity:.82}
+.head .wrap{display:flex;align-items:center;gap:18px;height:94px}
+.emblem{width:50px;height:50px;border-radius:12px;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.28);
+  display:grid;place-items:center;font-size:23px;font-weight:800;flex:0 0 auto}
+.brand h1{margin:0;font-size:22px;letter-spacing:2px}
+.brand p{margin:4px 0 0;font-size:11.5px;letter-spacing:1.3px;opacity:.8}
 .head .spacer{flex:1}
-.search{display:flex;background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.3);
-  border-radius:8px;overflow:hidden;height:38px;width:300px}
+.search{display:flex;background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.3);border-radius:8px;
+  overflow:hidden;height:38px;width:320px}
 .search input{flex:1;border:0;background:transparent;color:#fff;padding:0 12px;font-size:13.5px;outline:0}
-.search input::placeholder{color:rgba(255,255,255,.75)}
+.search input::placeholder{color:rgba(255,255,255,.72)}
 .search button{border:0;background:rgba(0,0,0,.18);color:#fff;padding:0 16px;font-size:13px;cursor:pointer}
-.head-links{display:flex;gap:14px;font-size:13px;opacity:.95}
-.head-links a{white-space:nowrap}
+.head-links{display:flex;gap:16px;font-size:13px}
+.head-links button{background:none;border:0;color:#fff;cursor:pointer;font-size:13px;padding:0}
+.head-links button:hover{text-decoration:underline}
 .head-links a:hover{text-decoration:underline}
 
-/* 主导航 */
-.nav{background:#fff;border-bottom:1px solid var(--line);position:sticky;top:0;z-index:30;
-  box-shadow:0 2px 10px rgba(20,30,50,.05)}
-.nav .wrap{display:flex;gap:4px;height:52px;align-items:stretch;overflow-x:auto}
-.nav a{display:flex;align-items:center;padding:0 15px;font-size:14px;color:var(--sub);
-  border-bottom:3px solid transparent;white-space:nowrap}
-.nav a.on{color:var(--red);font-weight:700;border-bottom-color:var(--red)}
-.nav a:hover{color:var(--red)}
+.nav{background:#fff;border-bottom:1px solid var(--line);position:sticky;top:0;z-index:40;box-shadow:0 2px 10px rgba(20,30,50,.05)}
+.nav .wrap{display:flex;height:50px;overflow-x:auto}
+.nav button{background:none;border:0;border-bottom:3px solid transparent;padding:0 16px;font-size:14px;color:var(--sub);
+  cursor:pointer;white-space:nowrap;height:100%}
+.nav button.on{color:var(--red);font-weight:700;border-bottom-color:var(--red)}
+.nav button:hover{color:var(--red)}
 
-/* 服务区 */
+.sec{display:none;animation:fade .3s ease}
+.sec.on{display:block}
+@keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+
 .grid{display:grid;grid-template-columns:1.35fr .95fr;gap:18px;margin:22px 0}
-.card{background:#fff;border:1px solid var(--line);border-radius:8px}
-.card-h{display:flex;align-items:center;justify-content:space-between;
-  padding:14px 18px;border-bottom:1px solid var(--line)}
-.card-h h2{margin:0;font-size:16px;letter-spacing:.5px}
-.card-h h2::before{content:"";display:inline-block;width:4px;height:15px;background:var(--red);
-  border-radius:2px;margin-right:9px;vertical-align:-2px}
+.card{background:#fff;border:1px solid var(--line);border-radius:8px;overflow:hidden}
+.card-h{display:flex;align-items:center;justify-content:space-between;padding:13px 18px;border-bottom:1px solid var(--line)}
+.card-h h2{margin:0;font-size:16px}
+.card-h h2::before{content:"";display:inline-block;width:4px;height:15px;background:var(--red);border-radius:2px;margin-right:9px;vertical-align:-2px}
 .card-h .more{font-size:12.5px;color:var(--sub)}
 
 .tabs{display:flex;gap:8px;padding:14px 18px 0}
-.tab{border:1px solid var(--line);background:#f7f8fa;color:var(--sub);border-radius:6px;
-  padding:7px 16px;font-size:13.5px;cursor:pointer}
+.tab{border:1px solid var(--line);background:#f7f8fa;color:var(--sub);border-radius:6px;padding:7px 16px;font-size:13.5px;cursor:pointer}
 .tab.on{background:var(--red);border-color:var(--red);color:#fff;font-weight:600}
 
 .svc{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;padding:16px 18px 20px}
-.svc a{display:flex;gap:12px;align-items:center;border:1px solid var(--line);border-radius:8px;
-  padding:13px 14px;background:#fdfefe;transition:.18s}
-.svc a:hover{border-color:#f0c1c5;background:#fffafa;transform:translateY(-1px);
-  box-shadow:0 6px 18px rgba(192,32,42,.08)}
-.svc .ico{width:34px;height:34px;border-radius:8px;background:#fdeef0;color:var(--red);
-  display:grid;place-items:center;font-size:15px;font-weight:700;flex:0 0 auto}
-.svc b{display:block;font-size:14px;font-weight:600}
+.svc button{display:flex;gap:12px;align-items:center;text-align:left;border:1px solid var(--line);border-radius:8px;
+  padding:13px 14px;background:#fdfefe;transition:.18s;cursor:pointer}
+.svc button:hover{border-color:#f0c1c5;background:#fffafa;transform:translateY(-1px);box-shadow:0 6px 18px rgba(187,31,42,.08)}
+.svc .ico{width:36px;height:36px;border-radius:8px;background:#fdeef0;color:var(--red);display:grid;place-items:center;
+  font-size:14px;font-weight:700;flex:0 0 auto}
+.svc b{display:block;font-size:14px}
 .svc i{display:block;margin-top:4px;font-size:12px;color:var(--sub);font-style:normal}
 
-/* 公告 */
-.news{padding:6px 18px 16px}
-.news li{list-style:none;display:flex;gap:10px;padding:11px 0;border-bottom:1px dashed #eceef2;
-  font-size:13.5px;color:#31363d}
+.news{padding:4px 18px 14px;margin:0}
+.news li{list-style:none;display:flex;gap:10px;padding:11px 0;border-bottom:1px dashed #eceef2;font-size:13.5px;
+  color:#31363d;cursor:pointer}
 .news li:last-child{border-bottom:0}
-.news li span{margin-left:auto;color:#98a0ad;font-size:12px;flex:0 0 auto}
-.news li::before{content:"";width:5px;height:5px;border-radius:50%;background:var(--red);
-  margin-top:7px;flex:0 0 auto;opacity:.7}
+.news li:hover{color:var(--red)}
+.news li span{margin-left:auto;color:#98a0ad;font-size:12px}
+.news li::before{content:"";width:5px;height:5px;border-radius:50%;background:var(--red);opacity:.7;margin-top:8px;flex:0 0 auto}
 
-/* 办事列表 */
-.table-h{padding:16px 18px;font-size:14px;color:var(--sub);display:flex;gap:14px;flex-wrap:wrap;align-items:center}
-.table-h strong{color:var(--ink);font-size:15px}
-.tbl{width:100%;border-collapse:collapse;font-size:13.5px}
-.tbl th{background:#f7f8fa;text-align:left;padding:11px 18px;color:#48505c;font-weight:600;
-  border-top:1px solid var(--line);border-bottom:1px solid var(--line);white-space:nowrap}
-.tbl td{padding:13px 18px;border-bottom:1px solid #f0f2f5;color:#2b3038;vertical-align:middle}
-.tbl tr:hover td{background:#fcfcfd}
-.tbl .op{color:var(--blue);font-weight:600;white-space:nowrap}
-.tbl .dept{color:var(--sub)}
-.pill{display:inline-block;font-size:11.5px;padding:2px 8px;border-radius:20px;
-  border:1px solid #d9dee6;color:#5c6572;background:#fafbfc;margin-left:6px}
-
-/* 快捷 */
-.quick{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:0 0 22px}
-.quick a{background:#fff;border:1px solid var(--line);border-radius:8px;padding:16px;
-  text-align:center;transition:.18s}
-.quick a:hover{border-color:#c9d6ea;box-shadow:0 6px 16px rgba(26,95,180,.09)}
+.quick{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:22px}
+.quick button{background:#fff;border:1px solid var(--line);border-radius:8px;padding:16px;text-align:center;cursor:pointer;transition:.18s}
+.quick button:hover{border-color:#c9d6ea;box-shadow:0 6px 16px rgba(23,94,168,.09)}
 .quick b{display:block;font-size:14.5px}
 .quick i{display:block;margin-top:5px;font-size:12px;color:var(--sub);font-style:normal}
 
-/* 页脚 */
-.foot{background:#3a4048;color:#c6ccd4;margin-top:28px;padding:26px 0 30px;font-size:12.5px;line-height:2}
+.tbl{width:100%;border-collapse:collapse;font-size:13.5px}
+.tbl th{background:#f7f8fa;text-align:left;padding:11px 18px;color:#48505c;border-bottom:1px solid var(--line);white-space:nowrap}
+.tbl td{padding:12px 18px;border-bottom:1px solid #f0f2f5}
+.tbl tr:hover td{background:#fcfcfd}
+.op{color:var(--blue);font-weight:600;cursor:pointer;white-space:nowrap}
+.pill{display:inline-block;font-size:11.5px;padding:2px 8px;border-radius:20px;border:1px solid #d9dee6;color:#5c6572;background:#fafbfc;margin-left:6px}
+.tbl-tip{padding:12px 18px;font-size:12.5px;color:var(--sub);border-top:1px solid #f0f2f5;background:#fcfcfd}
+
+.form{background:#fff;border:1px solid var(--line);border-radius:8px;padding:22px}
+.form h2{margin:0 0 6px;font-size:18px}
+.form p.hint{margin:0 0 18px;font-size:12.5px;color:var(--sub)}
+.field{display:flex;flex-direction:column;gap:6px;margin-bottom:14px}
+.field label{font-size:13px;color:#3d454f}
+.field input,.field select,.field textarea{border:1px solid #d8dde5;border-radius:6px;padding:10px 12px;font-size:13.5px;font-family:inherit;outline:0;background:#fff}
+.field input:focus,.field textarea:focus,.field select:focus{border-color:#9db6d6;box-shadow:0 0 0 3px rgba(23,94,168,.08)}
+.btn-primary{background:var(--red);color:#fff;border:0;border-radius:6px;padding:11px 26px;font-size:14px;cursor:pointer}
+.btn-primary:hover{background:var(--red-d)}
+.btn-ghost{background:#fff;border:1px solid #d8dde5;color:var(--ink);border-radius:6px;padding:10px 20px;font-size:13.5px;cursor:pointer}
+
+.result{margin-top:18px}
+.result:empty{display:none}
+.res-box{border:1px solid var(--line);border-radius:8px;overflow:hidden}
+.res-h{display:flex;align-items:center;justify-content:space-between;padding:13px 16px;background:#f8fafc;border-bottom:1px solid var(--line);font-size:13.5px}
+.res-body{padding:16px}
+.steps{list-style:none;padding:0;margin:0;display:grid;gap:12px}
+.steps li{display:flex;gap:12px;font-size:13.5px}
+.steps .num{width:22px;height:22px;border-radius:50%;background:#fdeef0;color:var(--red);display:grid;place-items:center;font-size:12px;font-weight:700;flex:0 0 auto}
+.steps .num.done{background:#e8f7ee;color:#12864c}
+.muted{color:var(--sub);font-size:13px}
+
+.list-item{display:flex;gap:14px;padding:16px 18px;border-bottom:1px solid #f0f2f5;cursor:pointer}
+.list-item:hover{background:#fcfcfd}
+.list-item:last-child{border-bottom:0}
+.list-item b{font-size:14.5px}
+.list-item i{display:block;margin-top:5px;font-size:12.5px;color:var(--sub);font-style:normal}
+.list-item .t{margin-left:auto;font-size:12px;color:#98a0ad;white-space:nowrap}
+
+.mask{position:fixed;inset:0;background:rgba(16,22,30,.45);display:none;z-index:70;padding:24px;overflow:auto}
+.mask.on{display:flex;align-items:flex-start;justify-content:center}
+.modal{background:#fff;border-radius:10px;width:min(680px,100%);margin:auto;box-shadow:0 24px 60px rgba(0,0,0,.24);animation:pop .22s ease}
+@keyframes pop{from{opacity:0;transform:translateY(10px) scale(.99)}to{opacity:1;transform:none}}
+.modal-h{display:flex;align-items:flex-start;gap:12px;padding:18px 22px;border-bottom:1px solid var(--line)}
+.modal-h h3{margin:0;font-size:17px}
+.modal-h .x{margin-left:auto;border:0;background:none;font-size:22px;line-height:1;color:#98a0ad;cursor:pointer;padding:0 4px}
+.modal-b{padding:20px 22px;font-size:13.8px;line-height:1.9;max-height:66vh;overflow:auto}
+.modal-f{display:flex;gap:10px;justify-content:flex-end;padding:14px 22px;border-top:1px solid var(--line);background:#fcfcfd}
+.kv{display:grid;grid-template-columns:88px 1fr;gap:8px 12px;margin:0 0 16px;font-size:13.5px}
+.kv dt{color:var(--sub)}
+.kv dd{margin:0}
+
+.toast{position:fixed;left:50%;bottom:30px;transform:translate(-50%,12px);opacity:0;background:#1f2329;color:#fff;
+  font-size:13px;padding:10px 18px;border-radius:8px;transition:.24s;pointer-events:none;z-index:80}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+
+.foot{background:#3a4048;color:#c6ccd4;margin-top:30px;padding:24px 0 28px;font-size:12.5px;line-height:2}
 .foot .wrap{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap}
 .foot a{text-decoration:underline;text-underline-offset:3px}
-.toast{position:fixed;left:50%;bottom:34px;transform:translate(-50%,14px);opacity:0;
-  background:#20242a;color:#fff;font-size:13px;padding:10px 18px;border-radius:8px;
-  transition:.25s;pointer-events:none;z-index:60}
-.toast.show{opacity:1;transform:translate(-50%,0)}
 
 @media (max-width:900px){
   .head .wrap{height:auto;padding:16px 20px;flex-wrap:wrap;gap:12px}
   .search{width:100%}
-  .head-links{font-size:12px}
+  .head-links{width:100%;gap:18px}
   .grid{grid-template-columns:1fr}
-  .quick{grid-template-columns:repeat(2,1fr)}
+  .quick{grid-template-columns:1fr 1fr}
   .svc{grid-template-columns:1fr}
   .tbl th:nth-child(3),.tbl td:nth-child(3),.tbl th:nth-child(4),.tbl td:nth-child(4){display:none}
+  .kv{grid-template-columns:1fr;gap:2px}
 }
 </style>
 </head>
 <body>
 
-<div class="demo-bar"><div class="wrap">
-  <span>界面演示页 · 非官方站点</span>
-  <span>·</span>
-  <span>所有栏目、事项与数据均为虚构示例，不办理任何业务，也不收集任何信息</span>
-  <a href="../" style="text-decoration:underline">返回总站</a>
+<div class="topline"><div class="wrap">
+  <a href="../">返回总站</a>
+  <a href="../status/">站点状态</a>
+  <span id="today"></span>
 </div></div>
 
-<header class="head">
-  <div class="wrap">
-    <div class="emblem">政</div>
-    <div class="brand">
-      <h1>政务服务系统</h1>
-      <p>GOVERNMENT SERVICE PORTAL · DEMO</p>
-    </div>
-    <div class="spacer"></div>
-    <div class="search">
-      <input id="q" placeholder="搜索事项、部门或关键词（演示）">
-      <button onclick="searchGo()">搜索</button>
-    </div>
-    <div class="head-links">
-      <a href="#" onclick="demo('登录为演示占位')">登录</a>
-      <a href="#" onclick="demo('注册为演示占位')">注册</a>
-      <a href="../status/">站点状态</a>
-    </div>
+<header class="head"><div class="wrap">
+  <div class="emblem">政</div>
+  <div class="brand"><h1>政务服务系统</h1><p>GOVERNMENT SERVICE PORTAL</p></div>
+  <div class="spacer"></div>
+  <div class="search">
+    <input id="q" placeholder="输入事项名称、部门或关键词">
+    <button id="qbtn">搜索</button>
   </div>
-</header>
+  <div class="head-links">
+    <button id="loginBtn">登录</button>
+    <button id="regBtn">注册</button>
+    <a href="../status/">状态</a>
+  </div>
+</div></header>
 
-<nav class="nav"><div class="wrap">
-  <a href="./" class="on">首页</a>
-  <a href="#svc" onclick="demo('个人办事：演示入口')">个人办事</a>
-  <a href="#svc" onclick="demo('法人办事：演示入口')">法人办事</a>
-  <a href="#guide" onclick="demo('办事指南：演示入口')">办事指南</a>
-  <a href="#list" onclick="demo('进度查询：演示入口')">进度查询</a>
-  <a href="#list" onclick="demo('咨询投诉：演示入口')">咨询投诉</a>
-  <a href="#news" onclick="demo('政策文件：演示入口')">政策文件</a>
+<nav class="nav" id="nav"><div class="wrap">
+  <button data-sec="home" class="on">首页</button>
+  <button data-sec="person">个人办事</button>
+  <button data-sec="corp">法人办事</button>
+  <button data-sec="guide">办事指南</button>
+  <button data-sec="progress">进度查询</button>
+  <button data-sec="consult">咨询投诉</button>
+  <button data-sec="policy">政策文件</button>
 </div></nav>
 
 <main class="wrap">
 
-  <div class="grid">
-    <section class="card">
-      <div class="card-h"><h2>服务大厅</h2><span class="more">共 12 类事项 · 示例数据</span></div>
-      <div class="tabs">
-        <button class="tab on" data-tab="person">个人办事</button>
-        <button class="tab" data-tab="corp">法人办事</button>
+  <section class="sec on" id="sec-home">
+    <div class="grid">
+      <div class="card">
+        <div class="card-h"><h2>服务大厅</h2><span class="more" id="svcCount">共 12 项</span></div>
+        <div class="tabs">
+          <button class="tab on" data-kind="person">个人办事</button>
+          <button class="tab" data-kind="corp">法人办事</button>
+        </div>
+        <div class="svc" id="svc"></div>
       </div>
-      <div class="svc" id="svc"></div>
-    </section>
-
-    <section class="card">
-      <div class="card-h"><h2>通知公告</h2><span class="more">示例</span></div>
-      <ul class="news" id="news">
-        <li>关于系统维护升级的公告（演示内容）<span>11-22</span></li>
-        <li>政务服务事项清单更新说明（演示内容）<span>11-18</span></li>
-        <li>办事材料精简事项一览（演示内容）<span>11-11</span></li>
-        <li>窗口服务时间调整通知（演示内容）<span>11-05</span></li>
-        <li>在线申报功能上线说明（演示内容）<span>10-29</span></li>
-      </ul>
-    </section>
-  </div>
-
-  <div class="quick">
-    <a href="#guide" onclick="demo('办事指南：演示入口')"><b>办事指南</b><i>材料、流程、时限</i></a>
-    <a href="#list" onclick="demo('在线申报：演示入口')"><b>在线申报</b><i>表单为样式占位</i></a>
-    <a href="#list" onclick="demo('进度查询：演示入口')"><b>进度查询</b><i>按受理号查询</i></a>
-    <a href="#list" onclick="demo('好差评：演示入口')"><b>好差评</b><i>办完给个评价</i></a>
-  </div>
-
-  <section class="card" id="list">
-    <div class="table-h">
-      <strong>高频事项</strong>
-      <span>以下内容为界面演示，办理部门和时限均为虚构</span>
+      <div class="card">
+        <div class="card-h"><h2>通知公告</h2><span class="more">5 条</span></div>
+        <ul class="news" id="news"></ul>
+      </div>
     </div>
-    <table class="tbl">
-      <thead><tr><th>事项名称</th><th>承办部门</th><th>办理时限</th><th>操作</th></tr></thead>
-      <tbody id="tbody"></tbody>
-    </table>
+
+    <div class="quick">
+      <button data-sec="guide"><b>办事指南</b><i>材料、流程、时限</i></button>
+      <button data-sec="person"><b>在线申报</b><i>按事项提交</i></button>
+      <button data-sec="progress"><b>进度查询</b><i>凭受理编号查询</i></button>
+      <button data-sec="consult"><b>咨询投诉</b><i>留下问题等回复</i></button>
+    </div>
+
+    <div class="card">
+      <div class="card-h"><h2>高频事项</h2><span class="more" id="hotCount"></span></div>
+      <table class="tbl">
+        <thead><tr><th>事项名称</th><th>承办部门</th><th>办理时限</th><th>操作</th></tr></thead>
+        <tbody id="hotBody"></tbody>
+      </table>
+      <div class="tbl-tip">点击「在线办理」可查看所需材料与办理流程，并生成受理编号。</div>
+    </div>
+  </section>
+
+  <section class="sec" id="sec-person"></section>
+  <section class="sec" id="sec-corp"></section>
+
+  <section class="sec" id="sec-guide">
+    <div class="form" style="margin-top:22px">
+      <h2>办事指南</h2>
+      <p class="hint">按事项查看申请材料、办理流程与承诺时限。顶部搜索框可跨分类检索。</p>
+      <div id="guideList"></div>
+    </div>
+  </section>
+
+  <section class="sec" id="sec-progress">
+    <div class="form" style="margin-top:22px;max-width:720px">
+      <h2>办件进度查询</h2>
+      <p class="hint">输入受理编号查询办理状态。编号在提交申报后生成，形如 RXH-2026-0001。</p>
+      <div class="field"><label>受理编号</label><input id="pn" placeholder="例如 RXH-2026-0001"></div>
+      <div class="field"><label>查询方式</label>
+        <select id="pway"><option>按受理编号</option><option>按手机号</option></select>
+      </div>
+      <button class="btn-primary" id="pbtn">查询</button>
+      <div class="result" id="presult"></div>
+    </div>
+  </section>
+
+  <section class="sec" id="sec-consult">
+    <div class="form" style="margin-top:22px;max-width:820px">
+      <h2>咨询投诉</h2>
+      <p class="hint">描述你的问题，提交后会生成受理编号，可在本机重复查看。</p>
+      <div class="field"><label>类型</label>
+        <select id="ctype"><option>咨询</option><option>建议</option><option>投诉</option></select>
+      </div>
+      <div class="field"><label>标题</label><input id="ctitle" placeholder="一句话概括问题"></div>
+      <div class="field"><label>详细说明</label><textarea id="cbody" rows="5" placeholder="请描述具体情况"></textarea></div>
+      <div class="field"><label>联系方式（选填）</label><input id="ccontact" placeholder="邮箱或手机号，仅保存在本机"></div>
+      <button class="btn-primary" id="cbtn">提交</button>
+      <div class="result" id="cresult"></div>
+    </div>
+  </section>
+
+  <section class="sec" id="sec-policy">
+    <div class="card" style="margin-top:22px">
+      <div class="card-h"><h2>政策文件</h2><span class="more">共 5 篇</span></div>
+      <div id="policyList"></div>
+    </div>
   </section>
 
 </main>
 
 <footer class="foot"><div class="wrap">
-  <div>
-    主办单位：RXH 演示平台（虚构，非任何政府机构）<br>
-    本页面仅用于前端界面样式演示，不具备任何办事、查询、收集信息的功能。
-  </div>
-  <div>
-    <a href="../">返回总站</a> · <a href="../status/">站点状态</a><br>
-    托管于 GitHub Pages · 2026
-  </div>
+  <div>RXH 政务门户界面 · 个人项目页面，非政府机构官方网站<br>不提供真实政务服务，不向任何服务器提交信息。</div>
+  <div><a href="../">返回总站</a> · <a href="../status/">站点状态</a><br>托管于 GitHub Pages · 2026</div>
 </div></footer>
 
-<div class="toast" id="toast">演示</div>
+<div class="mask" id="mask"><div class="modal">
+  <div class="modal-h"><h3 id="mTitle">标题</h3><button class="x" id="mClose">×</button></div>
+  <div class="modal-b" id="mBody"></div>
+  <div class="modal-f" id="mFoot"></div>
+</div></div>
+
+<div class="toast" id="toast"></div>
 
 <script>
-const person = [
-  ['身份证件办理','户籍 · 证件','身份证、户口簿','1 个工作日'],
-  ['社保参保登记','社会保险','身份证、劳动合同','即时办结'],
-  ['公积金提取','住房公积金','身份证、购房合同','3 个工作日'],
-  ['出入境证件预约','公安出入境','身份证、照片回执','5 个工作日'],
-  ['驾驶证换领','交通管理','身份证、体检表','1 个工作日'],
-  ['婚姻登记预约','民政','身份证、户口簿','即时预约']
-];
-const corp = [
-  ['企业设立登记','市场监管','名称核准、章程','1 个工作日'],
-  ['税务信息确认','税务','营业执照、法人证件','即时办结'],
-  ['社保开户','社会保险','营业执照、银行账户','2 个工作日'],
-  ['工程规划许可','自然资源','用地证明、设计方案','10 个工作日'],
-  ['食品经营许可','市场监管','场所证明、健康证','7 个工作日'],
-  ['排污许可登记','生态环境','环评文件、工艺说明','5 个工作日']
+const ITEMS = [
+  {k:'person', n:'身份证件办理', dept:'户籍管理', limit:'1 个工作日', mats:['居民户口簿','近期免冠照片'], steps:['提交申请','窗口核验','制证','领取']},
+  {k:'person', n:'社保参保登记', dept:'社会保险', limit:'即时办结', mats:['身份证','劳动合同'], steps:['填写登记表','单位确认','系统登记']},
+  {k:'person', n:'公积金提取', dept:'住房公积金', limit:'3 个工作日', mats:['身份证','购房合同或租赁合同','银行卡'], steps:['提交申请','材料审核','资金到账']},
+  {k:'person', n:'出入境证件预约', dept:'出入境管理', limit:'5 个工作日', mats:['身份证','证件照片'], steps:['线上预约','现场办理','证件寄送']},
+  {k:'person', n:'驾驶证换领', dept:'交通管理', limit:'1 个工作日', mats:['身份证','体检证明','原驾驶证'], steps:['体检','提交申请','换发新证']},
+  {k:'person', n:'婚姻登记预约', dept:'民政服务', limit:'即时预约', mats:['双方身份证','双方户口簿'], steps:['选择登记处','选择时段','现场办理']},
+  {k:'corp', n:'企业设立登记', dept:'市场监督管理', limit:'1 个工作日', mats:['名称核准通知','公司章程','股东身份证明'], steps:['名称核准','提交设立材料','领取营业执照']},
+  {k:'corp', n:'税务信息确认', dept:'税务服务', limit:'即时办结', mats:['营业执照','法定代表人证件'], steps:['登记信息确认','税种核定','领用发票']},
+  {k:'corp', n:'社保开户', dept:'社会保险', limit:'2 个工作日', mats:['营业执照','银行账户信息'], steps:['提交开户申请','人员信息备案','缴费账户绑定']},
+  {k:'corp', n:'工程规划许可', dept:'自然资源', limit:'10 个工作日', mats:['用地证明','设计方案','环评意见'], steps:['方案报送','技术审查','许可核发']},
+  {k:'corp', n:'食品经营许可', dept:'市场监督管理', limit:'7 个工作日', mats:['场所使用证明','从业人员健康证明'], steps:['提交申请','现场核查','许可决定']},
+  {k:'corp', n:'排污许可登记', dept:'生态环境', limit:'5 个工作日', mats:['环评文件','工艺说明'], steps:['填报登记表','形式审查','登记编号']}
 ];
 
-function render(list){
-  const box = document.getElementById('svc');
-  box.innerHTML = list.map((v,i)=>`
-    <a href="#list" onclick="demo('${v[0]}：演示入口')">
-      <span class="ico">${v[1].slice(0,2)}</span>
-      <span><b>${v[0]}</b><i>${v[1]} · ${v[3]}</i></span>
-    </a>`).join('');
-  document.getElementById('tbody').innerHTML = list.map(v=>`
-    <tr>
-      <td>${v[0]}<span class="pill">可预约</span></td>
-      <td class="dept">${v[1]}</td>
-      <td>${v[3]}</td>
-      <td class="op" onclick="demo('${v[0]}：演示入口')">在线办理 →</td>
-    </tr>`).join('');
-}
-render(person);
+const NEWS = [
+  {t:'关于系统维护升级的公告', d:'11-22', c:'为提升访问稳定性，系统将于本周六凌晨进行例行维护，期间可能出现短时无法访问，请合理安排办理时间。'},
+  {t:'政务服务事项清单更新说明', d:'11-18', c:'本次更新新增 3 项高频事项，精简 5 项申请材料，并同步调整了部分事项的承诺时限。'},
+  {t:'办事材料精简事项一览', d:'11-11', c:'以下事项不再要求提交纸质复印件：可通过电子证照核验的材料一律免交，清单见附件说明。'},
+  {t:'窗口服务时间调整通知', d:'11-05', c:'即日起窗口服务时间调整为工作日 9:00—17:00，中午不间断服务，节假日按公告执行。'},
+  {t:'在线申报功能上线说明', d:'10-29', c:'在线申报入口已开放，提交后可获得受理编号，用于进度查询与材料补正。'}
+];
 
-document.querySelectorAll('.tab').forEach(t=>{
-  t.addEventListener('click',()=>{
-    document.querySelectorAll('.tab').forEach(x=>x.classList.remove('on'));
-    t.classList.add('on');
-    render(t.dataset.tab === 'corp' ? corp : person);
-  });
+const POLICIES = [
+  {t:'政务服务事项办理规范', d:'2026-09-01', c:['本规范适用于门户内全部政务服务事项的受理、办理与反馈。','受理环节应在 1 个工作日内完成形式审查，材料不全的一次性告知补正内容。','承诺时限自分件之日起计算，办结后通过短信或站内消息告知申请人。']},
+  {t:'电子证照应用指引', d:'2026-08-12', c:['已归集的电子证照与纸质证照具有同等效力，受理时不得重复要求提交。','申请人可通过出示电子证照亮证，窗口应提供扫码核验通道。']},
+  {t:'办事材料精简实施方案', d:'2026-07-20', c:['对没有法律法规依据的证明材料一律取消。','同一材料在多个事项中重复使用的，建立一次提交、多次复用机制。']},
+  {t:'窗口服务规范（试行）', d:'2026-06-15', c:['窗口实行首问负责制，第一个接待的工作人员负责到底或转办到位。','对老年人、残障人士提供帮办代办服务，必要时上门办理。']},
+  {t:'政务服务好差评管理办法', d:'2026-05-08', c:['每个办结事项均开放评价入口，评价结果纳入服务考核。','差评件应在 3 个工作日内回访整改并向申请人反馈结果。']}
+];
+
+const $ = s => document.querySelector(s);
+const $$ = s => Array.from(document.querySelectorAll(s));
+let toastTimer;
+function toast(msg){
+  const el = $('#toast'); el.textContent = msg; el.classList.add('show');
+  clearTimeout(toastTimer); toastTimer = setTimeout(()=>el.classList.remove('show'), 1800);
+}
+function openModal(title, html, footerHtml){
+  $('#mTitle').textContent = title;
+  $('#mBody').innerHTML = html;
+  $('#mFoot').innerHTML = footerHtml || '<button class="btn-ghost" onclick="closeModal()">关闭</button>';
+  $('#mask').classList.add('on');
+}
+function closeModal(){ $('#mask').classList.remove('on'); }
+$('#mClose').addEventListener('click', closeModal);
+$('#mask').addEventListener('click', e=>{ if(e.target === $('#mask')) closeModal(); });
+
+function renderSvc(kind){
+  const list = ITEMS.filter(i=>i.k === kind);
+  $('#svcCount').textContent = '共 ' + list.length + ' 项';
+  $('#svc').innerHTML = list.map(it=>`
+    <button data-idx="${ITEMS.indexOf(it)}">
+      <span class="ico">${it.dept.slice(0,2)}</span>
+      <span><b>${it.n}</b><i>${it.dept} · ${it.limit}</i></span>
+    </button>`).join('');
+  $$('#svc button').forEach(b=> b.addEventListener('click',()=> openItem(Number(b.dataset.idx))));
+}
+renderSvc('person');
+
+$$('.tab').forEach(t=>t.addEventListener('click',()=>{
+  $$('.tab').forEach(x=>x.classList.remove('on'));
+  t.classList.add('on');
+  renderSvc(t.dataset.kind);
+}));
+
+$('#news').innerHTML = NEWS.map((n,i)=>`<li data-i="${i}">${n.t}<span>${n.d}</span></li>`).join('');
+$$('#news li').forEach(li=> li.addEventListener('click',()=>{
+  const n = NEWS[Number(li.dataset.i)];
+  openModal(n.t, `<div class="muted">发布日期：${n.d}</div><p>${n.c}</p>`);
+}));
+
+$('#hotBody').innerHTML = ITEMS.slice(0,6).map((it,i)=>`
+  <tr><td>${it.n}<span class="pill">可预约</span></td><td class="muted">${it.dept}</td><td>${it.limit}</td>
+  <td class="op" data-idx="${i}">在线办理 →</td></tr>`).join('');
+$('#hotCount').textContent = '展示前 6 项';
+$$('#hotBody .op').forEach(td=> td.addEventListener('click',()=> openItem(Number(td.dataset.idx))));
+
+function openItem(idx){
+  const it = ITEMS[idx];
+  openModal(it.n, `
+    <dl class="kv">
+      <dt>承办部门</dt><dd>${it.dept}</dd>
+      <dt>承诺时限</dt><dd>${it.limit}</dd>
+      <dt>申请材料</dt><dd>${it.mats.join('、')}</dd>
+    </dl>
+    <ol class="steps">${it.steps.map((s,i)=>`<li><span class="num">${i+1}</span><span>${s}</span></li>`).join('')}</ol>`,
+    `<button class="btn-ghost" onclick="closeModal()">关闭</button>
+     <button class="btn-primary" onclick="openApply(${idx})">开始申报</button>`);
+}
+
+function openApply(idx){
+  const it = ITEMS[idx];
+  openModal('申报 · ' + it.n, `
+    <div class="field"><label>申请人姓名</label><input id="apName" placeholder="用于受理回执"></div>
+    <div class="field"><label>联系电话</label><input id="apPhone" placeholder="11 位手机号"></div>
+    <div class="field"><label>备注（选填）</label><textarea id="apNote" rows="3" placeholder="需要的时段或特殊情况"></textarea></div>
+    <p class="muted">提交后生成受理编号，记录只保存在当前浏览器，不会上传到任何服务器。</p>`,
+    `<button class="btn-ghost" onclick="closeModal()">取消</button>
+     <button class="btn-primary" onclick="submitApply(${idx})">提交申报</button>`);
+}
+
+let seq = Number(localStorage.getItem('rxh_seq') || 0);
+function submitApply(idx){
+  const name = ($('#apName').value || '').trim();
+  const phone = ($('#apPhone').value || '').trim();
+  if(name.length < 2) return toast('请填写申请人姓名');
+  if(!/^1[3-9]\d{9}$/.test(phone)) return toast('请填写正确的手机号');
+  seq++; localStorage.setItem('rxh_seq', seq);
+  const no = 'RXH-2026-' + String(seq).padStart(4,'0');
+  localStorage.setItem('rxh_case_' + no, JSON.stringify({item:ITEMS[idx].n, dept:ITEMS[idx].dept, name, at:Date.now()}));
+  openModal('申报已受理', `<p>受理编号：<b style="color:#bb1f2a;font-size:16px">${no}</b></p>
+    <p class="muted">请记录该编号，可在「进度查询」中查看办理状态。</p>`,
+    `<button class="btn-primary" onclick="goProgress('${no}')">去查询进度</button>`);
+}
+function goProgress(no){ closeModal(); $('#pn').value = no; switchSec('progress'); queryProgress(); }
+
+['person','corp'].forEach(kind=>{
+  const sec = $('#sec-' + kind);
+  sec.innerHTML = `
+    <div class="card" style="margin-top:22px">
+      <div class="card-h"><h2>${kind==='person'?'个人办事':'法人办事'}</h2><span class="more">共 ${ITEMS.filter(i=>i.k===kind).length} 项</span></div>
+      <div id="list-${kind}"></div>
+    </div>`;
+  $('#list-'+kind).innerHTML = ITEMS.filter(i=>i.k===kind).map(it=>`
+    <div class="list-item" data-idx="${ITEMS.indexOf(it)}">
+      <div><b>${it.n}</b><i>${it.dept} · 材料 ${it.mats.length} 项 · ${it.limit}</i></div>
+      <span class="t">查看 →</span>
+    </div>`).join('');
+  $$('#list-'+kind+' .list-item').forEach(el=> el.addEventListener('click',()=> openItem(Number(el.dataset.idx))));
 });
 
-let tt;
-function demo(msg){
-  const el = document.getElementById('toast');
-  el.textContent = '演示页面 · ' + msg;
-  el.classList.add('show');
-  clearTimeout(tt);
-  tt = setTimeout(()=>el.classList.remove('show'), 1500);
-  return false;
-}
+$('#guideList').innerHTML = ITEMS.map(it=>`
+  <div class="list-item" data-idx="${ITEMS.indexOf(it)}">
+    <div><b>${it.n}</b><i>${it.dept} · 材料：${it.mats.join('、')}</i></div>
+    <span class="t">${it.limit}</span>
+  </div>`).join('');
+$$('#guideList .list-item').forEach(el=> el.addEventListener('click',()=> openItem(Number(el.dataset.idx))));
 
-function searchGo(){
-  const q = document.getElementById('q').value.trim();
-  demo(q ? '搜索「' + q + '」：演示环境无数据' : '请输入关键词试试');
+function queryProgress(){
+  const no = ($('#pn').value || '').trim().toUpperCase();
+  const box = $('#presult');
+  if(!no){ box.innerHTML = ''; toast('请输入受理编号'); return; }
+  if(!/^RXH-2026-\d{4}$/.test(no)){
+    box.innerHTML = `<div class="res-box"><div class="res-h"><b>未查询到记录</b><span class="muted">${no}</span></div>
+      <div class="res-body muted">受理编号格式应为 RXH-2026-0001。若刚提交申报，请确认编号是否完整。</div></div>`;
+    return;
+  }
+  const data = JSON.parse(localStorage.getItem('rxh_case_' + no) || 'null');
+  if(!data){
+    box.innerHTML = `<div class="res-box"><div class="res-h"><b>该编号不存在于本机</b><span class="muted">${no}</span></div>
+      <div class="res-body muted">办件数据只保存在生成它的那台浏览器中，换设备或清除缓存后查不到。</div></div>`;
+    return;
+  }
+  const stages = ['已受理','材料核验','办理中','已办结'];
+  const cur = Math.min(3, Math.floor((Date.now() - data.at) / 600000) + 1);
+  box.innerHTML = `<div class="res-box">
+    <div class="res-h"><b>${data.item}</b><span class="muted">${no}</span></div>
+    <div class="res-body">
+      <ol class="steps">${stages.map((s,i)=>`<li><span class="num ${i<cur?'done':''}">${i+1}</span>
+        <span>${s}${i===cur?'（当前）':''}<br><span class="muted">${i<=cur?'已完成':'待处理'}</span></span></li>`).join('')}</ol>
+      <p class="muted" style="margin-top:14px">承办部门：${data.dept} · 提交时间：${new Date(data.at).toLocaleString('zh-CN')}</p>
+    </div></div>`;
 }
-document.getElementById('q').addEventListener('keydown', e=>{
-  if(e.key === 'Enter'){ e.preventDefault(); searchGo(); }
+$('#pbtn').addEventListener('click', queryProgress);
+$('#pn').addEventListener('keydown', e=>{ if(e.key==='Enter') queryProgress(); });
+
+$('#cbtn').addEventListener('click',()=>{
+  const title = ($('#ctitle').value || '').trim();
+  const body = ($('#cbody').value || '').trim();
+  if(title.length < 3) return toast('标题至少 3 个字');
+  if(body.length < 10) return toast('请把情况写详细一些（至少 10 字）');
+  const records = JSON.parse(localStorage.getItem('rxh_consult') || '[]');
+  const no = 'ZX-2026-' + String(records.length + 1).padStart(4,'0');
+  records.push({no, type:$('#ctype').value, title, body, contact:($('#ccontact').value||'').trim(), at:Date.now()});
+  localStorage.setItem('rxh_consult', JSON.stringify(records));
+  $('#cresult').innerHTML = `<div class="res-box"><div class="res-h"><b>提交成功</b><span class="muted">${no}</span></div>
+    <div class="res-body">类型：${$('#ctype').value}<br>标题：${title}<br>
+    <span class="muted">已记录在本机，共 ${records.length} 条。</span></div></div>`;
+  $('#ctitle').value = ''; $('#cbody').value = ''; $('#ccontact').value = '';
+  toast('已提交，编号 ' + no);
 });
-document.querySelectorAll('.news li').forEach(li=>{
-  li.style.cursor = 'pointer';
-  li.addEventListener('click',()=>demo('公告详情：演示入口'));
+
+$('#policyList').innerHTML = POLICIES.map((p,i)=>`
+  <div class="list-item" data-i="${i}"><div><b>${p.t}</b><i>${p.d} · 共 ${p.c.length} 条</i></div><span class="t">阅读 →</span></div>`).join('');
+$$('#policyList .list-item').forEach(el=> el.addEventListener('click',()=>{
+  const p = POLICIES[Number(el.dataset.i)];
+  openModal(p.t, `<div class="muted">发布：${p.d}</div>` + p.c.map((c,i)=>`<p>${i+1}. ${c}</p>`).join(''));
+}));
+
+function doSearch(){
+  const q = ($('#q').value || '').trim();
+  if(!q){ toast('请输入关键词'); return; }
+  const hits = ITEMS.filter(it=> (it.n + it.dept + it.mats.join('')).includes(q));
+  const newsHits = NEWS.filter(n=> (n.t + n.c).includes(q));
+  openModal('搜索：' + q, `
+    <p class="muted">找到 ${hits.length} 个事项、${newsHits.length} 条公告</p>
+    ${hits.map(it=>`<div class="list-item" data-idx="${ITEMS.indexOf(it)}"><div><b>${it.n}</b>
+      <i>${it.dept} · ${it.limit}</i></div><span class="t">查看 →</span></div>`).join('') || '<p class="muted">没有匹配的事项。</p>'}
+    ${newsHits.map(n=>`<div class="list-item"><div><b>${n.t}</b><i>${n.d}</i></div></div>`).join('')}`,
+    `<button class="btn-primary" onclick="closeModal()">知道了</button>`);
+  $$('#mBody .list-item[data-idx]').forEach(el=> el.addEventListener('click',()=> openItem(Number(el.dataset.idx))));
+}
+$('#qbtn').addEventListener('click', doSearch);
+$('#q').addEventListener('keydown', e=>{ if(e.key==='Enter'){ e.preventDefault(); doSearch(); } });
+
+$('#loginBtn').addEventListener('click',()=>{
+  openModal('账号登录', `<p>统一身份认证账号用于办理需要实名核验的事项。</p>
+    <div class="field"><label>账号</label><input placeholder="请输入账号"></div>
+    <div class="field"><label>密码</label><input type="password" placeholder="请输入密码"></div>
+    <p class="muted">账号系统尚未接入，填写内容不会发送到任何服务器。</p>`,
+    `<button class="btn-ghost" onclick="closeModal()">取消</button>
+     <button class="btn-primary" onclick="toast('账号系统尚未接入，可先用受理编号查询进度')">登录</button>`);
 });
+$('#regBtn').addEventListener('click',()=>{
+  openModal('注册账号', `<p>注册后可保存常用事项、订阅办理提醒。</p>
+    <div class="field"><label>手机号</label><input placeholder="11 位手机号"></div>
+    <div class="field"><label>验证码</label><input placeholder="6 位验证码"></div>
+    <p class="muted">短信通道尚未接入，本页面不会真实发送验证码。</p>`,
+    `<button class="btn-ghost" onclick="closeModal()">取消</button>
+     <button class="btn-primary" onclick="toast('注册通道尚未接入')">注册</button>`);
+});
+
+function switchSec(name){
+  $$('.nav button').forEach(b=> b.classList.toggle('on', b.dataset.sec === name));
+  $$('.sec').forEach(s=> s.classList.toggle('on', s.id === 'sec-' + name));
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+$('#nav').addEventListener('click', e=>{
+  const b = e.target.closest('button[data-sec]'); if(!b) return;
+  switchSec(b.dataset.sec);
+});
+$$('.quick button').forEach(b=> b.addEventListener('click',()=> switchSec(b.dataset.sec)));
+
+$('#today').textContent = new Date().toLocaleDateString('zh-CN',{year:'numeric',month:'long',day:'numeric',weekday:'long'});
 </script>
 </body>
 </html>
