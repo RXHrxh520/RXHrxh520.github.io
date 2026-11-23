@@ -198,7 +198,7 @@ async function loadKeys() {
   try {
     const r = await fetch('/api/keys', { credentials: 'same-origin', cache: 'no-store' });
     const d = await r.json();
-    keys = d.keys || [];
+    keys = d.keys || d.items || [];
   } catch (e) { list.innerHTML = '<div class="empty">读取密钥失败</div>'; return; }
   document.getElementById('statKeys').textContent = String(keys.length);
   if (!keys.length) { list.innerHTML = '<div class="empty">暂无密钥，填写备注后创建</div>'; return; }
