@@ -99,7 +99,9 @@ async function loadUsers() {
       <td>${ban ? `<span class="pill bad">封禁中</span><br><span class="sub">${esc(ban.reason || "")}<br>${fmt(ban.start_at)} → ${fmt(ban.end_at)}</span>` : '<span class="sub">—</span>'}</td>
       <td><button class="btn sm ghost" data-uid="${esc(u.uid)}" data-act="fill">填入封禁</button>
           <button class="btn sm ghost" data-uid="${esc(u.uid)}" data-act="unban">解封</button>
-          <button class="btn sm ghost" data-uid="${esc(u.uid)}" data-name="${esc(u.name)}" data-act="edit">改资料/ID</button></td>
+          <button class="btn sm ghost" data-uid="${esc(u.uid)}" data-name="${esc(u.name)}" data-act="edit">改资料/ID</button>
+          <button class="btn sm ghost danger" data-uid="${esc(u.uid)}" data-act="deluser">删除账号</button>
+          <button class="btn sm ghost danger" data-uid="${esc(u.uid)}" data-act="deluser">删除账号</button></td>
     </tr>`;
   }).join("");
 }
