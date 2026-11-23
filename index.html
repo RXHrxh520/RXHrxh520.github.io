@@ -148,9 +148,35 @@ main{max-width:1180px;margin:0 auto;padding:30px 22px 90px}
 .music.open .m-panel{display:block;animation:fade .25s ease both}
 .m-panel .lead{font-size:12px;color:var(--dim)}
 .m-cover{height:64px;border-radius:12px;margin:10px 0;background:linear-gradient(135deg,color-mix(in srgb,var(--pink) 30%,transparent),color-mix(in srgb,var(--pink2) 26%,transparent));display:grid;place-items:center;color:var(--dim);font-size:11.5px;letter-spacing:.06em}
-.m-bars{display:flex;align-items:center;gap:10px;color:var(--dim);font-size:11.5px}
-.m-bars .bar{flex:1;height:3px;border-radius:3px;background:rgba(255,255,255,.12);position:relative;overflow:hidden}
-.m-bars .bar i{position:absolute;inset:0 62% 0 0;background:linear-gradient(90deg,var(--pink),var(--pink2));opacity:.5}
+.m-panel{width:264px}
+.m-head{display:flex;align-items:center;justify-content:space-between}
+.m-note{font-size:10.5px;color:var(--dim);opacity:.75}
+.m-cover{display:flex;align-items:center;gap:10px;height:auto;padding:10px 12px;text-align:left}
+.m-cover svg{width:22px;height:22px;opacity:.75;flex:0 0 auto}
+.m-cover b{display:block;font-size:12.5px;color:var(--txt);font-weight:600}
+.m-cover span{display:block;font-size:10.5px;color:var(--dim);margin-top:1px}
+.m-time{display:flex;justify-content:space-between;font-size:10.5px;color:var(--dim);margin-bottom:5px}
+.m-seek{height:3px;border-radius:3px;background:rgba(255,255,255,.14);cursor:pointer;position:relative}
+.m-seek i{position:absolute;left:0;top:0;bottom:0;width:0;border-radius:3px;background:linear-gradient(90deg,var(--pink),var(--pink2));transition:width .2s linear}
+.m-ctrl{display:flex;align-items:center;gap:6px;margin:10px 0 8px}
+.m-ctrl button{width:30px;height:30px;border-radius:9px;border:1px solid var(--line);background:transparent;color:var(--dim);display:grid;place-items:center;cursor:pointer}
+.m-ctrl button:hover{color:var(--txt);background:rgba(255,255,255,.08)}
+.m-ctrl button svg{width:13px;height:13px}
+.m-ctrl .m-play{width:36px;height:36px;border-radius:11px;border:0;background:linear-gradient(135deg,var(--pink),var(--pink2));color:#150d1c}
+.m-ctrl .m-play svg{width:15px;height:15px}
+.m-vol{display:flex;align-items:center;gap:6px;margin-left:auto;color:var(--dim)}
+.m-vol svg{width:13px;height:13px}
+.vbar{width:52px;height:3px;border-radius:3px;background:rgba(255,255,255,.14);cursor:pointer;position:relative}
+.vbar i{position:absolute;left:0;top:0;bottom:0;width:60%;border-radius:3px;background:var(--dim)}
+.m-list{margin-top:9px;border-top:1px solid var(--line);padding-top:7px;display:grid;gap:2px}
+.mi{display:flex;align-items:center;gap:8px;padding:5px 6px;border-radius:7px;font-size:11px;color:var(--dim)}
+.mi.on{background:rgba(255,255,255,.05);color:var(--txt)}
+.mi span{width:14px;opacity:.6}
+.mi b{flex:1;font-weight:500;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.mi em{font-style:normal;font-size:10px;opacity:.6}
+body.light .m-seek,body.light .vbar{background:rgba(20,24,40,.15)}
+body.light .m-ctrl button{color:#5b6480}
+body.light .mi{color:#5b6480}
 
 footer{max-width:1180px;margin:0 auto;padding:26px 22px 40px;color:var(--dim);font-size:12.5px;display:flex;gap:8px;flex-wrap:wrap;align-items:center}
 footer a{color:var(--dim);border-bottom:1px dashed rgba(255,255,255,.18)}
@@ -351,17 +377,30 @@ body.light .pill{color:#5f6884}
 
 <footer>
   <span>© 2026 软小寒 · rxh.asia</span><span>·</span>
-  <a href="https://github.com/RXHrxh520/RXHrxh520.github.io" target="_blank" rel="noopener" data-ext>GitHub 仓库</a><span>·</span>
   <a href="https://status.rxh.asia/" target="_blank" rel="noopener">状态页</a><span>·</span>
-  <span>托管于 GitHub Pages &amp; Cloudflare</span>
+  <span>部署于 Cloudflare</span>
 </footer>
 
 <!-- 音乐播放器 -->
 <div class="music" id="music">
   <div class="m-panel">
-    <div class="lead">音乐播放器</div>
-    <div class="m-cover">暂未添加曲目</div>
-    <div class="m-bars"><span>00:00</span><div class="bar"><i></i></div><span>00:00</span></div>
+    <div class="m-head"><span class="lead">音乐播放器</span><span class="m-note" id="mNote">未配置音频</span></div>
+    <div class="m-cover">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><use href="https://www.rxh.asia/assets/icons.svg#i-music"/></svg>
+      <div><b id="mTitle">暂无曲目</b><span id="mArtist">拖入歌曲后这里会显示</span></div>
+    </div>
+    <div class="m-time"><span id="mCur">00:00</span><span id="mDur">00:00</span></div>
+    <div class="m-seek" id="mSeek"><i id="mFill"></i></div>
+    <div class="m-ctrl">
+      <button id="mPrev" aria-label="上一首"><svg viewBox="0 0 24 24"><use href="https://www.rxh.asia/assets/icons.svg#i-prev"/></svg></button>
+      <button class="m-play" id="mPlay" aria-label="播放"><svg viewBox="0 0 24 24"><use href="https://www.rxh.asia/assets/icons.svg#i-play"/></svg></button>
+      <button id="mNext" aria-label="下一首"><svg viewBox="0 0 24 24"><use href="https://www.rxh.asia/assets/icons.svg#i-next"/></svg></button>
+      <div class="m-vol"><svg viewBox="0 0 24 24"><use href="https://www.rxh.asia/assets/icons.svg#i-volume"/></svg><div class="vbar" id="vBar"><i id="vFill"></i></div></div>
+    </div>
+    <div class="m-list" id="mList">
+      <div class="mi on"><span>1</span><b>暂无曲目</b><em>—</em></div>
+      <div class="mi"><span>2</span><b>播放列表为空</b><em>—</em></div>
+    </div>
   </div>
   <button class="m-toggle" id="mToggle" aria-label="展开音乐播放器">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="m6 9 6 6 6-6"/></svg>
@@ -398,7 +437,7 @@ body.light .pill{color:#5f6884}
   </div>
 </div>
 
-<script src="/assets/auth-modal.js?v=20261124b"></script>
-<script src="/assets/site.js?v=20261124d"></script>
+<script src="/assets/auth-modal.js?v=20261124c"></script>
+<script src="/assets/site.js?v=20261124e"></script>
 </body>
 </html>
