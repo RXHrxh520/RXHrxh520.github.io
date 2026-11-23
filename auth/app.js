@@ -112,12 +112,14 @@ $("#regForm").addEventListener("submit", async e => {
       headers: { "content-type": "application/json" },
       body: JSON.stringify({
         email: $("#re").value.trim(), name: $("#rn").value.trim(),
-        password: $("#rp").value, invite: $("#ri").value.trim(), turnstile: tsToken,
+        password: $("#rp").value, invite: $("#ri").value.trim(),
+        gender: Number($("#rg").value || 0), turnstile: tsToken,
       }),
     });
     const d = await r.json();
     if (!d.ok) throw new Error(d.error || "注册失败");
-    say(msg, `注册成功，你的 ID 是 ${d.uid}，请用邮箱登录`, true);
+    if (d.sid) localStorage.setItem("rxh_sid", d.sid);
+    say(msg, `注册成功，你的 ID 是 ${d.uid}`, true);
     setTimeout(() => location.href = "/account/", 800);
   } catch (err) {
     say(msg, err.message || "注册失败");
