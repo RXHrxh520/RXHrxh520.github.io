@@ -203,7 +203,7 @@ async function loadKeys() {
   try {
     const r = await fetch('https://auth.rxh.asia/api/keys', { credentials: 'include', cache: 'no-store' });
     const d = await r.json();
-    keys = d.keys || d.items || [];
+    keys = (d.keys || d.items || []).filter(k => !k.revoked);
   } catch (e) { list.innerHTML = '<div class="empty">读取密钥失败</div>'; return; }
   document.getElementById('statKeys').textContent = String(keys.length);
   if (!keys.length) { list.innerHTML = '<div class="empty">暂无密钥，填写备注后创建</div>'; return; }
