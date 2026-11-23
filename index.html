@@ -8,7 +8,7 @@
 <meta property="og:title" content="软小寒 · 总站">
 <meta property="og:description" content="安卓小工具爱好者，今天比昨天多会一点点。">
 <meta property="og:type" content="website">
-<meta property="og:url" content="https://rxh.asia/">
+<meta property="og:url" content="https://www.rxh.asia/">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌸</text></svg>">
 <style>
   :root{
@@ -331,7 +331,6 @@
   .explain h3{margin:0;font-size:17px}
   .explain .bullets{margin-top:16px}
 
-
   /* ============ 明暗主题 ============ */
   body.dark{
     --ink:#f3eef7; --ink-2:#cec8da; --ink-3:#948ea3;
@@ -416,45 +415,6 @@
     background:linear-gradient(90deg,#ff9dbb,#ff4f86);transition:width .8s cubic-bezier(.2,.8,.2,1)}
   .npct{display:flex;justify-content:space-between;margin-top:5px;font-size:10.5px;color:var(--ink-3)}
 
-  /* ============ ARG / 微信界面 ============ */
-  .argview{display:none}
-  body.arg .argview{display:flex}
-  body.arg .view,body.arg .navbar,body.arg .footer{display:none !important}
-  body.arg .ctrl{top:14px;right:14px}
-  .argview{position:fixed;inset:0;z-index:55;background:#111;
-    align-items:center;justify-content:center;padding:0}
-  .wx{width:min(430px,100%);height:min(880px,100%);background:#ededed;display:flex;flex-direction:column;
-    overflow:hidden;box-shadow:0 30px 90px rgba(0,0,0,.55);border-radius:16px;position:relative}
-  .wx-nav{height:52px;flex:0 0 auto;display:flex;align-items:center;background:#ededed;
-    border-bottom:1px solid #d7d7d7;padding:0 6px;position:relative;z-index:2}
-  .wx-back,.wx-more{width:46px;height:44px;border:0;background:none;cursor:pointer;display:grid;place-items:center;color:#1a1a1a}
-  .wx-back svg,.wx-more svg{width:22px;height:22px;opacity:.85}
-  .wx-title{flex:1;text-align:center;font-size:17px;font-weight:500;color:#111;letter-spacing:.2px}
-  .wx-body{flex:1;background:#ededed;overflow-y:auto;padding:14px 12px;display:flex;flex-direction:column;gap:10px}
-  .wx-msg{display:flex;justify-content:flex-end}
-  .wx-msg .b{max-width:76%;background:#95ec69;color:#111;font-size:15px;line-height:1.45;
-    padding:9px 12px;border-radius:5px;word-break:break-word;position:relative}
-  .wx-msg .b::after{content:"";position:absolute;right:-5px;top:12px;width:0;height:0;
-    border-left:6px solid #95ec69;border-top:4px solid transparent;border-bottom:4px solid transparent}
-  .wx-toolbar{flex:0 0 auto;display:flex;align-items:center;gap:8px;background:#f7f7f7;
-    border-top:1px solid #d7d7d7;padding:8px 10px calc(8px + env(safe-area-inset-bottom))}
-  .wx-ico{width:34px;height:34px;border:0;background:none;display:grid;place-items:center;cursor:pointer;color:#2b2b2b}
-  .wx-ico svg{width:23px;height:23px;opacity:.72}
-  .wx-inputwrap{flex:1;display:flex}
-  .wx-input{width:100%;height:36px;border:0;border-radius:6px;background:#fff;padding:0 10px;
-    font-size:15px;color:#111;outline:0;font-family:inherit}
-  .wx-send{display:none;height:34px;padding:0 15px;border:0;border-radius:4px;background:#07c160;
-    color:#fff;font-size:14px;cursor:pointer;flex:0 0 auto}
-  .wx-send.on{display:block}
-  .wx-plus{width:30px;height:30px;border:0;background:none;display:grid;place-items:center;cursor:pointer;color:#2b2b2b}
-  .wx-plus svg{width:25px;height:25px;opacity:.8}
-  body.arg .wx-plus{display:grid}
-
-  @media (max-width:1100px){
-    .tool-grid{grid-template-columns:repeat(3,1fr)}
-  }
-
-
   /* ============ 工作台 ============ */
   .bench{margin-top:22px;background:rgba(255,255,255,.72);border:1px solid rgba(255,255,255,.9);
     border-radius:22px;padding:22px 26px;box-shadow:0 14px 36px rgba(80,40,60,.05)}
@@ -473,114 +433,6 @@
     background:#fff0f5;border:1px solid var(--pink-line);border-radius:6px;padding:2px 7px;margin-top:1px}
   .log-list b{display:block;font-size:13px;color:var(--ink)}
   .log-list i{display:block;font-style:normal;font-size:11.5px;color:var(--ink-3);line-height:1.55;margin-top:2px}
-
-  /* ============ 404 · 微信 ============ */
-  .wx2{width:min(420px,100%);height:min(880px,100%);background:#ededed;display:flex;flex-direction:column;
-    overflow:hidden;border-radius:18px;box-shadow:0 30px 90px rgba(0,0,0,.5);position:relative}
-  .wx2-nav{height:46px;flex:0 0 auto;display:flex;align-items:center;background:#ededed;
-    border-bottom:1px solid #d9d9d9;position:relative;padding:0 4px;z-index:5}
-  .wnav-btn{width:44px;height:40px;border:0;background:none;display:grid;place-items:center;cursor:pointer;color:#111}
-  .wnav-btn svg{width:21px;height:21px;opacity:.9}
-  .wx2-title{flex:1;text-align:center;font-size:17px;font-weight:500;color:#111;letter-spacing:.2px}
-  .wx2-body{flex:1;overflow-y:auto;background:#ededed;-webkit-overflow-scrolling:touch}
-  .wx2-tabbar{flex:0 0 auto;display:flex;background:#f7f7f7;border-top:1px solid #dcdcdc;
-    padding-bottom:env(safe-area-inset-bottom)}
-  .wx2-tabbar.hide{display:none}
-  .wtab{flex:1;border:0;background:none;padding:7px 0 5px;display:flex;flex-direction:column;align-items:center;
-    gap:3px;cursor:pointer;color:#7d7f83;font-size:10.5px;position:relative}
-  .wtab svg{width:23px;height:23px}
-  .wtab.on{color:#07c160}
-  .wdot{position:absolute;top:5px;left:calc(50% + 6px);width:8px;height:8px;border-radius:50%;background:#fa5151}
-
-  .wlist{background:#fff}
-  .wrow{display:flex;align-items:center;gap:12px;padding:11px 14px;background:#fff;
-    border-bottom:1px solid #ededed;cursor:pointer}
-  .wrow:active{background:#e9e9e9}
-  .wrow:last-child{border-bottom:0}
-  .wav{width:44px;height:44px;border-radius:5px;flex:0 0 auto;display:grid;place-items:center;
-    font-size:14px;font-weight:700;color:#fff;overflow:hidden;background:#dcdcdc}
-  .wav.default{background:#e7e7e7}
-  .wav svg{width:26px;height:26px}
-  .wav.service{background:#4a90e2;font-size:12px}
-  .wav.news{background:#2f7d32;font-size:15px}
-  .wmid{flex:1;min-width:0}
-  .wmid b{display:block;font-size:16px;font-weight:400;color:#111;line-height:1.35}
-  .wmid i{display:block;font-style:normal;font-size:12.5px;color:#9a9a9a;margin-top:2px;
-    white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-  .wright{flex:0 0 auto;display:flex;flex-direction:column;align-items:flex-end;gap:5px;text-align:right}
-  .wright span{font-size:11.5px;color:#a6a6a6}
-  .wright em{font-style:normal;background:#fa5151;color:#fff;font-size:11px;min-width:18px;height:18px;
-    border-radius:9px;display:grid;place-items:center;padding:0 5px}
-
-  .wchat{padding:10px 12px 24px;min-height:100%;display:flex;flex-direction:column;gap:10px}
-  .wtime{text-align:center;font-size:11.5px;color:#9a9a9a;margin:10px 0 6px}
-  .wb{max-width:78%;background:#fff;border-radius:5px;padding:9px 12px;font-size:15px;line-height:1.55;
-    color:#111;align-self:flex-start;position:relative;word-break:break-word}
-  .wb::before{content:"";position:absolute;left:-5px;top:11px;border-right:6px solid #fff;
-    border-top:4px solid transparent;border-bottom:4px solid transparent}
-  .wb.me{align-self:flex-end;background:#95ec69}
-  .wb.me::before{left:auto;right:-5px;border-right:0;border-left:6px solid #95ec69}
-
-  .wcard{background:#fff;border-radius:6px;padding:12px;cursor:pointer}
-  .wcard:active{background:#f6f6f6}
-  .wcard b{display:block;font-size:15px;line-height:1.45;color:#111}
-  .wthumb{height:72px;border-radius:4px;margin-top:10px;background:linear-gradient(120deg,#eef2f6,#dde6ef);
-    display:grid;place-items:center;color:#8fa0b3;font-size:11px;letter-spacing:3px}
-  .wsrc{margin-top:9px;font-size:11.5px;color:#9a9a9a;display:flex;gap:8px}
-
-  .wgroup{background:#fff;margin-top:9px}
-  .wgtitle{padding:8px 14px;font-size:12px;color:#8a8a8a;background:#ededed}
-  .wcell{display:flex;align-items:center;gap:12px;padding:13px 14px;background:#fff;
-    border-bottom:1px solid #ededed;cursor:pointer;font-size:15px;color:#111}
-  .wcell:last-child{border-bottom:0}
-  .wcell:active{background:#e9e9e9}
-  .wcell .ci{width:24px;height:24px;border-radius:5px;background:#f1f1f1;display:grid;place-items:center;color:#5d6570}
-  .wcell .ci svg{width:15px;height:15px}
-  .wcell .cv{margin-left:auto;color:#a6a6a6;font-size:12.5px}
-  .me{display:flex;gap:14px;align-items:center;padding:26px 16px 22px;background:#fff}
-  .mav{width:62px;height:62px;border-radius:6px;background:#e7e7e7;display:grid;place-items:center;overflow:hidden}
-  .mav svg{width:36px;height:36px}
-  .me h3{margin:0;font-size:19px;font-weight:500}
-  .me p{margin:5px 0 0;font-size:12.5px;color:#8a8a8a;line-height:1.5}
-
-  .art{padding:18px 16px 40px;background:#fff}
-  .art h1{font-size:22px;line-height:1.42;margin:0 0 12px;letter-spacing:-.2px}
-  .art .am{display:flex;gap:10px;flex-wrap:wrap;font-size:12.5px;color:#9a9a9a;margin-bottom:18px}
-  .art p{font-size:16px;line-height:1.85;color:#333;margin:0 0 16px}
-  .art .src{margin-top:22px;padding-top:14px;border-top:1px solid #eee;font-size:12px;color:#9a9a9a}
-
-
-  .wlist{min-height:100%}
-  .wav.file{background:#d6efd6}
-
-  .wsearch{padding:9px 12px;background:#ededed}
-  .wsearch div{display:flex;align-items:center;gap:6px;height:32px;background:#fff;border-radius:6px;
-    color:#8f8f8f;font-size:13.5px;padding:0 10px}
-  .wsearch svg{width:15px;height:15px;stroke:#9a9a9a}
-  .wcico{width:24px;height:24px;border-radius:6px;display:grid;place-items:center;flex:0 0 auto}
-  .wcico svg{width:15px;height:15px;stroke:#fff;fill:none;stroke-width:1.8}
-  .warrow{width:14px;height:14px;margin-left:auto;flex:0 0 auto;stroke:#c4c4c4;fill:none;stroke-width:2}
-  .wcell .cv{margin-left:auto;color:#a6a6a6;font-size:12.5px}
-  .wcell .cv + .warrow{margin-left:6px}
-
-  .wxbar{flex:0 0 auto;display:flex;align-items:center;gap:7px;background:#f7f7f7;
-    border-top:1px solid #d7d7d7;padding:7px 8px calc(7px + env(safe-area-inset-bottom))}
-  .wxbar.hide{display:none}
-  .wxb{width:34px;height:34px;border:0;background:none;display:grid;place-items:center;color:#2b2b2b;cursor:pointer;flex:0 0 auto}
-  .wxb svg{width:24px;height:24px;opacity:.72}
-  .wxfield{flex:1;min-width:0;height:36px;border:0;border-radius:5px;background:#fff;padding:0 10px;
-    font-size:15px;color:#111;outline:0;font-family:inherit}
-  .wxsend{display:none;height:34px;padding:0 14px;border:0;border-radius:4px;background:#07c160;
-    color:#fff;font-size:14px;cursor:pointer;flex:0 0 auto}
-  .wxsend.on{display:block}
-  .wxplus{width:30px;height:30px;border:0;background:none;display:grid;place-items:center;color:#2b2b2b;cursor:pointer;flex:0 0 auto}
-  .wxplus svg{width:25px;height:25px;opacity:.8}
-
-  @media (max-width:520px){
-    .argview{padding:0}
-    .wx2{width:100%;height:100%;border-radius:0;box-shadow:none}
-    .bench-grid{grid-template-columns:1fr;gap:0}
-  }
 
   /* ============ 页脚（黑） ============ */
   .footer{
@@ -702,27 +554,23 @@
     <svg id="themeIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><circle cx="12" cy="12" r="4.2"/><path d="M12 2v2.4M12 19.6v2.4M2 12h2.4M19.6 12h2.4M4.8 4.8l1.7 1.7M17.5 17.5l1.7 1.7M19.2 4.8l-1.7 1.7M6.5 17.5l-1.7 1.7"/></svg>
     <span id="themeLabel">暗夜</span>
   </button>
-  <button id="modeBtn" aria-label="切换模式">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M9.4 7.6 11 6a3.6 3.6 0 0 1 5.1 5.1l-1.5 1.5"/><path d="M14.6 16.4 13 18a3.6 3.6 0 0 1-5.1-5.1l1.5-1.5"/><path d="M4 4l7 7M20 20l-7-7" opacity=".5"/></svg>
-    <span id="modeLabel">404</span>
-  </button>
 </div>
 
 <!-- ================= 悬浮玻璃导航 ================= -->
 <nav class="navbar">
-  <a class="nav-item active" href="/" data-view="home">
+  <a class="nav-item active" href="./" data-view="home">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 10.5 12 3l9 7.5"/><path d="M5 9.5V21h14V9.5"/></svg>
     <span>首页</span>
   </a>
-  <a class="nav-item" href="/projects" data-view="projects">
+  <a class="nav-item" href="?v=projects" data-view="projects">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 7h18v12H3z"/><path d="M8 7V5h8v2"/></svg>
     <span>项目</span>
   </a>
-  <a class="nav-item" href="/ai" data-view="ai">
+  <a class="nav-item" href="?v=ai" data-view="ai">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="4" y="6" width="16" height="12" rx="4"/><circle cx="10" cy="12" r="1.3"/><circle cx="14" cy="12" r="1.3"/></svg>
     <span>AI</span>
   </a>
-  <a class="nav-item" href="/sites" data-view="sites">
+  <a class="nav-item" href="?v=sites" data-view="sites">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="8"/><path d="M4 12h16M12 4c4 4 4 12 0 16"/></svg>
     <span>分站</span>
   </a>
@@ -747,7 +595,7 @@
           </div>
 
           <div class="cta">
-            <a class="btn main" href="/projects" data-view="projects">
+            <a class="btn main" href="?v=projects" data-view="projects">
               看看我的项目
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
             </a>
@@ -925,20 +773,8 @@
       </div>
 
       <div class="soon-grid">
-        <a class="soon" href="https://gov.rxh.asia/" target="_self">
-          <span class="badge live">已上线</span>
-          <h4>政务服务系统</h4>
-          <p>按政务门户常见版式排的服务大厅、通知公告、办事列表与快捷入口，纯静态页面，不接后台。</p>
-          <code>gov.rxh.asia</code>
-          <span class="go">进入分站 →</span>
-        </a>
-        <a class="soon" href="https://police.rxh.asia/" target="_self">
-          <span class="badge live">已上线</span>
-          <h4>公安网</h4>
-          <p>玄河县公安局的网上门户：警务公开、办事指南、警情通报与线索提交，纯静态页面。</p>
-          <code>police.rxh.asia</code>
-          <span class="go">进入分站 →</span>
-        </a>
+        
+        
         <a class="soon" href="https://open.rxh.asia/" target="_self">
           <span class="badge live">已上线</span>
           <h4>玄河开放平台</h4>
@@ -965,7 +801,7 @@
       <div class="explain">
         <h3>路径式分站怎么运作</h3>
         <ul class="bullets">
-          <li><span>·</span> 一个目录就是一个分站：仓库里建 <b>/gov/</b>、<b>/police/</b>、<b>/open/</b>、<b>/status/</b>，各放一个 index.html 即可访问</li>
+          <li><span>·</span> 一个目录就是一个分站：仓库里建 <b>/open/</b>、<b>/status/</b>，各放一个 index.html 即可访问</li>
           <li><span>·</span> 不占域名、不占仓库：不用买子域名、不用新建仓库，证书和 CDN 全部跟总站共用</li>
           <li><span>·</span> 加法很简单：建目录 → 放页面 → 在总站这张卡上加一条链接，就多了一个分站</li>
           <li><span>·</span> 代价是共用一套：同一域名下所有页面一起构建、一起发版，某个目录写坏可能连一起 404</li>
@@ -974,15 +810,6 @@
     </div>
   </section>
 
-  <!-- ================= 404 · 微信界面 ================= -->
-  <section class="argview" id="view-arg">
-    <div class="wx2">
-      <div class="wx2-nav" id="wx2Nav"></div>
-      <div class="wx2-body" id="wx2Body"></div>
-      <div class="wxbar hide" id="wx2Bar"></div>
-      <div class="wx2-tabbar" id="wx2Tab"></div>
-    </div>
-  </section>
 </main>
 
 <!-- ================= 黑色页脚 ================= -->
@@ -1081,22 +908,25 @@ function show(name){
   });
   window.scrollTo(0,0);
 }
-const PATH2VIEW = {'/':'home','/home':'home','/projects':'projects','/ai':'ai','/sites':'sites'};
-function fromPath(){
-  const p = location.pathname.replace(/\/index\.html$/,'/').replace(/\/$/,'') || '/';
-  show(PATH2VIEW[p] || 'home');
+const VIEWS = ['home','projects','ai','sites'];
+function fromUrl(){
+  const v = new URLSearchParams(location.search).get('v') || 'home';
+  show(VIEWS.includes(v) ? v : 'home');
 }
-window.addEventListener('popstate', fromPath);
-fromPath();
+function pushView(v){
+  const u = v === 'home' ? location.pathname : location.pathname + '?v=' + v;
+  history.pushState({v}, '', u);
+}
+window.addEventListener('popstate', fromUrl);
+fromUrl();
 
 document.querySelectorAll('[data-view]').forEach(el=>{
   el.addEventListener('click', e=>{
     const href = el.getAttribute('href') || '';
-    if(el.tagName === 'A' && href.startsWith('/')){
+    if(el.tagName === 'A' && el.dataset.view){
       e.preventDefault();
       const v = el.dataset.view;
-      const target = v === 'home' ? '/' : '/' + v;
-      if(location.pathname !== target){ history.pushState({v}, '', target); }
+      pushView(v);
       show(v);
     }
   });
@@ -1267,18 +1097,6 @@ document.getElementById('themeBtn').addEventListener('click', ()=>{
   applyTheme(!document.body.classList.contains('dark'));
 });
 
-/* ================= 模式 ================= */
-function setMode(on){
-  document.body.classList.toggle('arg', on);
-  document.getElementById('modeLabel').textContent = on ? 'ARG' : '404';
-  if(!on) window.scrollTo(0, 0);
-}
-document.getElementById('modeBtn').addEventListener('click', ()=>{
-  setMode(!document.body.classList.contains('arg'));
-});
-const _wb = document.getElementById('wxBack');
-if(_wb) _wb.addEventListener('click', ()=> setMode(false));
-
 /* ================= 工作台 ================= */
 const BENCH = [
   ['托管','GitHub Pages'],
@@ -1311,302 +1129,6 @@ const LOGS = [
 ];
 document.getElementById('logList').innerHTML = LOGS.map(l=>
   `<li><span class="ldate">${l.d}</span><div><b>${l.t}</b><i>${l.n}</i></div></li>`).join('');
-
-/* ================= 404 · 微信 ================= */
-const ME = { name:'{user-name}', wxid:'{wxid}', region:'玄河平凉' };
-
-const ARTICLES = [
-  {
-    t:'凌晨收工的剧组，被十几台相机堵在高速口',
-    d:'2026-11-21', src:'藤蔓新闻',
-    p:[
-      '一场夜戏拍到将近凌晨三点，剧组车辆刚驶出影视城，就被等在路边的十几台车跟上了。有人在超车道上变道别车，有人把相机伸出天窗，只为了拍一张演员摘下口罩的侧脸。',
-      '这样的画面这两年越来越常见。代拍已经形成一条完整的链条：有人蹲守行程，有人按张收费，有人把照片打包卖给粉丝站。被围堵的不只是演员，还有正常行驶的其他车辆。',
-      '更值得追问的是需求端。只要有人愿意为一张模糊的生图付钱，就会有人愿意在高速上别车。追星追到把公共安全当成成本，这笔账最后是由所有路过的人来承担的。',
-      '平台已经在清理代拍交易的关键词，但换个说法又能搜到。真正能刹住这股风的，大概不是封几个账号，而是没人再为这种照片买单。'
-    ]
-  },
-  {
-    t:'排队三小时的网红店，视频里那一桌是借来的',
-    d:'2026-11-19', src:'藤蔓新闻',
-    p:[
-      '一家新开的餐厅在小范围内刷屏：满桌菜品、暖光、镜头缓慢推近，配文是"终于排到了"。评论区里有人问地址，有人问要不要等位。',
-      '实际情况是，那一桌菜是店里提前摆好的样品，拍摄结束后被收回后厨。镜头外的食客在门口排了三个小时，进店后发现菜单上有一半的菜"今日售罄"。',
-      '探店内容早就成了生意。报价单上写着拍摄时长、出图数量、是否需要好评，甚至标注"不拍排队画面"。观众看到的是热闹，看不到的是合同。',
-      '虚假种草的成本最终落在消费者身上：时间、期待，还有对一整座城市餐饮口碑的信任。比起骂一家店，更该被看见的是这套默认的默契。'
-    ]
-  },
-  {
-    t:'粉丝集资打投流水上千万，钱去哪了没人说得清',
-    d:'2026-11-16', src:'藤蔓新闻',
-    p:[
-      '一个后援会在一周内收到超过一千万的集资，用于某档节目的投票和应援。账目以截图形式公布，几张表格，几行汇总，没有流水，也没有第三方见证。',
-      '有粉丝在群里提出疑问，很快被管理员移出。留下来的说法是"信任就好"。等到节目结束，集资余额的去向变成了一个新的问题，而这个问题通常不会得到回答。',
-      '集资打投的逻辑是把喜欢折算成数字，再把数字折算成资源。中间经手的人越多，账就越难对。参与者大多是学生，很多人第一次转出的是自己的生活费。',
-      '这不是某一个后援会的问题，而是一整套缺少约束的运作方式。没有票据、没有审计、没有退出机制，只有不断被放大的情绪和不断被消耗的钱。'
-    ]
-  },
-  {
-    t:'直播间里"卖惨"的果农，镜头外换了两身衣服',
-    d:'2026-11-14', src:'藤蔓新闻',
-    p:[
-      '一个卖水果的账号连着播了七天，主播每天穿同一件旧外套，背景是堆满烂果的院子和一句"今年真卖不动了"。评论区里不断有人下单，说"帮一把是一把"。',
-      '有买家按地址找过去，发现院子是租的拍摄场地，烂果是道具，主播在另一场直播里换了干净衬衫，卖的是同一批货，价格还高一截。',
-      '卖惨之所以有效，是因为它跳过了比价和判断，直接把同情换成了订单。真正受损的是那些确实卖不动、却不会拍视频的人。'
-    ]
-  },
-  {
-    t:'"公益打卡"拍完就走，村口那条路还是没人修',
-    d:'2026-11-11', src:'藤蔓新闻',
-    p:[
-      '周末来了一队人，举着横幅给村里的老人发米面，镜头拍了四十分钟。视频剪出来两分钟，配乐一起，评论区都在说"这才是年轻人"。',
-      '车队走后，米面被收回车上，说"还要去下一个点"。村民站在路边看着，没说什么。那条塌了半边的路，仍然没有人来修。',
-      '把善意做成内容不是问题，问题在于只做给人看的那一半。镜头关了之后还愿意留下的人，才叫志愿者。'
-    ]
-  },
-  {
-    t:'探店报价单流出：好评能买，差评也能买',
-    d:'2026-11-08', src:'藤蔓新闻',
-    p:[
-      '一份探店合作报价单在本地商家群里传开：图文套餐、视频套餐、连麦套餐，最后一行写着"竞品负面另议"。',
-      '有店家试过一次，付钱后评分从 4.2 涨到 4.8，两周后又掉回去。也有店家拒绝合作，紧接着出现几条"吃到虫子"的差评，配图是网图。',
-      '评价体系本来是给后来的人看的，一旦可以标价，它就只剩下一个数字。'
-    ]
-  },
-  {
-    t:'机场到达层的"代拍"，把旅客出口堵成了走廊',
-    d:'2026-11-05', src:'藤蔓新闻',
-    p:[
-      '晚上十点，到达层的出口被三十多人围住，三脚架摆成一排。普通旅客推着行李挤过去，有人被撞掉了箱子，有人干脆绕到另一侧的楼梯。',
-      '工作人员来劝，人群散开两米，等人一走又围回去。有人边拍边打电话报位置："出来了，白色帽子。"',
-      '被拍的人或许早已习惯，但同机抵达的其他人没有同意成为背景。公共空间的使用顺序，不该由谁的热度高来决定。'
-    ]
-  }
-];
-
-const CHATS = [
-  {id:'file', name:'文件传输助手', av:'file', preview:'', time:'11:20', badge:0},
-  {id:'self', name:'{name}', av:'default', preview:'', time:'11:58', badge:0},
-  {id:'kefu', name:'藤蔓客服', av:'service', preview:'近期高发黑灰产通过参与扫码送礼、有偿辅助…', time:'11:42', badge:1},
-  {id:'news', name:'藤蔓新闻', av:'news', preview:'【藤蔓新闻】凌晨收工的剧组，被十几台相机堵在高速口', time:'10:06', badge:2}
-];
-
-const AVATARS = {
-  file: '<svg viewBox="0 0 24 24" fill="none" stroke="#2e7d32" stroke-width="2"><path d="M7 3.5h6l4.5 4.5v12.5H7z"/><path d="M13 3.5V8h4.5"/></svg>',
-  default: '<svg viewBox="0 0 24 24" fill="#c9c9c9"><circle cx="12" cy="8.6" r="3.9"/><path d="M4.6 20.6c0-4 3.3-6.5 7.4-6.5s7.4 2.5 7.4 6.5z"/></svg>',
-  service: '<svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.9"><path d="M4.8 12a7.2 7.2 0 0 1 14.4 0"/><rect x="3.6" y="11.4" width="3.6" height="5.4" rx="1.8"/><rect x="16.8" y="11.4" width="3.6" height="5.4" rx="1.8"/></svg>',
-  news: '<svg viewBox="0 0 24 24"><text x="12" y="17.4" text-anchor="middle" font-size="13" font-family="serif" fill="#fff">藤</text></svg>'
-};
-
-const S = { tab:'chats', chat:null, art:null };
-
-const navHTML = () => {
-  if(S.art !== null){
-    return `<button class="wnav-btn" data-back="art"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M15 4l-8 8 8 8"/></svg></button>
-      <div class="wx2-title">藤蔓新闻</div><button class="wnav-btn"></button>`;
-  }
-  if(S.chat){
-    return `<button class="wnav-btn" data-back="chat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M15 4l-8 8 8 8"/></svg></button>
-      <div class="wx2-title">${S.chat.name}</div>
-      <button class="wnav-btn" data-more="1"><svg viewBox="0 0 24 24" fill="currentColor"><circle cx="5" cy="12" r="1.8"/><circle cx="12" cy="12" r="1.8"/><circle cx="19" cy="12" r="1.8"/></svg></button>`;
-  }
-  const title = S.tab === 'chats' ? '微信' : S.tab === 'contacts' ? '通讯录' : S.tab === 'discover' ? '发现' : '我';
-  const right = S.tab === 'chats'
-    ? `<button class="wnav-btn" data-more="1"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg></button>`
-    : `<button class="wnav-btn"></button>`;
-  return `<button class="wnav-btn"></button><div class="wx2-title">${title}</div>${right}`;
-};
-
-const rowHTML = c => `<div class="wrow" data-chat="${c.id}">
-  <span class="wav ${c.av}">${AVATARS[c.av] || (c.av === 'service' ? '客服' : '藤')}</span>
-  <div class="wmid"><b>${c.name}</b><i>${c.preview || ''}</i></div>
-  <div class="wright"><span>${c.time}</span>${c.badge ? `<em>${c.badge}</em>` : ''}</div>
-</div>`;
-
-const searchHTML = () => `<div class="wsearch"><div><svg viewBox="0 0 24 24" fill="none"><circle cx="10.5" cy="10.5" r="6.2"/><path d="M15.2 15.2 20 20"/></svg>搜索</div></div>`;
-const listHTML = () => `<div class="wlist">${searchHTML()}${CHATS.map(rowHTML).join('')}</div>`;
-
-function chatHTML(){
-  const id = S.chat.id;
-  if(id === 'kefu'){
-    return `<div class="wchat">
-      <div class="wtime">今天 11:42</div>
-      <div class="wb">近期高发黑灰产通过参与扫码送礼、有偿辅助等方式，诱导用户进行辅助注册、辅助解封验证的情况较多。</div>
-      <div class="wb">前述行为容易给你造成一定的安全风险。</div>
-      <div class="wb">如有人以"帮忙点一下""帮朋友验证"为由索要你的账号操作权限，请直接拒绝并保留截图。</div>
-      <div class="wtime">今天 11:43</div>
-      <div class="wb">如你已误操作，请尽快修改密码、开启二次验证，并在本会话留言说明情况。</div>
-    </div>`;
-  }
-  if(id === 'news'){
-    return `<div class="wchat">
-      <div class="wtime">今天 10:06</div>
-      ${ARTICLES.map((a,i)=>`<div class="wcard" data-art="${i}">
-        <b>${a.t}</b>
-        <div class="wthumb">藤 蔓 新 闻</div>
-        <div class="wsrc"><span>${a.src}</span><span>${a.d}</span></div>
-      </div>`).join('')}
-    </div>`;
-  }
-  return `<div class="wchat"></div>`;
-}
-
-function articleHTML(){
-  const a = ARTICLES[S.art];
-  return `<div class="art">
-    <h1>${a.t}</h1>
-    <div class="am"><span>${a.src}</span><span>${a.d}</span></div>
-    ${a.p.map(x=>`<p>${x}</p>`).join('')}
-  </div>`;
-}
-
-const ICO_C = {friend:'#f0a04b', group:'#07c160', tag:'#4a90e2', mp:'#3f7edb',
-  moments:'#4a90e2', channels:'#fa5151', live:'#fa5151', scan:'#4a90e2', look:'#f0a04b',
-  search:'#4a90e2', mini:'#6f5bd6', service:'#07c160', fav:'#f0a04b', card:'#4a90e2',
-  emoji:'#f5c542', set:'#8a9099'};
-const ICO_S = {
-  friend:'<circle cx="9.5" cy="8.5" r="3"/><path d="M3.5 19c.7-3.4 3-5.4 6-5.4 1.4 0 2.6.4 3.6 1.2"/><path d="M17 9v6M14 12h6"/>',
-  group:'<circle cx="9" cy="8.6" r="2.7"/><circle cx="16" cy="9.6" r="2.2"/><path d="M4 18.6c.7-3 2.7-4.6 5-4.6s4.3 1.6 5 4.6"/><path d="M14.4 18.4c.4-1.9 1.5-3 2.8-3 1.1 0 2 .7 2.5 2"/>',
-  tag:'<path d="M4.5 5.5h6.6L19.5 12l-8.4 6.5H4.5z"/><circle cx="8.2" cy="12" r="1.2" fill="#fff" stroke="none"/>',
-  mp:'<path d="M4 10.5h3.2l6-3v9l-6-3H4z"/><path d="M16.2 9.4c1.2 1.5 1.2 3.7 0 5.2"/>',
-  moments:'<circle cx="8.4" cy="8.4" r="2.2"/><circle cx="15.6" cy="8.4" r="2.2"/><circle cx="8.4" cy="15.6" r="2.2"/><circle cx="15.6" cy="15.6" r="2.2"/>',
-  channels:'<rect x="4" y="6" width="16" height="12" rx="2"/><path d="M11 9.4l4 2.6-4 2.6z" fill="#fff" stroke="none"/>',
-  live:'<circle cx="12" cy="12" r="3"/><path d="M7 7a7 7 0 0 0 0 10M17 7a7 7 0 0 1 0 10"/>',
-  scan:'<path d="M4 9V5.5h3.5M20 9V5.5h-3.5M4 15v3.5h3.5M20 15v3.5h-3.5"/><path d="M8 12h8"/>',
-  look:'<circle cx="11" cy="11" r="4.6"/><path d="M14.8 14.8 19 19"/><path d="M11 8.4v5.2"/>',
-  search:'<circle cx="10.6" cy="10.6" r="5.2"/><path d="M14.6 14.6 19 19"/>',
-  mini:'<circle cx="12" cy="12" r="3"/><path d="M12 3.5v3M12 17.5v3M3.5 12h3M17.5 12h3"/>',
-  service:'<rect x="4.5" y="6.5" width="15" height="11" rx="2.2"/><path d="M4.5 10.5h15"/><path d="M8 14.5h4"/>',
-  fav:'<path d="M12 4.6l2.3 4.7 5.2.7-3.8 3.6.9 5.1-4.6-2.4-4.6 2.4.9-5.1L4.5 10l5.2-.7z"/>',
-  card:'<rect x="4" y="6.4" width="16" height="11.2" rx="2"/><path d="M4 10h16"/><path d="M7.5 14.5h3"/>',
-  emoji:'<circle cx="12" cy="12" r="7.4"/><circle cx="9.4" cy="10.2" r="1" fill="#fff" stroke="none"/><circle cx="14.6" cy="10.2" r="1" fill="#fff" stroke="none"/><path d="M8.8 14.2c1.6 1.6 4.8 1.6 6.4 0"/>',
-  set:'<circle cx="12" cy="12" r="3"/><path d="M12 4.5v2M12 17.5v2M4.5 12h2M17.5 12h2M6.7 6.7l1.4 1.4M15.9 15.9l1.4 1.4M17.3 6.7l-1.4 1.4M8.1 15.9l-1.4 1.4"/>'
-};
-const ico = k => `<span class="wcico" style="background:${ICO_C[k]}"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8">${ICO_S[k]}</svg></span>`;
-const chev = '<svg class="warrow" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg>';
-const cell = (label,k,extra='') => `<div class="wcell">${ico(k)}<span>${label}</span>${extra}${chev}</div>`;
-
-function contactsHTML(){
-  const av = {'藤蔓客服':'service','藤蔓新闻':'news'};
-  return `${searchHTML()}<div class="wgroup">
-    ${cell('新的朋友','friend','<span class="cv">3</span>')}
-    ${cell('群聊','group','<span class="cv">2</span>')}
-    ${cell('标签','tag')}${cell('公众号','mp','<span class="cv">1</span>')}
-  </div>
-  <div class="wgroup">
-    ${['藤蔓客服','藤蔓新闻', ME.name].map(n=>`<div class="wcell">
-      <span class="wav ${av[n]||'default'}" style="width:34px;height:34px;font-size:13px">${AVATARS[av[n]||'default']}</span>
-      <span>${n}</span>${chev}</div>`).join('')}
-  </div>`;
-}
-
-function discoverHTML(){
-  const dot = '<span class="cv"><span class="wdot" style="position:static;display:inline-block"></span></span>';
-  return `<div class="wgroup">
-    ${cell('朋友圈','moments',dot)}${cell('视频号','channels')}${cell('直播','live')}
-  </div>
-  <div class="wgroup">
-    ${cell('扫一扫','scan')}${cell('看一看','look')}${cell('搜一搜','search')}
-  </div>
-  <div class="wgroup">
-    ${cell('小程序','mini')}
-  </div>`;
-}
-
-function meHTML(){
-  return `<div class="me">
-    <div class="mav">${AVATARS.default}</div>
-    <div><h3>${ME.name}</h3>
-      <p>微信号：${ME.wxid}<br>地区：${ME.region}</p>
-    </div>
-  </div>
-  <div class="wgroup">
-    ${cell('服务','service')}
-  </div>
-  <div class="wgroup">
-    ${cell('收藏','fav')}${cell('朋友圈','moments')}${cell('卡包','card')}${cell('表情','emoji')}
-  </div>
-  <div class="wgroup">
-    ${cell('设置','set')}
-  </div>`;
-}
-
-function tabbarHTML(){
-  const tabs = [
-    {k:'chats', label:'微信', icon:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M20 11.5c0 3.6-3.6 6.5-8 6.5-1 0-2-.16-2.9-.45L5 19l1.2-2.7C4.9 15 4 13.3 4 11.5C4 7.9 7.6 5 12 5s8 2.9 8 6.5z"/><circle cx="9.5" cy="11" r=".9"/><circle cx="14.5" cy="11" r=".9"/></svg>', dot:true},
-    {k:'contacts', label:'通讯录', icon:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><circle cx="12" cy="8.5" r="3.4"/><path d="M5 20c1-4 3.8-6 7-6s6 2 7 6"/></svg>'},
-    {k:'discover', label:'发现', icon:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><circle cx="12" cy="12" r="7.8"/><path d="M15.4 8.6 13.2 13.2 8.6 15.4 10.8 10.8z"/></svg>'},
-    {k:'me', label:'我', icon:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><circle cx="12" cy="8.6" r="3.5"/><path d="M5.2 19.6c1-3.8 3.8-5.8 6.8-5.8s5.8 2 6.8 5.8"/></svg>'}
-  ];
-  return tabs.map(t=>`<button class="wtab ${S.tab===t.k && !S.chat && S.art===null ? 'on':''}" data-tab="${t.k}">
-    ${t.icon}<span>${t.label}</span>${t.dot ? '<i class="wdot"></i>' : ''}</button>`).join('');
-}
-
-function renderWX(){
-  document.getElementById('wx2Nav').innerHTML = navHTML();
-  const body = document.getElementById('wx2Body');
-  if(S.art !== null) body.innerHTML = articleHTML();
-  else if(S.chat) body.innerHTML = chatHTML();
-  else if(S.tab === 'chats') body.innerHTML = listHTML();
-  else if(S.tab === 'contacts') body.innerHTML = contactsHTML();
-  else if(S.tab === 'discover') body.innerHTML = discoverHTML();
-  else body.innerHTML = meHTML();
-
-  const tb = document.getElementById('wx2Tab');
-  tb.classList.toggle('hide', !!S.chat || S.art !== null);
-  tb.innerHTML = tabbarHTML();
-
-  body.style.background = (!S.chat && S.art === null && S.tab === 'chats') ? '#fff' : '#ededed';
-  const bar = document.getElementById('wx2Bar');
-  bar.classList.toggle('hide', !S.chat || S.art !== null);
-  bar.innerHTML = (S.chat && S.art === null) ? `<button class="wxb" data-voice="1"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><rect x="9.2" y="3.2" width="5.6" height="10.4" rx="2.8"/><path d="M5.8 11.4v1.4a6.2 6.2 0 0 0 12.4 0v-1.4"/><path d="M12 18.8v2.2M9.4 21h5.2"/></svg></button>
-    <input class="wxfield" id="wxField" placeholder="发消息">
-    <button class="wxb" data-emoji="1"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><circle cx="12" cy="12" r="8.4"/><circle cx="9" cy="10" r="1"/><circle cx="15" cy="10" r="1"/><path d="M8.6 14.4c1.4 1.5 5.4 1.5 6.8 0"/></svg></button>
-    <button class="wxsend" id="wxSend">发送</button>
-    <button class="wxplus" data-more="1"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><circle cx="12" cy="12" r="8.6"/><path d="M12 8v8M8 12h8"/></svg></button>` : '';
-
-  body.scrollTop = S.chat || S.art !== null ? 0 : body.scrollTop;
-}
-
-document.getElementById('view-arg').addEventListener('input', e=>{
-  if(e.target.id !== 'wxField') return;
-  const btn = document.getElementById('wxSend');
-  if(btn) btn.classList.toggle('on', e.target.value.trim().length > 0);
-});
-document.getElementById('view-arg').addEventListener('keydown', e=>{
-  if(e.target.id === 'wxField' && e.key === 'Enter'){ e.preventDefault(); sendWX(); }
-});
-function sendWX(){
-  const field = document.getElementById('wxField');
-  if(!field) return;
-  const v = field.value.trim();
-  if(!v) return;
-  const body = document.getElementById('wx2Body');
-  const wrap = body.querySelector('.wchat');
-  if(!wrap) return;
-  const div = document.createElement('div');
-  div.className = 'wb me';
-  div.textContent = v;
-  wrap.appendChild(div);
-  field.value = '';
-  const sb = document.getElementById('wxSend');
-  if(sb) sb.classList.remove('on');
-  body.scrollTop = body.scrollHeight;
-}
-document.getElementById('view-arg').addEventListener('click', e=>{
-  const send = e.target.closest('#wxSend');
-  if(send){ sendWX(); return; }
-  const tab = e.target.closest('[data-tab]');
-  if(tab){ S.tab = tab.dataset.tab; S.chat = null; S.art = null; renderWX(); return; }
-  const row = e.target.closest('[data-chat]');
-  if(row){ S.chat = CHATS.find(c=>c.id === row.dataset.chat); S.art = null; renderWX(); return; }
-  const art = e.target.closest('[data-art]');
-  if(art){ S.art = Number(art.dataset.art); renderWX(); return; }
-  const back = e.target.closest('[data-back]');
-  if(back){ S.chat = null; S.art = null; renderWX(); return; }
-  if(e.target.closest('[data-more]') && typeof flash === 'function') flash('功能未开放');
-});
-renderWX();
 
 /* ================= AI 会话计数 ================= */
 let aiCount = 0;
