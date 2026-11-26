@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>API 文档 · rxh.asia 开放平台</title>
+<meta name="description" content="rxh.asia 开放平台 API 文档：快速开始、模型列表、对话补全、错误码与限流说明。">
+<meta name="color-scheme" content="light dark">
+<style>
+:root{
+  --ink:#191b1f;--sub:#6b7280;--mute:#9aa1ad;--line:#e8eaee;--card:#fff;--page:#fbfbfc;--soft:#f4f5f7;
+  --brand:#3d63ff;--brand2:#7b5cff;--code-bg:#f7f8fa;--code-line:#e6e8ec;
+}
+@media (prefers-color-scheme:dark){
+  :root{--ink:#e9edf4;--sub:#9aa3b2;--mute:#6b7381;--line:#252b36;--card:#141821;--page:#0e1015;--soft:#181d27;
+    --code-bg:#11151d;--code-line:#232a36}
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:88px}
+body{margin:0;background:var(--page);color:var(--ink);
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+  -webkit-font-smoothing:antialiased;font-size:15px;line-height:1.75}
+a{color:inherit}
+.mono,code,pre{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace}
+
+/* 顶栏 */
+.topbar{position:sticky;top:0;z-index:40;height:60px;background:color-mix(in srgb,var(--card) 86%,transparent);
+  backdrop-filter:saturate(180%) blur(12px);border-bottom:1px solid var(--line)}
+.topbar-in{max-width:1320px;margin:0 auto;height:100%;padding:0 24px;display:flex;align-items:center;gap:28px}
+.logo{display:flex;align-items:center;gap:9px;text-decoration:none;font-size:13px;letter-spacing:.06em;color:var(--ink)}
+.logo .mark{width:24px;height:24px;border-radius:7px;display:grid;place-items:center;color:#fff;font-size:12px;font-weight:800;
+  background:linear-gradient(135deg,var(--brand),var(--brand2))}
+.tb-links{display:flex;gap:22px;font-size:13.5px}
+.tb-links a{color:var(--sub);text-decoration:none}
+.tb-links a.on{color:var(--ink);font-weight:600}
+.tb-right{margin-left:auto;display:flex;align-items:center;gap:12px}
+.tb-right a.ghost{font-size:13px;color:var(--sub);text-decoration:none}
+.tb-right a.pill{font-size:13px;text-decoration:none;color:#fff;background:linear-gradient(120deg,var(--brand),var(--brand2));
+  padding:7px 15px;border-radius:8px}
+.burger{display:none;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:8px;width:34px;height:32px;font-size:16px}
+
+/* 三栏 */
+.layout{max-width:1320px;margin:0 auto;padding:0 24px;display:grid;grid-template-columns:236px minmax(0,1fr) 196px;gap:48px}
+.sidebar{padding:28px 0 80px;position:sticky;top:60px;height:calc(100dvh - 60px);overflow:auto}
+.side-group{margin-bottom:22px}
+.side-group h5{margin:0 0 8px;font-size:12px;font-weight:600;letter-spacing:.08em;color:var(--mute);text-transform:uppercase}
+.side-link{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:7px 10px;border-radius:7px;
+  color:var(--sub);text-decoration:none;font-size:13.5px}
+.side-link:hover{background:var(--soft);color:var(--ink)}
+.side-link.on{background:var(--soft);color:var(--ink);font-weight:600}
+.side-link .b{font-size:10.5px;color:var(--mute)}
+
+/* 正文 */
+.main{padding:40px 0 120px;min-width:0}
+.crumb{font-size:12.5px;color:var(--mute);margin-bottom:10px}
+h1{margin:0;font-size:31px;line-height:1.25;letter-spacing:-.02em}
+.lead{margin:14px 0 0;color:var(--sub);font-size:15px;max-width:62ch}
+.meta-row{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}
+.chip{font-size:12px;color:var(--sub);border:1px solid var(--line);background:var(--card);border-radius:999px;padding:4px 10px}
+h2{margin:52px 0 14px;font-size:23px;letter-spacing:-.01em;scroll-margin-top:88px}
+h2 .num{font-size:12px;color:var(--mute);font-weight:500;margin-right:8px;vertical-align:2px}
+h3{margin:30px 0 10px;font-size:17px}
+p{margin:10px 0;color:var(--sub)}
+p strong{color:var(--ink);font-weight:600}
+.callout{display:flex;gap:11px;padding:14px 16px;border:1px solid var(--line);border-left:3px solid var(--brand);
+  border-radius:10px;background:var(--card);margin:18px 0;font-size:13.5px;color:var(--sub)}
+.callout b{color:var(--ink)}
+
+/* 表格 */
+table{width:100%;border-collapse:collapse;margin:16px 0;font-size:13.5px;background:var(--card);
+  border:1px solid var(--line);border-radius:10px;overflow:hidden}
+th,td{text-align:left;padding:10px 14px;border-bottom:1px solid var(--line);vertical-align:top}
+th{color:var(--ink);font-weight:600;background:var(--soft);font-size:12.5px}
+td{color:var(--sub)}
+tr:last-child td{border-bottom:0}
+td code{color:var(--ink);background:var(--soft);padding:1px 6px;border-radius:5px;font-size:12.5px}
+
+/* 代码块 */
+.code{position:relative;margin:18px 0;border:1px solid var(--code-line);border-radius:12px;overflow:hidden;background:var(--code-bg)}
+.code-head{display:flex;align-items:center;gap:6px;padding:8px 12px;border-bottom:1px solid var(--code-line);background:var(--card)}
+.tab{border:0;background:transparent;color:var(--sub);font-size:12.5px;padding:4px 9px;border-radius:6px;cursor:pointer}
+.tab.on{background:var(--soft);color:var(--ink);font-weight:600}
+.copy{margin-left:auto;border:1px solid var(--line);background:var(--card);color:var(--sub);font-size:11.5px;
+  border-radius:6px;padding:3px 9px;cursor:pointer}
+.copy:hover{color:var(--ink)}
+.code pre{margin:0;padding:16px 18px;overflow:auto;font-size:13px;line-height:1.8;color:var(--ink)}
+.code pre[data-lang]{display:none}
+.code pre.on{display:block}
+.tok-c{color:#8b95a6}.tok-k{color:#7b5cff}.tok-s{color:#178a4c}.tok-n{color:#b45309}
+
+/* 右侧目录 */
+.toc{position:sticky;top:60px;height:calc(100dvh - 60px);padding:44px 0 40px;overflow:auto;font-size:12.5px}
+.toc h6{margin:0 0 10px;font-size:11px;letter-spacing:.1em;color:var(--mute);text-transform:uppercase}
+.toc a{display:block;color:var(--sub);text-decoration:none;padding:5px 0}
+.toc a:hover{color:var(--ink)}
+
+/* 底部翻页 */
+.pager{display:flex;gap:14px;margin-top:56px;flex-wrap:wrap}
+.pager a{flex:1 1 240px;border:1px solid var(--line);background:var(--card);border-radius:10px;padding:14px 16px;text-decoration:none}
+.pager span{display:block;font-size:11.5px;color:var(--mute)}
+.pager b{display:block;margin-top:3px;font-size:14px;color:var(--ink)}
+
+@media (max-width:1180px){
+  .layout{grid-template-columns:210px minmax(0,1fr);gap:36px}
+  .toc{display:none}
+}
+@media (max-width:860px){
+  .topbar-in{padding:0 16px;gap:14px}
+  .tb-links{display:none}
+  .tb-right a.ghost{display:none}
+  .burger{display:block}
+  .layout{display:block;padding:0 18px}
+  .sidebar{position:fixed;inset:60px auto 0 0;width:78%;max-width:300px;background:var(--card);z-index:35;
+    padding:18px 14px;border-right:1px solid var(--line);transform:translateX(-102%);transition:transform .25s;height:auto}
+  .sidebar.open{transform:none;box-shadow:0 0 0 100vmax rgba(0,0,0,.28)}
+  .main{padding-top:28px}
+  h1{font-size:25px;line-height:1.3}
+  h2{font-size:20px;margin-top:42px}
+  .code pre{font-size:12px}
+}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="topbar-in">
+    <a class="logo" href="https://open.rxh.asia/"><span class="mark">R</span><span>RXH <b>OPEN</b></span></a>
+    <nav class="tb-links">
+      <a class="on" href="/docs">文档</a>
+      <a href="/">控制台</a>
+      <a href="https://status.rxh.asia/">服务状态</a>
+    </nav>
+    <div class="tb-right">
+      <a class="ghost" href="https://www.rxh.asia/">返回主站</a>
+      <a class="pill" href="/">获取 API Key</a>
+      <button class="burger" id="burger" aria-label="打开目录">☰</button>
+    </div>
+  </div>
+</div>
+
+<div class="layout">
+  <nav class="sidebar" id="sidebar">
+    <div class="side-group">
+      <h5>开始使用</h5>
+      <a class="side-link on" href="#intro">概览</a>
+      <a class="side-link" href="#quickstart">快速开始 <span class="b">5 min</span></a>
+      <a class="side-link" href="#first-call">首次调用</a>
+      <a class="side-link" href="#auth">鉴权方式</a>
+    </div>
+    <div class="side-group">
+      <h5>接口参考</h5>
+      <a class="side-link" href="#models">模型列表</a>
+      <a class="side-link" href="#chat">对话补全</a>
+      <a class="side-link" href="#params">请求参数</a>
+      <a class="side-link" href="#response">返回结构</a>
+    </div>
+    <div class="side-group">
+      <h5>运行与排错</h5>
+      <a class="side-link" href="#errors">错误码</a>
+      <a class="side-link" href="#limits">限流与配额</a>
+      <a class="side-link" href="#faq">常见问题</a>
+    </div>
+  </nav>
+
+  <main class="main">
+    <div class="crumb">开放平台 / 文档</div>
+    <h1 id="intro">rxh.asia API 文档</h1>
+    <p class="lead">开放平台提供与 OpenAI 兼容的对话接口。所有能力使用同一个 Base URL 和同一个 API Key，无需为不同模态单独接入。</p>
+    <div class="meta-row">
+      <span class="chip">Base URL · https://api.rxh.asia/v1</span>
+      <span class="chip">模型 · R-Ultra1</span>
+      <span class="chip">认证 · Bearer</span>
+    </div>
+
+    <div class="callout"><span>ⓘ</span><div><b>公测说明：</b>当前对话接口固定返回 <code>HelloWould</code>，用于连通性与鉴权验证；不保存任何对话内容，也不消耗额度。</div></div>
+
+    <h2 id="quickstart"><span class="num">01</span>快速开始</h2>
+    <p>三步完成第一次调用：在控制台创建密钥，把密钥放进环境变量，然后向接口发一条请求。</p>
+    <h3>1. 创建 API Key</h3>
+    <p>登录 <a href="/">开放平台控制台</a>，在「API 密钥」页填写备注并创建。密钥只在创建时完整展示一次，请立即保存。</p>
+    <h3>2. 配置环境变量</h3>
+    <div class="code">
+      <div class="code-head"><button class="tab on" data-tab="env-sh">Shell</button><button class="tab" data-tab="env-ps">PowerShell</button><button class="copy">复制</button></div>
+      <pre class="on" data-lang="env-sh"><code><span class="tok-k">export</span> RXH_API_KEY=<span class="tok-s">"sk-rxh-你的密钥"</span></code></pre>
+      <pre data-lang="env-ps"><code><span class="tok-k">$env:</span>RXH_API_KEY = <span class="tok-s">"sk-rxh-你的密钥"</span></code></pre>
+    </div>
+
+    <h2 id="first-call"><span class="num">02</span>首次调用</h2>
+    <div class="code">
+      <div class="code-head"><button class="tab on" data-tab="curl">cURL</button><button class="tab" data-tab="python">Python</button><button class="tab" data-tab="node">Node.js</button><button class="copy">复制</button></div>
+      <pre class="on" data-lang="curl"><code><span class="tok-k">curl</span> https://api.rxh.asia/v1/chat/completions \
+  -H <span class="tok-s">"Authorization: Bearer $RXH_API_KEY"</span> \
+  -H <span class="tok-s">"Content-Type: application/json"</span> \
+  -d <span class="tok-s">'{
+    "model": "R-Ultra1",
+    "messages": [{"role": "user", "content": "你好"}]
+  }'</span></code></pre>
+      <pre data-lang="python"><code><span class="tok-k">import</span> os, requests
+
+r = requests.post(
+    <span class="tok-s">"https://api.rxh.asia/v1/chat/completions"</span>,
+    headers={<span class="tok-s">"Authorization"</span>: <span class="tok-s">f"Bearer {os.environ['RXH_API_KEY']}"</span>},
+    json={<span class="tok-s">"model"</span>: <span class="tok-s">"R-Ultra1"</span>,
+          <span class="tok-s">"messages"</span>: [{<span class="tok-s">"role"</span>: <span class="tok-s">"user"</span>, <span class="tok-s">"content"</span>: <span class="tok-s">"你好"</span>}]},
+    timeout=<span class="tok-n">30</span>,
+)
+<span class="tok-k">print</span>(r.json())</code></pre>
+      <pre data-lang="node"><code><span class="tok-k">const</span> res = <span class="tok-k">await</span> fetch(<span class="tok-s">"https://api.rxh.asia/v1/chat/completions"</span>, {
+  method: <span class="tok-s">"POST"</span>,
+  headers: {
+    <span class="tok-s">"Authorization"</span>: <span class="tok-s">`Bearer ${process.env.RXH_API_KEY}`</span>,
+    <span class="tok-s">"Content-Type"</span>: <span class="tok-s">"application/json"</span>,
+  },
+  body: JSON.stringify({
+    model: <span class="tok-s">"R-Ultra1"</span>,
+    messages: [{ role: <span class="tok-s">"user"</span>, content: <span class="tok-s">"你好"</span> }],
+  }),
+});
+console.log(<span class="tok-k">await</span> res.json());</code></pre>
+    </div>
+    <p>返回示例（固定内容）：</p>
+    <div class="code">
+      <div class="code-head"><button class="tab on">JSON</button><button class="copy">复制</button></div>
+      <pre class="on"><code>{
+  <span class="tok-s">"id"</span>: <span class="tok-s">"chatcmpl-rxh"</span>,
+  <span class="tok-s">"object"</span>: <span class="tok-s">"chat.completion"</span>,
+  <span class="tok-s">"model"</span>: <span class="tok-s">"R-Ultra1"</span>,
+  <span class="tok-s">"choices"</span>: [{
+    <span class="tok-s">"index"</span>: <span class="tok-n">0</span>,
+    <span class="tok-s">"message"</span>: { <span class="tok-s">"role"</span>: <span class="tok-s">"assistant"</span>, <span class="tok-s">"content"</span>: <span class="tok-s">"HelloWould"</span> },
+    <span class="tok-s">"finish_reason"</span>: <span class="tok-s">"stop"</span>
+  }]
+}</code></pre>
+    </div>
+
+    <h2 id="auth"><span class="num">03</span>鉴权方式</h2>
+    <p>所有接口都需要在请求头携带 API Key，使用标准 Bearer 格式。密钥与统一账号绑定，可在控制台吊销，吊销后立即失效。</p>
+    <div class="code">
+      <div class="code-head"><button class="tab on">HTTP</button><button class="copy">复制</button></div>
+      <pre class="on"><code>Authorization: Bearer sk-rxh-xxxxxxxxxxxxxxxx</code></pre>
+    </div>
+    <p>请勿把密钥写进前端代码或公开仓库；服务端调用时建议通过环境变量注入。</p>
+
+    <h2 id="models"><span class="num">04</span>模型列表</h2>
+    <p><code>GET /v1/models</code> 返回当前账号可用的模型。当前仅一个模型，能力覆盖文本、音频与视频输入。</p>
+    <table>
+      <tr><th>字段</th><th>说明</th></tr>
+      <tr><td><code>id</code></td><td>模型标识，当前为 <code>R-Ultra1</code></td></tr>
+      <tr><td><code>object</code></td><td>固定为 <code>model</code></td></tr>
+      <tr><td><code>owned_by</code></td><td><code>rxh.asia</code></td></tr>
+    </table>
+    <div class="code">
+      <div class="code-head"><button class="tab on">cURL</button><button class="tab" data-tab="m-py">Python</button><button class="copy">复制</button></div>
+      <pre class="on" data-lang="curl"><code><span class="tok-k">curl</span> https://api.rxh.asia/v1/models \
+  -H <span class="tok-s">"Authorization: Bearer $RXH_API_KEY"</span></code></pre>
+      <pre data-lang="m-py"><code><span class="tok-k">import</span> os, requests
+r = requests.get(<span class="tok-s">"https://api.rxh.asia/v1/models"</span>,
+    headers={<span class="tok-s">"Authorization"</span>: <span class="tok-s">f"Bearer {os.environ['RXH_API_KEY']}"</span>})
+<span class="tok-k">print</span>(r.json())</code></pre>
+    </div>
+
+    <h2 id="chat"><span class="num">05</span>对话补全</h2>
+    <p><code>POST /v1/chat/completions</code> 接收消息数组并返回一条助手消息。请求体与 OpenAI Chat Completions 保持一致，现有 SDK 可直接替换 Base URL 使用。</p>
+
+    <h3 id="params">请求参数</h3>
+    <table>
+      <tr><th>参数</th><th>类型</th><th>必填</th><th>说明</th></tr>
+      <tr><td><code>model</code></td><td>string</td><td>是</td><td>模型标识，填写 <code>R-Ultra1</code></td></tr>
+      <tr><td><code>messages</code></td><td>array</td><td>是</td><td>消息列表，元素含 <code>role</code> 与 <code>content</code></td></tr>
+      <tr><td><code>stream</code></td><td>boolean</td><td>否</td><td>是否以 SSE 流式返回，默认 <code>false</code></td></tr>
+      <tr><td><code>temperature</code></td><td>number</td><td>否</td><td>采样温度，公测期接受但不影响固定返回</td></tr>
+      <tr><td><code>max_tokens</code></td><td>integer</td><td>否</td><td>最大输出长度，公测期接受但被忽略</td></tr>
+    </table>
+
+    <h3 id="response">返回结构</h3>
+    <table>
+      <tr><th>字段</th><th>说明</th></tr>
+      <tr><td><code>id</code></td><td>本次请求标识</td></tr>
+      <tr><td><code>object</code></td><td><code>chat.completion</code></td></tr>
+      <tr><td><code>choices[0].message.content</code></td><td>助手回复，公测期为固定文本 <code>HelloWould</code></td></tr>
+      <tr><td><code>choices[0].finish_reason</code></td><td><code>stop</code></td></tr>
+    </table>
+
+    <h2 id="errors"><span class="num">06</span>错误码</h2>
+    <p>错误响应遵循 OpenAI 风格，<code>error.code</code> 可用于程序判断，<code>error.message</code> 仅用于排查。</p>
+    <table>
+      <tr><th>HTTP</th><th>code</th><th>含义与处理</th></tr>
+      <tr><td>401</td><td><code>missing_api_key</code></td><td>未携带 Authorization 头，补上 Bearer 密钥</td></tr>
+      <tr><td>401</td><td><code>invalid_api_key</code></td><td>密钥不存在或已吊销，在控制台重新创建</td></tr>
+      <tr><td>403</td><td><code>account_disabled</code></td><td>账号被停用，联系管理员</td></tr>
+      <tr><td>404</td><td><code>not_found</code></td><td>路径不存在，检查 Base URL 是否带 <code>/v1</code></td></tr>
+      <tr><td>429</td><td><code>rate_limited</code></td><td>请求过于频繁，退避后重试</td></tr>
+    </table>
+
+    <h2 id="limits"><span class="num">07</span>限流与配额</h2>
+    <p>公测期不限制调用次数，单密钥默认按分钟级令牌桶平滑。若出现 <code>429</code>，请按 <code>Retry-After</code> 等待，不要直接高频重试。</p>
+
+    <h2 id="faq"><span class="num">08</span>常见问题</h2>
+    <h3>为什么返回永远是 HelloWould？</h3>
+    <p>公测阶段接口只做鉴权与连通验证，模型输出固定，便于快速排查网络与密钥问题。</p>
+    <h3>能否直接用 OpenAI SDK？</h3>
+    <p>可以。把 <code>base_url</code> 换成 <code>https://api.rxh.asia/v1</code>，<code>api_key</code> 换成开放平台密钥即可。</h3>
+    <h3>密钥泄露了怎么办？</h3>
+    <p>立即到控制台「API 密钥」页吊销，再创建新密钥；旧密钥吊销后即刻失效。</p>
+
+    <div class="pager">
+      <a href="/"><span>返回</span><b>控制台 · 创建密钥</b></a>
+      <a href="https://status.rxh.asia/"><span>下一步</span><b>查看服务状态</b></a>
+    </div>
+  </main>
+
+  <aside class="toc">
+    <h6>本页目录</h6>
+    <a href="#intro">概览</a>
+    <a href="#quickstart">快速开始</a>
+    <a href="#first-call">首次调用</a>
+    <a href="#auth">鉴权方式</a>
+    <a href="#models">模型列表</a>
+    <a href="#chat">对话补全</a>
+    <a href="#params">请求参数</a>
+    <a href="#response">返回结构</a>
+    <a href="#errors">错误码</a>
+    <a href="#limits">限流与配额</a>
+    <a href="#faq">常见问题</a>
+  </aside>
+</div>
+
+<script>
+(() => {
+  // 代码语言切换
+  document.querySelectorAll('.code').forEach(box => {
+    const tabs = box.querySelectorAll('.tab[data-tab]');
+    if (!tabs.length) return;
+    tabs.forEach(t => t.addEventListener('click', () => {
+      tabs.forEach(x => x.classList.toggle('on', x === t));
+      box.querySelectorAll('pre[data-lang]').forEach(p => p.classList.toggle('on', p.dataset.lang === t.dataset.tab));
+    }));
+  });
+  // 复制
+  document.querySelectorAll('.copy').forEach(btn => btn.addEventListener('click', async () => {
+    const box = btn.closest('.code');
+    const pre = box.querySelector('pre.on') || box.querySelector('pre');
+    const text = pre.textContent;
+    try {
+      await navigator.clipboard.writeText(text);
+      btn.textContent = '已复制';
+      setTimeout(() => btn.textContent = '复制', 1600);
+    } catch { btn.textContent = '复制失败'; }
+  }));
+  // 移动端目录
+  const sb = document.getElementById('sidebar'), bg = document.getElementById('burger');
+  bg && bg.addEventListener('click', () => sb.classList.toggle('open'));
+  sb.querySelectorAll('a').forEach(a => a.addEventListener('click', () => sb.classList.remove('open')));
+})();
+</script>
+</body>
+</html>
