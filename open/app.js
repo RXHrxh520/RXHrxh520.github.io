@@ -78,9 +78,6 @@ function guestConsole() {
 
 /* 已登录则直接复用统一账号会话 */
 (async () => {
-  const saved = sessionStorage.getItem('rxh_open_user');
-  if (saved) { try { enterConsole(JSON.parse(saved)); return; } catch (e) {} }
-  if (sessionStorage.getItem('rxh_open_preview') === '1') { guestConsole(); return; }
   try {
     const r = await fetch('https://auth.rxh.asia/api/me', { credentials: 'include', cache: 'no-store' });
     const d = await r.json();
@@ -187,7 +184,7 @@ document.querySelectorAll('.nav-item').forEach(b => b.addEventListener('click', 
 document.getElementById('loginInline').addEventListener('click', doLogin);
 function doLogin() {
   if (!window.RXHAuth) return toast('账号组件未加载，请刷新重试');
-  window.RXHAuth.open({ onSuccess: u => { try { enterConsole(u); } catch (e) { app.dataset.mode = 'preview'; } toast('已登录 · ' + (u.name || u.uid)); } });
+  window.RXHAuth.open({ onSuccess: () => { sessionStorage.removeItem('rxh_open_preview'); sessionStorage.removeItem('rxh_open_user'); location.reload(); } });
 }
 
 /* ---------- 密钥 ---------- */
