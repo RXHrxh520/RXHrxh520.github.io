@@ -305,6 +305,80 @@
     .s-preview .cmain{padding:20px 18px 64px}
     .s-preview .cmain > *{max-width:none}
   }
+
+  /* ===== 控制台：按照 DeepSeek 平台的骨架复刻 ===== */
+  .s-preview{margin:0 -24px;padding:0;background:#fff}
+  .ds-shell{display:grid;grid-template-columns:232px minmax(0,1fr);min-height:100dvh;background:var(--card);color:var(--ink)}
+  .ds-side{position:sticky;top:0;height:100dvh;display:flex;flex-direction:column;gap:4px;
+    padding:22px 14px 18px;border-right:1px solid var(--line);background:var(--card)}
+  .ds-logo{display:flex;align-items:center;gap:9px;padding:0 10px 24px;font-size:14px;letter-spacing:.02em}
+  .ds-mark{width:24px;height:24px;border-radius:7px;display:grid;place-items:center;color:#fff;font-size:12px;font-weight:800;
+    background:linear-gradient(135deg,var(--brand),var(--brand2))}
+  .ds-logo b{font-weight:700}.ds-logo i{font-style:normal;color:var(--mute);font-size:11px;letter-spacing:.12em}
+  .ds-nav{display:flex;flex-direction:column;gap:2px}
+  .ds-nav .nav-item{border:0;background:transparent;display:flex;align-items:center;gap:9px;width:100%;
+    padding:10px 12px;border-radius:8px;font-size:13.5px;color:var(--sub);cursor:pointer;text-align:left}
+  .ds-nav .nav-item:hover{background:#f5f6f8;color:var(--ink)}
+  .ds-nav .nav-item.on{background:#f2f3f5;color:var(--ink);font-weight:600}
+  .ds-side-bottom{margin-top:auto;display:flex;flex-direction:column;gap:2px;padding:14px 10px 0;border-top:1px solid var(--line)}
+  .ds-side-bottom a{font-size:12.5px;color:var(--mute);text-decoration:none;padding:6px 2px}
+  .ds-side-bottom a:hover{color:var(--ink)}
+  .side-foot{margin-top:10px;font-size:11.5px;color:var(--mute)}
+
+  .ds-main{min-width:0;padding:30px 40px 90px}
+  .ds-main > *{max-width:1080px;margin-left:auto;margin-right:auto;width:100%}
+  .ds-top{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;margin-bottom:6px}
+  .crumb{font-size:26px;font-weight:700;letter-spacing:-.02em;color:var(--ink)}
+  .ds-top-right{display:flex;align-items:center;gap:10px;padding-top:4px}
+  .tag{font-size:12px;color:#8a6d1f;background:#fff7e0;border:1px solid #f2e3b3;border-radius:6px;padding:3px 8px}
+  .ds-login{border:0;background:#15171c;color:#fff;font-size:12.5px;padding:7px 14px;border-radius:8px;cursor:pointer}
+  .banner{font-size:13px;color:var(--sub);margin:2px auto 24px;padding:0;background:transparent;border:0}
+  .stat-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin:0 auto 14px}
+  .stat{background:#f7f7f8;border:0;border-radius:12px;padding:18px 20px}
+  .stat span{font-size:12px;color:var(--sub)}
+  .stat b{display:block;margin-top:10px;font-size:26px;font-weight:700;letter-spacing:-.02em}
+  .panel-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:12px}
+  .panel{background:#f7f7f8;border:0;border-radius:12px;padding:18px 20px}
+  .panel h4{margin:0 0 10px;font-size:14px;font-weight:600}
+  .mrow{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:10px 0;
+    border-bottom:1px solid #ececef;font-size:13px}
+  .mrow:last-child{border-bottom:0}
+  .mrow b{font-weight:500;color:var(--ink)}.mrow span{color:var(--sub);font-size:12.5px;text-align:right}
+  .empty{padding:24px 0;text-align:center;color:var(--mute);font-size:12.5px}
+  .panel-grid .panel .mrow{border-color:#ececef}
+  #pn-overview .panel-grid{margin-top:0}
+  #pn-keys .keybar{display:flex;gap:8px}
+  #pn-keys input{flex:1;height:38px;border:1px solid var(--line);border-radius:8px;padding:0 12px;background:var(--card);color:var(--ink)}
+  .btnp{border:0;background:#15171c;color:#fff;border-radius:8px;padding:0 16px;height:38px;font-size:13px;cursor:pointer}
+  .codeblock{margin-top:10px;border:1px solid var(--line);border-radius:10px;padding:14px 16px;
+    background:#fafafa;font-size:12.5px;overflow:auto;white-space:pre;color:#333}
+  .docnote{font-size:12.5px;color:var(--sub);margin-top:10px}
+
+  @media (prefers-color-scheme:dark){
+    .s-preview{background:var(--card)}
+    .ds-nav .nav-item:hover{background:#1d2330}
+    .ds-nav .nav-item.on{background:#1d2330}
+    .stat,.panel,.codeblock{background:#171c26}
+    .mrow{border-color:#232a36}
+    .ds-login{background:#e9edf4;color:#0f1117}
+    .btnp{background:#e9edf4;color:#0f1117}
+    .tag{background:#2a2412;border-color:#4a3d18;color:#e6cf7a}
+  }
+  @media (max-width:980px){
+    .s-preview{margin:0 -18px}
+    .ds-shell{grid-template-columns:1fr}
+    .ds-side{position:sticky;height:auto;min-height:0;flex-direction:row;overflow-x:auto;align-items:center;
+      border-right:0;border-bottom:1px solid var(--line);padding:10px 12px;z-index:9}
+    .ds-logo{padding:0 12px 0 0;flex:0 0 auto}
+    .ds-nav{flex-direction:row;gap:4px}
+    .ds-nav .nav-item{white-space:nowrap;padding:8px 10px}
+    .ds-side-bottom{display:none}
+    .ds-main{padding:20px 18px 64px}
+    .ds-main > *{max-width:none}
+    .crumb{font-size:21px}
+    .stat-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+    .panel-grid{grid-template-columns:1fr}
+  }
 </style>
 </head>
 <body>
@@ -389,26 +463,34 @@
 
 
   <section class="screen s-preview">
-    <div class="console">
-      <aside class="side">
-        <div class="side-brand"><span class="mark">R</span> RXH.ASIA OPEN</div>
-        <button class="nav-item on" data-panel="overview"><svg viewBox="0 0 24 24"><use href="#i-grid"/></svg>概览</button>
-        <button class="nav-item" data-panel="models"><svg viewBox="0 0 24 24"><use href="#i-spark"/></svg>模型广场</button>
-        <button class="nav-item" data-panel="keys"><svg viewBox="0 0 24 24"><use href="#i-key"/></svg>API 密钥</button>
-        <button class="nav-item" data-panel="usage"><svg viewBox="0 0 24 24"><use href="#i-activity"/></svg>用量</button>
-        <button class="nav-item" data-panel="docs"><svg viewBox="0 0 24 24"><use href="#i-doc"/></svg>接入文档</button>
-        <div class="side-foot" id="sideUser">访客 · 只读</div>
+    <div class="ds-shell">
+      <aside class="ds-side">
+        <div class="ds-logo"><span class="ds-mark">R</span><b>RXH</b><i>OPEN</i></div>
+        <nav class="ds-nav">
+          <button class="nav-item on" data-panel="overview">概览</button>
+          <button class="nav-item" data-panel="models">模型广场</button>
+          <button class="nav-item" data-panel="keys">API 密钥</button>
+          <button class="nav-item" data-panel="usage">用量</button>
+          <button class="nav-item" data-panel="docs">接入文档</button>
+        </nav>
+        <div class="ds-side-bottom">
+          <a href="/docs">接口文档</a>
+          <a href="https://status.rxh.asia/">服务状态</a>
+          <a href="https://www.rxh.asia/">返回主站</a>
+          <div class="side-foot" id="sideUser">访客 · 只读</div>
+        </div>
       </aside>
-      <div class="cmain">
-        <header class="cbar">
-          <div class="crumb" id="crumb">控制台 / 概览</div>
-          <div class="cbar-right">
-            <span class="tag" id="pvTag">匿名预览</span>
-            <button class="mini" id="loginInline">登录</button>
+
+      <div class="ds-main">
+        <header class="ds-top">
+          <div class="crumb" id="crumb">概览</div>
+          <div class="ds-top-right">
+            <span class="tag" id="pvTag">已登录</span>
+            <button class="ds-login" id="loginInline" hidden>登录</button>
           </div>
         </header>
 
-        <div class="banner" id="pvDesc">未登录时为只读预览；登录后可创建密钥并调用接口。</div>
+        <div class="banner" id="pvDesc">账号已登录，可与主站、账号中心通用。</div>
 
         <section class="cpane" id="pn-overview">
           <div class="stat-grid">
@@ -447,7 +529,7 @@
             <h4>API 密钥</h4>
             <div class="keybar">
               <input id="keyName" placeholder="密钥备注，例如 default" maxlength="30">
-              <button class="btnp" id="createKey"><svg viewBox="0 0 24 24"><use href="#i-plus"/></svg>创建密钥</button>
+              <button class="btnp" id="createKey">创建密钥</button>
             </div>
             <div class="msgline" id="keyMsg"></div>
             <div class="keylist" id="keyList"><div class="empty">登录后可创建与查看密钥</div></div>
@@ -468,7 +550,7 @@
           <div class="panel">
             <h4>接入文档</h4>
             <div class="codeblock">curl https://api.rxh.asia/v1/models \
-  -H "Authorization: Bearer sk-rxh-..." 
+  -H "Authorization: Bearer sk-rxh-..."
 
 curl https://api.rxh.asia/v1/chat/completions \
   -H "Authorization: Bearer sk-rxh-..." \
@@ -478,11 +560,8 @@ curl https://api.rxh.asia/v1/chat/completions \
             <a class="btnp" href="/docs" style="display:inline-flex;margin-top:14px;text-decoration:none">打开完整 API 文档 →</a>
           </div>
         </section>
-
       </div>
     </div>
-  </section>
-
 </main>
 
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
@@ -491,6 +570,6 @@ window.TURNSTILE_SITEKEY = "0x4AAAAAAGPRu0xFiTmg5BYn";
 </script>
 <script src="https://www.rxh.asia/assets/auth-modal.js?v=20261126d"></script>
 <script src="https://www.rxh.asia/assets/notice-bar.js?v=20261126d" defer></script>
-<script src="app.js?v=20261126i" defer></script>
+<script src="app.js?v=20261126j" defer></script>
 </body>
 </html>
