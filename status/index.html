@@ -99,7 +99,11 @@ body[data-theme="dark"] .seg.null{background:#2a3140}
 .cal-cell.today .evd{display:block;background:#fff}
 .cal-legend{display:flex;gap:16px;margin-top:12px;padding-top:12px;border-top:1px solid var(--line2);color:var(--mute);font-size:11px}
 .cal-legend i{display:inline-block;width:7px;height:7px;border-radius:50%;margin-right:5px;vertical-align:1px}
-.foot{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-top:36px;padding-top:18px;border-top:1px solid var(--line);color:var(--mute);font-size:11.5px}
+.foot{margin-top:36px;padding-top:18px;border-top:1px solid var(--line);color:var(--mute);font-size:11.5px}
+.socials{display:flex;flex-wrap:wrap;gap:16px;margin-bottom:11px}
+.socials a{color:var(--sub);font-size:11.5px}
+.socials a:hover{color:var(--ink)}
+.foot-line{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
 .foot .back{margin-left:auto;color:var(--sub)}
 .foot .back:hover{color:var(--ink)}
 @media(max-width:640px){
@@ -181,9 +185,20 @@ body[data-theme="dark"] .seg.null{background:#2a3140}
   </section>
 
   <footer class="foot">
-    <span>状态由边缘节点自动探测 · 每 5 分钟更新一次</span>
-    <a class="back" href="https://www.rxh.asia/">← 返回总站</a>
-    <span>2026</span>
+    <nav class="socials" aria-label="社交账号">
+      <a href="https://www.douyin.com/search/软小寒" target="_blank" rel="noopener noreferrer">抖音</a>
+      <a href="https://www.kuaishou.com/search/video?searchKey=软小寒" target="_blank" rel="noopener noreferrer">快手</a>
+      <a href="https://search.bilibili.com/upuser?keyword=软小寒" target="_blank" rel="noopener noreferrer">B 站</a>
+      <a href="https://x.com/search?q=软小寒" target="_blank" rel="noopener noreferrer">X</a>
+      <a href="https://t.me/软小寒" target="_blank" rel="noopener noreferrer">Telegram</a>
+      <a href="https://github.com/RXHrxh520" target="_blank" rel="noopener noreferrer">GitHub</a>
+      <a href="mailto:406992556@qq.com">邮箱</a>
+    </nav>
+    <div class="foot-line">
+      <span>状态由边缘节点自动探测 · 每 5 分钟更新一次</span>
+      <a class="back" href="https://www.rxh.asia/">← 返回总站</a>
+      <span>2026</span>
+    </div>
   </footer>
 </div>
 <script src="app.js?v=20261126u" defer></script>
