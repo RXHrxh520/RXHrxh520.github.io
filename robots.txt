@@ -5,6 +5,6 @@ Disallow: /auth
 Disallow: /account
 Disallow: /appeal
 Disallow: /api
-Disallow: /trap
+Disallow: /trap/
 
 Sitemap: https://www.rxh.asia/sitemap.xml
