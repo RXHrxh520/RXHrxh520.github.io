@@ -241,6 +241,43 @@
   .app[data-mode="auth"] .s-auth,
   .app[data-mode="verify"] .s-verify{display:flex !important;align-items:center;justify-content:center;min-height:calc(100dvh - 24px)}
   .s-auth .card,.s-verify .card{margin:0 auto}
+
+  /* ---- 控制台：参考 DeepSeek 开放平台的留白与灰卡 ---- */
+  .s-preview .console{max-width:1240px;grid-template-columns:224px minmax(0,1fr);gap:56px;align-items:start}
+  .s-preview .side{position:sticky;top:0;border:0;background:transparent;border-radius:0;padding:22px 0 18px;
+    min-height:100dvh;display:flex;flex-direction:column;gap:2px}
+  .side-brand{font-size:13px;padding:0 12px 20px;letter-spacing:.04em;color:var(--sub)}
+  .nav-item{border:0;background:transparent;border-radius:8px;padding:10px 12px;font-size:13.5px;
+    color:var(--sub);justify-content:flex-start;gap:10px}
+  .nav-item svg{width:16px;height:16px}
+  .nav-item:hover{background:var(--soft);color:var(--ink)}
+  .nav-item.on{background:var(--soft);color:var(--ink);font-weight:600}
+  .side-foot{margin-top:auto;border-top:1px solid var(--line);padding:14px 12px 0;font-size:12px;color:var(--mute)}
+  .s-preview .cmain{max-width:860px;padding:34px 0 80px}
+  .cbar{background:transparent;border:0;padding:0;margin:0}
+  .crumb{font-size:20px;font-weight:700;color:var(--ink);letter-spacing:-.01em}
+  .cbar-right .tag{font-size:12px}
+  .banner{background:transparent;border:0;border-radius:0;padding:0;margin:8px 0 28px;font-size:13px;color:var(--sub)}
+  .stat-grid{gap:12px;margin:0 0 28px}
+  .stat{background:var(--soft);border:0;border-radius:12px;padding:18px 20px}
+  .stat span{font-size:12px;color:var(--sub)}
+  .stat b{display:block;margin-top:10px;font-size:24px;font-weight:700;letter-spacing:-.01em}
+  .panel-grid{gap:12px}
+  .panel{background:var(--soft);border:0;border-radius:12px;padding:18px 20px}
+  .panel h4{margin:0 0 12px;font-size:14px;font-weight:600}
+  .mrow{padding:9px 0;border-bottom:1px solid color-mix(in srgb,var(--line) 70%,transparent);font-size:13px}
+  .mrow:last-child{border-bottom:0}
+  .empty{font-size:12.5px;color:var(--mute);padding:18px 0;text-align:center}
+  .codeblock{border-radius:10px}
+  @media (max-width:980px){
+    .s-preview .console{gap:14px}
+    .s-preview .side{min-height:0;position:sticky;top:0;background:var(--card);border-bottom:1px solid var(--line);
+      flex-direction:row;overflow-x:auto;padding:8px 6px;margin:0 -18px;width:auto}
+    .side-brand,.side-foot{display:none}
+    .s-preview .cmain{padding-top:18px}
+    .crumb{font-size:17px}
+    .stat-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+  }
 </style>
 </head>
 <body>
@@ -323,23 +360,6 @@
     </div>
   </section>
 
-  <section class="screen s-verify">
-    <div class="card">
-      <div class="head">
-        <div>
-          <h2>人机验证</h2>
-          <p>由 Cloudflare Turnstile 提供，无需拼图</p>
-        </div>
-        <button class="close" id="vclose" aria-label="返回">
-          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6l12 12M18 6L6 18"/></svg>
-        </button>
-      </div>
-      <div class="tsbox" id="tsbox"></div>
-      <button class="submit" id="vgo" disabled>验证并进入预览</button>
-      <button class="ghost" id="tsretry" hidden>重新验证</button>
-      <p class="verify-tip">通过验证后写入 30 分钟临时凭证，仅可浏览界面，不写入任何数据。</p>
-    </div>
-  </section>
 
   <section class="screen s-preview">
     <div class="console">
@@ -443,8 +463,7 @@ curl https://api.rxh.asia/v1/chat/completions \
 window.TURNSTILE_SITEKEY = "0x4AAAAAAGPRu0xFiTmg5BYn";
 </script>
 <script src="https://www.rxh.asia/assets/auth-modal.js?v=20261126d"></script>
-<script src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit" defer></script>
 <script src="https://www.rxh.asia/assets/notice-bar.js?v=20261126d" defer></script>
-<script src="app.js?v=20261126f" defer></script>
+<script src="app.js?v=20261126g" defer></script>
 </body>
 </html>
