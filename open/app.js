@@ -16,13 +16,8 @@ function toast(msg) {
 }
 
 function setMode(mode) {
-  if (app.dataset.mode === mode) return;
-  const apply = () => { app.dataset.mode = mode; window.scrollTo(0, 0); };
-  if (document.startViewTransition && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
-    document.startViewTransition(apply);
-  } else {
-    apply();
-  }
+  app.dataset.mode = mode;
+  window.scrollTo(0, 0);
 }
 
 /* ---------- 入口 ---------- */
@@ -149,7 +144,7 @@ document.getElementById('tsretry').addEventListener('click', () => {
 });
 
 /* 点匿名体验 → 进验证页 → 渲染控件 */
-document.getElementById('optGuest').addEventListener('click', () => {
+document.getElementById('optGuest')?.addEventListener('click', () => {
   setMode('verify');
   mountTurnstile();
 });
@@ -192,7 +187,7 @@ document.querySelectorAll('.nav-item').forEach(b => b.addEventListener('click', 
 document.getElementById('loginInline').addEventListener('click', doLogin);
 function doLogin() {
   if (!window.RXHAuth) return toast('账号组件未加载，请刷新重试');
-  window.RXHAuth.open({ onSuccess: u => { enterConsole(u); toast('已登录 · ' + (u.name || u.uid)); } });
+  window.RXHAuth.open({ onSuccess: u => { try { enterConsole(u); } catch (e) { app.dataset.mode = 'preview'; } toast('已登录 · ' + (u.name || u.uid)); } });
 }
 
 /* ---------- 密钥 ---------- */
