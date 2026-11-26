@@ -24,7 +24,7 @@ function setMode(mode) {
 document.getElementById('start')?.addEventListener('click', () => doLogin());
 document.getElementById('start2')?.addEventListener('click', () => doLogin());
 document.getElementById('close').addEventListener('click', () => setMode('intro'));
-document.getElementById('vclose').addEventListener('click', () => setMode('auth'));
+document.getElementById('vclose')?.addEventListener('click', () => setMode('auth'));
 document.getElementById('back').addEventListener('click', () => {
   document.getElementById('pwdForm').hidden = true;
   document.getElementById('opts').hidden = false;
@@ -129,7 +129,7 @@ async function mountTurnstile() {
   }
 }
 
-document.getElementById('tsretry').addEventListener('click', () => {
+document.getElementById('tsretry')?.addEventListener('click', () => {
   document.getElementById('tsretry').hidden = true;
   if (window.turnstile && tsWidget !== null) {
     window.turnstile.reset(tsWidget);
@@ -146,7 +146,7 @@ document.getElementById('optGuest')?.addEventListener('click', () => {
   mountTurnstile();
 });
 
-vgo.addEventListener('click', async () => {
+vgo?.addEventListener('click', async () => {
   if (!tsToken) return toast('请先完成人机验证');
   vgo.disabled = true;
   const label = vgo.textContent;
