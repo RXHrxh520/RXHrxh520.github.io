@@ -89,6 +89,16 @@ body[data-theme="dark"] .seg.null{background:#2a3140}
 .inc p{margin:5px 0 0;color:var(--sub);font-size:12.5px;line-height:1.65}
 .inc-time{margin-top:6px;color:var(--mute);font-size:11px;font-variant-numeric:tabular-nums}
 .empty{padding:26px 20px;color:var(--mute);font-size:12.5px}
+.cal{background:var(--card);border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow);padding:18px 20px 16px}
+.cal-week{display:grid;grid-template-columns:repeat(7,1fr);color:var(--mute);font-size:11px;text-align:center;padding-bottom:6px}
+.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:4px}
+.cal-cell{height:36px;border-radius:7px;display:grid;place-items:center;position:relative;font-size:12px;color:var(--mute);font-variant-numeric:tabular-nums}
+.cal-cell.in{color:var(--sub)}
+.cal-cell.today{background:var(--red-bg);color:var(--red);font-weight:700;box-shadow:inset 0 0 0 1px var(--red-line)}
+.cal-cell .evd{position:absolute;bottom:4px;width:4px;height:4px;border-radius:50%;background:var(--red)}
+.cal-cell.today .evd{display:none}
+.cal-legend{display:flex;gap:16px;margin-top:12px;padding-top:12px;border-top:1px solid var(--line2);color:var(--mute);font-size:11px}
+.cal-legend i{display:inline-block;width:7px;height:7px;border-radius:50%;margin-right:5px;vertical-align:1px}
 .foot{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-top:36px;padding-top:18px;border-top:1px solid var(--line);color:var(--mute);font-size:11.5px}
 .foot .back{margin-left:auto;color:var(--sub)}
 .foot .back:hover{color:var(--ink)}
@@ -148,12 +158,21 @@ body[data-theme="dark"] .seg.null{background:#2a3140}
     <div class="inc-wrap" id="incidents"><div class="empty">暂无事件记录</div></div>
   </section>
 
+  <section class="block">
+    <div class="sec-head"><h2>运行日历</h2><span id="calMonth"></span><a class="right" href="#incidents" style="color:var(--sub)">查看事件 ↓</a></div>
+    <div class="cal">
+      <div class="cal-week"><span>一</span><span>二</span><span>三</span><span>四</span><span>五</span><span>六</span><span>日</span></div>
+      <div class="cal-grid" id="calGrid"></div>
+      <div class="cal-legend"><span><i style="background:var(--green)"></i>正常运行</span><span><i style="background:var(--red)"></i>事件 / 不可用</span><span><i style="background:var(--line)"></i>无记录</span></div>
+    </div>
+  </section>
+
   <footer class="foot">
     <span>Cloudflare 边缘主动探测 · D1 持久化 · 每 5 分钟一次</span>
     <a class="back" href="https://www.rxh.asia/">← 返回总站</a>
     <span>2026</span>
   </footer>
 </div>
-<script src="app.js?v=20261126r" defer></script>
+<script src="app.js?v=20261126s" defer></script>
 </body>
 </html>
