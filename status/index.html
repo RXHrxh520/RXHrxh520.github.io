@@ -96,7 +96,7 @@ body[data-theme="dark"] .seg.null{background:#2a3140}
 .cal-cell.in{color:var(--sub)}
 .cal-cell.today{background:var(--red-bg);color:var(--red);font-weight:700;box-shadow:inset 0 0 0 1px var(--red-line)}
 .cal-cell .evd{position:absolute;bottom:4px;width:4px;height:4px;border-radius:50%;background:var(--red)}
-.cal-cell.today .evd{display:none}
+.cal-cell.today .evd{display:block;background:#fff}
 .cal-legend{display:flex;gap:16px;margin-top:12px;padding-top:12px;border-top:1px solid var(--line2);color:var(--mute);font-size:11px}
 .cal-legend i{display:inline-block;width:7px;height:7px;border-radius:50%;margin-right:5px;vertical-align:1px}
 .foot{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-top:36px;padding-top:18px;border-top:1px solid var(--line);color:var(--mute);font-size:11.5px}
@@ -116,6 +116,18 @@ body[data-theme="dark"] .seg.null{background:#2a3140}
  .inc{grid-template-columns:48px 1fr;gap:10px}
  .bar{gap:1px}
 }
+
+.seg.minor{background:var(--amber)}
+.seg.major{background:#d97706}
+.svc-right b.minor{color:var(--amber)}
+.svc-right b.major{color:#d97706}
+.svc-foot .st.minor{color:var(--amber)}
+.svc-foot .st.major{color:#d97706}
+.svc-foot .st.bad{color:var(--red)}
+.cal-cell[data-ev="1"]{cursor:pointer}
+.cal-cell.flash{outline:2px solid var(--red);outline-offset:2px}
+.svc-legend{display:flex;gap:14px;flex-wrap:wrap;margin:10px 2px 0;color:var(--mute);font-size:11px}
+.svc-legend i{display:inline-block;width:7px;height:7px;border-radius:2px;margin-right:5px;vertical-align:1px}
 </style>
 </head>
 <body>
@@ -123,7 +135,7 @@ body[data-theme="dark"] .seg.null{background:#2a3140}
   <header class="top">
     <a class="brand" href="https://www.rxh.asia/">
       <span class="logo">R</span>
-      <span><b>软小寒</b><i>系统状态</i></span>
+      <span><b>rxh.asia</b><i>系统状态</i></span>
     </a>
     <div class="top-actions">
       <button class="ta" id="themeBtn" title="切换主题">
@@ -151,6 +163,7 @@ body[data-theme="dark"] .seg.null{background:#2a3140}
   <section class="block">
     <div class="sec-head"><h2>系统状态</h2><span id="rangeTxt">近 90 天</span><span class="right" id="svcCount"></span></div>
     <div class="groups" id="groups"><div class="empty">正在获取组件状态…</div></div>
+    <div class="svc-legend"><span><i style="background:var(--green)"></i>正常</span><span><i style="background:var(--amber)"></i>降级</span><span><i style="background:#d97706"></i>部分不可用</span><span><i style="background:var(--red)"></i>完全不可用</span><span><i style="background:var(--line)"></i>无记录</span></div>
   </section>
 
   <section class="block">
@@ -159,11 +172,11 @@ body[data-theme="dark"] .seg.null{background:#2a3140}
   </section>
 
   <section class="block">
-    <div class="sec-head"><h2>运行日历</h2><span id="calMonth"></span><a class="right" href="#incidents" style="color:var(--sub)">查看事件 ↓</a></div>
+    <div class="sec-head"><h2>运行日历</h2><span id="calMonth"></span><span class="right">事件日会标红</span></div>
     <div class="cal">
       <div class="cal-week"><span>一</span><span>二</span><span>三</span><span>四</span><span>五</span><span>六</span><span>日</span></div>
       <div class="cal-grid" id="calGrid"></div>
-      <div class="cal-legend"><span><i style="background:var(--green)"></i>正常运行</span><span><i style="background:var(--red)"></i>事件 / 不可用</span><span><i style="background:var(--line)"></i>无记录</span></div>
+      <div class="cal-legend"><span><i style="background:var(--red)"></i>事件日</span><span><i style="background:var(--red);opacity:.35"></i>今天</span><span><i style="background:var(--line)"></i>无事件</span></div>
     </div>
   </section>
 
@@ -173,6 +186,6 @@ body[data-theme="dark"] .seg.null{background:#2a3140}
     <span>2026</span>
   </footer>
 </div>
-<script src="app.js?v=20261126t" defer></script>
+<script src="app.js?v=20261126u" defer></script>
 </body>
 </html>
