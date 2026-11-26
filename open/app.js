@@ -94,7 +94,7 @@ document.querySelectorAll('.nav-item').forEach(b => b.addEventListener('click', 
   const k = b.dataset.panel;
   document.querySelectorAll('.nav-item').forEach(x => x.classList.toggle('on', x === b));
   Object.keys(CRUMB).forEach(p => { const el = document.getElementById('pn-' + p); if (el) el.hidden = p !== k; });
-  document.getElementById('crumb').textContent = '控制台 / ' + CRUMB[k];
+  document.getElementById('crumb').textContent = CRUMB[k];
 }));
 
 document.getElementById('loginInline').addEventListener('click', doLogin);
