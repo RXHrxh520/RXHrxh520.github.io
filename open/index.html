@@ -278,6 +278,33 @@
     .crumb{font-size:17px}
     .stat-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
   }
+
+  /* ---- 控制台：铺满宽度，去掉右侧死白 ---- */
+  .s-preview{padding:0;background:var(--card)}
+  .s-preview .console{max-width:none;width:100%;margin:0;border:0;border-radius:0;
+    min-height:100dvh;grid-template-columns:248px minmax(0,1fr);gap:0}
+  .s-preview .side{position:sticky;top:0;min-height:100dvh;border:0;border-right:1px solid var(--line);
+    border-radius:0;background:var(--card);padding:26px 16px 18px}
+  .s-preview .cmain{max-width:none;width:100%;padding:40px 48px 96px;min-width:0}
+  .s-preview .cmain > *{max-width:1160px}
+  .s-preview .cbar,.s-preview .banner,.s-preview .stat-grid,.s-preview .panel-grid,
+  .s-preview .cpane{max-width:1160px;width:100%}
+  .stat,.panel{background:var(--card-soft)}
+  :root{--card-soft:#f5f6f8}
+  @media (prefers-color-scheme:dark){:root{--card-soft:#1a1f29}}
+  .stat{border-radius:14px;padding:20px 22px}
+  .stat b{font-size:26px}
+  .panel{border-radius:14px;padding:20px 22px}
+  .nav-item{padding:10px 12px;border-radius:9px}
+  .nav-item.on{background:var(--card-soft)}
+  .side-brand{padding:0 12px 26px}
+  @media (max-width:980px){
+    .s-preview .console{grid-template-columns:1fr}
+    .s-preview .side{min-height:0;border-right:0;border-bottom:1px solid var(--line);position:sticky;top:0;
+      flex-direction:row;overflow-x:auto;padding:8px 12px;background:var(--card);z-index:9}
+    .s-preview .cmain{padding:20px 18px 64px}
+    .s-preview .cmain > *{max-width:none}
+  }
 </style>
 </head>
 <body>
@@ -464,6 +491,6 @@ window.TURNSTILE_SITEKEY = "0x4AAAAAAGPRu0xFiTmg5BYn";
 </script>
 <script src="https://www.rxh.asia/assets/auth-modal.js?v=20261126d"></script>
 <script src="https://www.rxh.asia/assets/notice-bar.js?v=20261126d" defer></script>
-<script src="app.js?v=20261126h" defer></script>
+<script src="app.js?v=20261126i" defer></script>
 </body>
 </html>
