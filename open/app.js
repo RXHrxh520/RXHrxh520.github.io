@@ -27,6 +27,7 @@ function setMode(mode) {
 
 /* ---------- 入口 ---------- */
 document.getElementById('start').addEventListener('click', () => setMode('auth'));
+document.getElementById('start2')?.addEventListener('click', () => setMode('auth'));
 document.getElementById('close').addEventListener('click', () => setMode('intro'));
 document.getElementById('vclose').addEventListener('click', () => setMode('auth'));
 document.getElementById('back').addEventListener('click', () => {
