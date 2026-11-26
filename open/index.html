@@ -317,7 +317,7 @@
   .ds-logo b{font-weight:700}.ds-logo i{font-style:normal;color:var(--mute);font-size:11px;letter-spacing:.12em}
   .ds-nav{display:flex;flex-direction:column;gap:2px}
   .ds-nav .nav-item{border:0;background:transparent;display:flex;align-items:center;gap:9px;width:100%;
-    padding:10px 12px;border-radius:8px;font-size:13.5px;color:var(--sub);cursor:pointer;text-align:left}
+    padding:11px 12px;border-radius:8px;font-size:13.5px;color:var(--sub);cursor:pointer;text-align:left}
   .ds-nav .nav-item:hover{background:#f5f6f8;color:var(--ink)}
   .ds-nav .nav-item.on{background:#f2f3f5;color:var(--ink);font-weight:600}
   .ds-side-bottom{margin-top:auto;display:flex;flex-direction:column;gap:2px;padding:14px 10px 0;border-top:1px solid var(--line)}
@@ -329,7 +329,7 @@
   .ds-main > *{max-width:1400px;margin-left:auto;margin-right:auto;width:100%}
   .ds-top{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;margin-bottom:6px}
   .crumb{font-size:26px;font-weight:700;letter-spacing:-.02em;color:var(--ink)}
-  .ds-top-right{display:flex;align-items:center;gap:10px;padding-top:4px}
+  .ds-top-right{display:flex;align-items:center;gap:14px;padding-top:4px}
   .tag{font-size:12px;color:#8a6d1f;background:#fff7e0;border:1px solid #f2e3b3;border-radius:6px;padding:3px 8px}
   .ds-login{border:0;background:#15171c;color:#fff;font-size:12.5px;padding:7px 14px;border-radius:8px;cursor:pointer}
   .banner{font-size:13px;color:var(--sub);margin:2px auto 24px;padding:0;background:transparent;border:0}
@@ -347,9 +347,9 @@
   .empty{padding:24px 0;text-align:center;color:var(--mute);font-size:12.5px}
   .panel-grid .panel .mrow{border-color:#ececef}
   #pn-overview .panel-grid{margin-top:0}
-  #pn-keys .keybar{display:flex;gap:8px}
+  #pn-keys .keybar{display:flex;gap:10px;margin-top:14px}
   #pn-keys input{flex:1;height:38px;border:1px solid var(--line);border-radius:8px;padding:0 12px;background:var(--card);color:var(--ink)}
-  .btnp{border:0;background:#15171c;color:#fff;border-radius:8px;padding:0 16px;height:38px;font-size:13px;cursor:pointer}
+  .btnp{border:0;background:#15171c;color:#fff;border-radius:8px;padding:0 20px;height:38px;font-size:13px;cursor:pointer;margin-top:16px}
   .codeblock{margin-top:10px;border:1px solid var(--line);border-radius:10px;padding:14px 16px;
     background:#fafafa;font-size:12.5px;overflow:auto;white-space:pre;color:#333}
   .docnote{font-size:12.5px;color:var(--sub);margin-top:10px}
@@ -420,7 +420,7 @@
       <aside class="hero-r">
         <div class="codecard">
           <div class="cc-bar"><i></i><i></i><i></i><span>chat.sh</span></div>
-          <pre><code><span class="c-cm"># 一次调用，固定返回 HelloWould</span>
+          <pre><code><span class="c-cm"># 标准 Chat Completions 请求</span>
 <span class="c-kw">curl</span> https://api.rxh.asia/v1/chat/completions \
   -H <span class="c-str">"Authorization: Bearer $RXH_API_KEY"</span> \
   -H <span class="c-str">"Content-Type: application/json"</span> \
@@ -552,9 +552,9 @@
           <div class="panel">
             <h4>用量</h4>
             <div class="mrow"><b>本月请求</b><span>0 次</span></div>
-            <div class="mrow"><b>计费</b><span>公测期免费</span></div>
+            <div class="mrow"><b>计费</b><span>按量计费</span></div>
             <div class="mrow"><b>限流</b><span>未启用</span></div>
-            <div class="empty">对话模式固定返回 HelloWould，不做上下文存储。</div>
+            <div class="empty">调用明细与用量会在产生请求后显示。</div>
           </div>
         </section>
 
@@ -568,7 +568,7 @@ curl https://api.rxh.asia/v1/chat/completions \
   -H "Authorization: Bearer sk-rxh-..." \
   -H "Content-Type: application/json" \
   -d '{"model":"R-Ultra1","messages":[{"role":"user","content":"hi"}]}'</div>
-            <p class="docnote">固定返回 {"choices":[{"message":{"content":"HelloWould"}}]}；不会保存对话内容。</p>
+            
             <a class="btnp" href="/docs" style="display:inline-flex;margin-top:14px;text-decoration:none">打开完整 API 文档 →</a>
           </div>
         </section>
@@ -582,6 +582,6 @@ window.TURNSTILE_SITEKEY = "0x4AAAAAAGPRu0xFiTmg5BYn";
 </script>
 <script src="https://www.rxh.asia/assets/auth-modal.js?v=20261126d"></script>
 <script src="https://www.rxh.asia/assets/notice-bar.js?v=20261126d" defer></script>
-<script src="app.js?v=20261126m" defer></script>
+<script src="app.js?v=20261126n" defer></script>
 </body>
 </html>
