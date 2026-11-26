@@ -40,7 +40,7 @@ a{color:inherit}
 .burger{display:none;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:8px;width:34px;height:32px;font-size:16px}
 
 /* 三栏 */
-.layout{max-width:1320px;margin:0 auto;padding:0 24px;display:grid;grid-template-columns:236px minmax(0,1fr) 196px;gap:48px}
+.layout{max-width:1180px;margin:0 auto;padding:0 24px;display:grid;grid-template-columns:228px minmax(0,1fr);gap:56px}
 .sidebar{padding:28px 0 80px;position:sticky;top:60px;height:calc(100dvh - 60px);overflow:auto}
 .side-group{margin-bottom:22px}
 .side-group h5{margin:0 0 8px;font-size:12px;font-weight:600;letter-spacing:.08em;color:var(--mute);text-transform:uppercase}
@@ -102,7 +102,6 @@ td code{color:var(--ink);background:var(--soft);padding:1px 6px;border-radius:5p
 
 @media (max-width:1180px){
   .layout{grid-template-columns:210px minmax(0,1fr);gap:36px}
-  .toc{display:none}
 }
 @media (max-width:860px){
   .topbar-in{padding:0 16px;gap:14px}
@@ -172,7 +171,6 @@ td code{color:var(--ink);background:var(--soft);padding:1px 6px;border-radius:5p
       <span class="chip">认证 · Bearer</span>
     </div>
 
-    <div class="callout"><span>ⓘ</span><div><b>公测说明：</b>当前对话接口固定返回 <code>HelloWould</code>，用于连通性与鉴权验证；不保存任何对话内容，也不消耗额度。</div></div>
 
     <h2 id="quickstart"><span class="num">01</span>快速开始</h2>
     <p>三步完成第一次调用：在控制台创建密钥，把密钥放进环境变量，然后向接口发一条请求。</p>
@@ -227,7 +225,7 @@ console.log(<span class="tok-k">await</span> res.json());</code></pre>
   <span class="tok-s">"model"</span>: <span class="tok-s">"R-Ultra1"</span>,
   <span class="tok-s">"choices"</span>: [{
     <span class="tok-s">"index"</span>: <span class="tok-n">0</span>,
-    <span class="tok-s">"message"</span>: { <span class="tok-s">"role"</span>: <span class="tok-s">"assistant"</span>, <span class="tok-s">"content"</span>: <span class="tok-s">"HelloWould"</span> },
+    <span class="tok-s">"message"</span>: { <span class="tok-s">"role"</span>: <span class="tok-s">"assistant"</span>, <span class="tok-s">"content"</span>: <span class="tok-s">"你好，我是 rxh.asia 的助手。"</span> },
     <span class="tok-s">"finish_reason"</span>: <span class="tok-s">"stop"</span>
   }]
 }</code></pre>
@@ -268,8 +266,8 @@ r = requests.get(<span class="tok-s">"https://api.rxh.asia/v1/models"</span>,
       <tr><td><code>model</code></td><td>string</td><td>是</td><td>模型标识，填写 <code>R-Ultra1</code></td></tr>
       <tr><td><code>messages</code></td><td>array</td><td>是</td><td>消息列表，元素含 <code>role</code> 与 <code>content</code></td></tr>
       <tr><td><code>stream</code></td><td>boolean</td><td>否</td><td>是否以 SSE 流式返回，默认 <code>false</code></td></tr>
-      <tr><td><code>temperature</code></td><td>number</td><td>否</td><td>采样温度，公测期接受但不影响固定返回</td></tr>
-      <tr><td><code>max_tokens</code></td><td>integer</td><td>否</td><td>最大输出长度，公测期接受但被忽略</td></tr>
+      <tr><td><code>temperature</code></td><td>number</td><td>否</td><td>采样温度，默认 0.7</td></tr>
+      <tr><td><code>max_tokens</code></td><td>integer</td><td>否</td><td>最大输出长度，默认 1024</td></tr>
     </table>
 
     <h3 id="response">返回结构</h3>
@@ -277,7 +275,7 @@ r = requests.get(<span class="tok-s">"https://api.rxh.asia/v1/models"</span>,
       <tr><th>字段</th><th>说明</th></tr>
       <tr><td><code>id</code></td><td>本次请求标识</td></tr>
       <tr><td><code>object</code></td><td><code>chat.completion</code></td></tr>
-      <tr><td><code>choices[0].message.content</code></td><td>助手回复，公测期为固定文本 <code>HelloWould</code></td></tr>
+      <tr><td><code>choices[0].message.content</code></td><td>模型生成的文本回复</td></tr>
       <tr><td><code>choices[0].finish_reason</code></td><td><code>stop</code></td></tr>
     </table>
 
@@ -293,12 +291,10 @@ r = requests.get(<span class="tok-s">"https://api.rxh.asia/v1/models"</span>,
     </table>
 
     <h2 id="limits"><span class="num">07</span>限流与配额</h2>
-    <p>公测期不限制调用次数，单密钥默认按分钟级令牌桶平滑。若出现 <code>429</code>，请按 <code>Retry-After</code> 等待，不要直接高频重试。</p>
+    <p>接口按密钥维度做分钟级限流。若出现 <code>429</code>，请按 <code>Retry-After</code> 等待，不要高频重试。</p>
 
     <h2 id="faq"><span class="num">08</span>常见问题</h2>
-    <h3>为什么返回永远是 HelloWould？</h3>
-    <p>公测阶段接口只做鉴权与连通验证，模型输出固定，便于快速排查网络与密钥问题。</p>
-    <h3>能否直接用 OpenAI SDK？</h3>
+    <h3>是否兼容 OpenAI SDK？</h3>
     <p>可以。把 <code>base_url</code> 换成 <code>https://api.rxh.asia/v1</code>，<code>api_key</code> 换成开放平台密钥即可。</h3>
     <h3>密钥泄露了怎么办？</h3>
     <p>立即到控制台「API 密钥」页吊销，再创建新密钥；旧密钥吊销后即刻失效。</p>
@@ -309,20 +305,6 @@ r = requests.get(<span class="tok-s">"https://api.rxh.asia/v1/models"</span>,
     </div>
   </main>
 
-  <aside class="toc">
-    <h6>本页目录</h6>
-    <a href="#intro">概览</a>
-    <a href="#quickstart">快速开始</a>
-    <a href="#first-call">首次调用</a>
-    <a href="#auth">鉴权方式</a>
-    <a href="#models">模型列表</a>
-    <a href="#chat">对话补全</a>
-    <a href="#params">请求参数</a>
-    <a href="#response">返回结构</a>
-    <a href="#errors">错误码</a>
-    <a href="#limits">限流与配额</a>
-    <a href="#faq">常见问题</a>
-  </aside>
 </div>
 
 <script>
