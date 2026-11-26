@@ -212,10 +212,9 @@
   .feat{background:var(--card);padding:18px 20px;display:flex;flex-direction:column;gap:6px}
   .feat b{font-size:13.5px}.feat span{font-size:12.5px;color:var(--sub);line-height:1.6}
 
-  .s-auth,.s-verify{min-height:100dvh;padding:56px 0;display:grid;place-items:center}
   .card{width:min(440px,100%)}
   .s-preview{padding:0 0 40px}
-  .s-preview .console{max-width:1260px;margin:0 auto;min-height:calc(100dvh - 40px);display:grid;
+  .s-preview .console{max-width:1400px;margin:0 auto;min-height:calc(100dvh - 40px);display:grid;
     grid-template-columns:236px minmax(0,1fr);gap:28px;align-items:start}
   .s-preview .side{position:sticky;top:24px;display:flex;flex-direction:column;gap:4px;padding:18px 12px;
     border:1px solid var(--line);border-radius:12px;background:var(--card)}
@@ -433,9 +432,6 @@ curl https://api.rxh.asia/v1/chat/completions \
           </div>
         </section>
 
-        <div class="console-foot">
-          <button class="exit" id="exit">退出预览</button>
-        </div>
       </div>
     </div>
   </section>
@@ -449,6 +445,6 @@ window.TURNSTILE_SITEKEY = "0x4AAAAAAGPRu0xFiTmg5BYn";
 <script src="https://www.rxh.asia/assets/auth-modal.js?v=20261126d"></script>
 <script src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit" defer></script>
 <script src="https://www.rxh.asia/assets/notice-bar.js?v=20261126d" defer></script>
-<script src="app.js?v=20261126e" defer></script>
+<script src="app.js?v=20261126f" defer></script>
 </body>
 </html>
