@@ -21,8 +21,8 @@ function setMode(mode) {
 }
 
 /* ---------- 入口 ---------- */
-document.getElementById('start').addEventListener('click', () => setMode('auth'));
-document.getElementById('start2')?.addEventListener('click', () => setMode('auth'));
+document.getElementById('start')?.addEventListener('click', () => doLogin());
+document.getElementById('start2')?.addEventListener('click', () => doLogin());
 document.getElementById('close').addEventListener('click', () => setMode('intro'));
 document.getElementById('vclose').addEventListener('click', () => setMode('auth'));
 document.getElementById('back').addEventListener('click', () => {
@@ -235,7 +235,7 @@ const esc = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({ '&': '&a
 function fmt(t) { if (!t) return '—'; try { return new Date(t).toLocaleDateString('zh-CN'); } catch { return t; } }
 
 /* ---------- 预览 ---------- */
-document.getElementById('exit').addEventListener('click', () => {
+document.getElementById('exit')?.addEventListener('click', () => {
   sessionStorage.removeItem('rxh_open_preview');
   sessionStorage.removeItem('rxh_open_user');
   setMode('intro');
