@@ -69,12 +69,6 @@ function guestConsole() {
   document.getElementById('statKeys').textContent = '0';
   setMode('preview');
 }
-function guestConsole() {
-  sessionStorage.setItem('rxh_open_preview', '1');
-  document.getElementById('pvTag').textContent = '匿名预览';
-  document.getElementById('sideUser').textContent = '访客 · 只读';
-  setMode('preview');
-}
 
 /* 已登录则直接复用统一账号会话 */
 (async () => {
