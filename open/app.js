@@ -98,9 +98,24 @@ document.querySelectorAll('.nav-item').forEach(b => b.addEventListener('click', 
 }));
 
 document.getElementById('loginInline').addEventListener('click', doLogin);
+let authLoader = null;
+function loadAuth() {
+  if (window.RXHAuth) return Promise.resolve(window.RXHAuth);
+  if (!authLoader) {
+    authLoader = new Promise((resolve, reject) => {
+      const s = document.createElement('script');
+      s.src = 'https://www.rxh.asia/assets/auth-modal.js?v=20261128h';
+      s.async = true;
+      s.onload = () => window.RXHAuth ? resolve(window.RXHAuth) : reject(new Error('auth unavailable'));
+      s.onerror = reject;
+      document.head.appendChild(s);
+    });
+  }
+  return authLoader;
+}
 function doLogin() {
-  if (!window.RXHAuth) return toast('账号组件未加载，请刷新重试');
-  window.RXHAuth.open({ onSuccess: () => { sessionStorage.removeItem('rxh_open_preview'); sessionStorage.removeItem('rxh_open_user'); location.reload(); } });
+  loadAuth().then(A => A.open({ onSuccess: () => { sessionStorage.removeItem('rxh_open_preview'); sessionStorage.removeItem('rxh_open_user'); location.reload(); } }))
+    .catch(() => toast('账号组件加载失败，请刷新重试'));
 }
 
 /* ---------- 密钥 ---------- */

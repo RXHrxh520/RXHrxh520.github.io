@@ -105,11 +105,31 @@
   const svcName = n => SVC_NAME[n] || String(n || '').replace(/GitHub Pages?/gi, '源站').trim();
   const esc = s => String(s || '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 
+  /* 登录组件按需加载：不登录时不下载 27KB 弹层脚本 */
+  let authLoader = null;
+  function loadAuth() {
+    if (window.RXHAuth) return Promise.resolve(window.RXHAuth);
+    if (!authLoader) {
+      authLoader = new Promise((resolve, reject) => {
+        const s = document.createElement('script');
+        s.src = '/assets/auth-modal.js?v=20261128h';
+        s.async = true;
+        s.onload = () => window.RXHAuth ? resolve(window.RXHAuth) : reject(new Error('auth unavailable'));
+        s.onerror = reject;
+        document.head.appendChild(s);
+      });
+    }
+    return authLoader;
+  }
+  function openAuth(opts) {
+    loadAuth().then(A => A.open(opts)).catch(() => toast('账号组件加载失败，请刷新重试'));
+  }
+
   function noticeLock() {
     const list = $('#noticeList');
     list.innerHTML = '<div class="n-empty" style="text-align:center">需要登录后查看通知<br><button class="big-btn primary" id="nLogin" style="margin-top:10px;padding:8px 16px;font-size:12.5px">登录 / 注册</button></div>';
     const b = document.getElementById('nLogin');
-    if (b) b.addEventListener('click', () => window.RXHAuth.open({ onSuccess: afterAuth }));
+    if (b) b.addEventListener('click', () => openAuth({ onSuccess: afterAuth }));
     $('#bellDot').classList.remove('on');
   }
 
@@ -280,7 +300,7 @@
   }
   $('#authBtn').addEventListener('click', () => {
     if (me) return go('me');
-    window.RXHAuth.open({ onSuccess: afterAuth });
+    openAuth({ onSuccess: afterAuth });
   });
   async function afterAuth(user) {
     me = user; setAuthBtn(); loadNotice(); loadNotices();
@@ -293,7 +313,7 @@
       $('#meName').textContent = '未登录';
       $('#meUid').textContent = '登录后可查看账号信息';
       $('#meActions').innerHTML = `<button class="big-btn primary" id="meLogin">登录 / 注册</button>`;
-      $('#meLogin').addEventListener('click', () => window.RXHAuth.open({ onSuccess: afterAuth }));
+      $('#meLogin').addEventListener('click', () => openAuth({ onSuccess: afterAuth }));
       return;
     }
     if (me.avatar) {
