@@ -5,7 +5,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>开放平台 · rxh.asia</title>
-<meta name="description" content="RXH 开放平台：大模型推理、多模态与 Agent 工具链，一个密钥全部接入。">
+<meta name="description" content="RXH 开放平台：自建微型中文模型 R-Micro1，一个密钥接入，兼容 OpenAI 格式。">
 <meta name="theme-color" content="#f7f8fa" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="#101218" media="(prefers-color-scheme: dark)">
 <meta name="color-scheme" content="light dark">
@@ -411,13 +411,13 @@
     <div class="hero">
       <div class="hero-l">
         <span class="eyebrow">OPEN PLATFORM · 开放平台</span>
-        <h1>一个密钥，<br>接入 rxh.asia 的全部能力</h1>
-        <p class="lede">文本、图像、语音与 Agent 能力统一在一个端点后面，按量计费，随用随扩。文档与接口保持 OpenAI 兼容格式，迁移成本几乎为零。</p>
+        <h1>一个密钥，<br>接入 rxh.asia 的中文模型</h1>
+        <p class="lede">一个自建的小模型，只做中文文本对话，兼容 OpenAI 格式。体积小、启动快、不调用任何第三方 AI 接口。</p>
         <div class="cta">
           <button class="primary" id="start2">进入控制台<span class="sheen"></span></button>
           <a class="ghost-link" href="/docs">阅读 API 文档 →</a>
         </div>
-        <div class="kv"><span>OpenAI 兼容</span><span>200 万上下文</span><span>SSE 流式</span><span>按量计费</span></div>
+        <div class="kv"><span>OpenAI 兼容</span><span>4K 上下文</span><span>SSE 流式</span><span>自建模型</span></div>
       </div>
       <aside class="hero-r">
         <div class="codecard">
@@ -427,7 +427,7 @@
   -H <span class="c-str">"Authorization: Bearer $RXH_API_KEY"</span> \
   -H <span class="c-str">"Content-Type: application/json"</span> \
   -d <span class="c-str">'{
-    "model": "R-Ultra1",
+    "model": "R-Micro1",
     "messages": [{"role":"user","content":"hi"}]
   }'</span></code></pre>
           <div class="cc-foot"><span class="dot"></span> api.rxh.asia · 在线</div>
@@ -516,8 +516,8 @@
           <div class="panel-grid">
             <div class="panel">
               <h4>模型广场</h4>
-              <div class="mrow"><b>R-Ultra1</b><span>200 万上下文 · 文本 / 音频 / 视频</span></div>
-              <div class="mrow"><b>工具调用</b><span>函数调用 · 多步编排</span></div>
+              <div class="mrow"><b>R-Micro1</b><span>4K 上下文 · 中文文本 · 自建微型模型</span></div>
+              <div class="mrow"><b>中文对话</b><span>检索 + 轻量语言规则</span></div>
               <div class="mrow"><b>流式输出</b><span>SSE · 首字即时返回</span></div>
             </div>
             <div class="panel">
@@ -529,11 +529,11 @@
 
         <section class="cpane" id="pn-models" hidden>
           <div class="panel">
-            <h4>R-Ultra1</h4>
-            <div class="mrow"><b>上下文长度</b><span>2,000,000 tokens（声明）</span></div>
-            <div class="mrow"><b>输入</b><span>文本 · 音频 · 视频</span></div>
-            <div class="mrow"><b>输出</b><span>文本 · 音频 · 视频</span></div>
-            <div class="mrow"><b>工具调用</b><span>支持</span></div>
+            <h4>R-Micro1</h4>
+            <div class="mrow"><b>上下文长度</b><span>约 4,096 字符</span></div>
+            <div class="mrow"><b>输入</b><span>中文文本</span></div>
+            <div class="mrow"><b>输出</b><span>中文文本</span></div>
+            <div class="mrow"><b>工具调用</b><span>不支持</span></div>
             <div class="mrow"><b>接口</b><span class="mono">POST /v1/chat/completions</span></div>
           </div>
         </section>
@@ -569,7 +569,7 @@
 curl https://api.rxh.asia/v1/chat/completions \
   -H "Authorization: Bearer sk-rxh-..." \
   -H "Content-Type: application/json" \
-  -d '{"model":"R-Ultra1","messages":[{"role":"user","content":"hi"}]}'</div>
+  -d '{"model":"R-Micro1","messages":[{"role":"user","content":"你好"}]}'</div>
             
             <a class="btnp" href="/docs" style="display:inline-flex;margin-top:14px;text-decoration:none">打开完整 API 文档 →</a>
           </div>

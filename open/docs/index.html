@@ -28,8 +28,9 @@ a{color:inherit}
   backdrop-filter:saturate(180%) blur(12px);border-bottom:1px solid var(--line)}
 .topbar-in{max-width:1320px;margin:0 auto;height:100%;padding:0 24px;display:flex;align-items:center;gap:28px}
 .logo{display:flex;align-items:center;gap:9px;text-decoration:none;font-size:13px;letter-spacing:.06em;color:var(--ink)}
-.logo .mark{width:24px;height:24px;border-radius:7px;display:grid;place-items:center;color:#fff;font-size:12px;font-weight:800;
+.logo .mark{width:24px;height:24px;border-radius:7px;display:grid;place-items:center;color:#fff;font-size:12px;font-weight:800;overflow:hidden;
   background:linear-gradient(135deg,var(--brand),var(--brand2))}
+.logo .mark img{width:100%;height:100%;object-fit:cover;display:block}
 .tb-links{display:flex;gap:22px;font-size:13.5px}
 .tb-links a{color:var(--sub);text-decoration:none}
 .tb-links a.on{color:var(--ink);font-weight:600}
@@ -119,11 +120,6 @@ td code{color:var(--ink);background:var(--soft);padding:1px 6px;border-radius:5p
 }
 </style>
 <link rel="icon" href="https://github.com/RXHrxh520.png?size=64">
-<style id="brand-avatar-css">
-.mark img,.logo img,.ds-mark img,.logo .mark img{width:100%;height:100%;object-fit:cover;border-radius:inherit;display:block}
-.brand .brand-ava{width:26px;height:26px;border-radius:8px;object-fit:cover;display:block;flex:0 0 26px}
-.brand-ava{width:22px;height:22px;border-radius:7px;object-fit:cover;display:block}
-</style>
 </head>
 <body>
 
@@ -170,10 +166,10 @@ td code{color:var(--ink);background:var(--soft);padding:1px 6px;border-radius:5p
   <main class="main">
     <div class="crumb">开放平台 / 文档</div>
     <h1 id="intro">rxh.asia API 文档</h1>
-    <p class="lead">开放平台提供与 OpenAI 兼容的对话接口。所有能力使用同一个 Base URL 和同一个 API Key，无需为不同模态单独接入。</p>
+    <p class="lead">开放平台提供与 OpenAI 兼容的中文对话接口，底层是站内自建的微型模型 R-Micro1。只需要一个 Base URL 和一个 API Key。</p>
     <div class="meta-row">
       <span class="chip">Base URL · https://api.rxh.asia/v1</span>
-      <span class="chip">模型 · R-Ultra1</span>
+      <span class="chip">模型 · R-Micro1</span>
       <span class="chip">认证 · Bearer</span>
     </div>
 
@@ -196,7 +192,7 @@ td code{color:var(--ink);background:var(--soft);padding:1px 6px;border-radius:5p
   -H <span class="tok-s">"Authorization: Bearer $RXH_API_KEY"</span> \
   -H <span class="tok-s">"Content-Type: application/json"</span> \
   -d <span class="tok-s">'{
-    "model": "R-Ultra1",
+    "model": "R-Micro1",
     "messages": [{"role": "user", "content": "你好"}]
   }'</span></code></pre>
       <pre data-lang="python"><code><span class="tok-k">import</span> os, requests
@@ -204,7 +200,7 @@ td code{color:var(--ink);background:var(--soft);padding:1px 6px;border-radius:5p
 r = requests.post(
     <span class="tok-s">"https://api.rxh.asia/v1/chat/completions"</span>,
     headers={<span class="tok-s">"Authorization"</span>: <span class="tok-s">f"Bearer {os.environ['RXH_API_KEY']}"</span>},
-    json={<span class="tok-s">"model"</span>: <span class="tok-s">"R-Ultra1"</span>,
+    json={<span class="tok-s">"model"</span>: <span class="tok-s">"R-Micro1"</span>,
           <span class="tok-s">"messages"</span>: [{<span class="tok-s">"role"</span>: <span class="tok-s">"user"</span>, <span class="tok-s">"content"</span>: <span class="tok-s">"你好"</span>}]},
     timeout=<span class="tok-n">30</span>,
 )
@@ -216,22 +212,22 @@ r = requests.post(
     <span class="tok-s">"Content-Type"</span>: <span class="tok-s">"application/json"</span>,
   },
   body: JSON.stringify({
-    model: <span class="tok-s">"R-Ultra1"</span>,
+    model: <span class="tok-s">"R-Micro1"</span>,
     messages: [{ role: <span class="tok-s">"user"</span>, content: <span class="tok-s">"你好"</span> }],
   }),
 });
 console.log(<span class="tok-k">await</span> res.json());</code></pre>
     </div>
-    <p>返回示例（固定内容）：</p>
+    <p>返回示例（由模型生成，内容随输入变化）：</p>
     <div class="code">
       <div class="code-head"><button class="tab on">JSON</button><button class="copy">复制</button></div>
       <pre class="on"><code>{
   <span class="tok-s">"id"</span>: <span class="tok-s">"chatcmpl-rxh"</span>,
   <span class="tok-s">"object"</span>: <span class="tok-s">"chat.completion"</span>,
-  <span class="tok-s">"model"</span>: <span class="tok-s">"R-Ultra1"</span>,
+  <span class="tok-s">"model"</span>: <span class="tok-s">"R-Micro1"</span>,
   <span class="tok-s">"choices"</span>: [{
     <span class="tok-s">"index"</span>: <span class="tok-n">0</span>,
-    <span class="tok-s">"message"</span>: { <span class="tok-s">"role"</span>: <span class="tok-s">"assistant"</span>, <span class="tok-s">"content"</span>: <span class="tok-s">"你好，我是 rxh.asia 的助手。"</span> },
+    <span class="tok-s">"message"</span>: { <span class="tok-s">"role"</span>: <span class="tok-s">"assistant"</span>, <span class="tok-s">"content"</span>: <span class="tok-s">"你好，我是 R-Micro1，rxh.asia 自建的小模型。"</span> },
     <span class="tok-s">"finish_reason"</span>: <span class="tok-s">"stop"</span>
   }]
 }</code></pre>
@@ -246,10 +242,10 @@ console.log(<span class="tok-k">await</span> res.json());</code></pre>
     <p>请勿把密钥写进前端代码或公开仓库；服务端调用时建议通过环境变量注入。</p>
 
     <h2 id="models"><span class="num">04</span>模型列表</h2>
-    <p><code>GET /v1/models</code> 返回当前账号可用的模型。当前仅一个模型，能力覆盖文本、音频与视频输入。</p>
+    <p><code>GET /v1/models</code> 返回当前账号可用的模型。当前仅一个模型，只处理中文文本，不调用第三方 AI 服务。</p>
     <table>
       <tr><th>字段</th><th>说明</th></tr>
-      <tr><td><code>id</code></td><td>模型标识，当前为 <code>R-Ultra1</code></td></tr>
+      <tr><td><code>id</code></td><td>模型标识，当前为 <code>R-Micro1</code></td></tr>
       <tr><td><code>object</code></td><td>固定为 <code>model</code></td></tr>
       <tr><td><code>owned_by</code></td><td><code>rxh.asia</code></td></tr>
     </table>
@@ -269,11 +265,11 @@ r = requests.get(<span class="tok-s">"https://api.rxh.asia/v1/models"</span>,
     <h3 id="params">请求参数</h3>
     <table>
       <tr><th>参数</th><th>类型</th><th>必填</th><th>说明</th></tr>
-      <tr><td><code>model</code></td><td>string</td><td>是</td><td>模型标识，填写 <code>R-Ultra1</code></td></tr>
+      <tr><td><code>model</code></td><td>string</td><td>是</td><td>模型标识，填写 <code>R-Micro1</code></td></tr>
       <tr><td><code>messages</code></td><td>array</td><td>是</td><td>消息列表，元素含 <code>role</code> 与 <code>content</code></td></tr>
       <tr><td><code>stream</code></td><td>boolean</td><td>否</td><td>是否以 SSE 流式返回，默认 <code>false</code></td></tr>
-      <tr><td><code>temperature</code></td><td>number</td><td>否</td><td>采样温度，默认 0.7</td></tr>
-      <tr><td><code>max_tokens</code></td><td>integer</td><td>否</td><td>最大输出长度，默认 1024</td></tr>
+      <tr><td><code>temperature</code></td><td>number</td><td>否</td><td>保留字段，当前不参与采样</td></tr>
+      <tr><td><code>max_tokens</code></td><td>integer</td><td>否</td><td>最大输出长度，默认 512</td></tr>
     </table>
 
     <h3 id="response">返回结构</h3>
