@@ -144,6 +144,10 @@
       setMode('login');
       setTimeout(() => modal.querySelector('#rxhAcc').focus(), 120);
     });
+    modal.querySelector('[data-choice="github"]').addEventListener('click', () => {
+      const back = location.origin + location.pathname + location.search;
+      location.href = 'https://auth.rxh.asia/api/oauth/github/start?return_to=' + encodeURIComponent(back);
+    });
     modal.querySelectorAll('[data-doc]').forEach(b => b.addEventListener('click', () => {
       doc.querySelector('#rxhDocBody').innerHTML = b.dataset.doc === 'terms' ? TERMS : PRIVACY;
       doc.classList.add('on');
